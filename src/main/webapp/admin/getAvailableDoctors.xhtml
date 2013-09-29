@@ -1,0 +1,31 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form4">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGroup >
+                <h1> Get Available Doctors</h1>
+                <h:outputText value="Appointment Date: " />
+                <p:inputText value="#{schedulingAndResourceAllocationManagedBean.appointmentDate}" required="true" label="Appointment Date"/>
+                <h:outputText value="Appointment Time " />
+                <p:inputText value="#{schedulingAndResourceAllocationManagedBean.appointmentTime}" required="true" label="Appointment Time"/>
+                </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{schedulingAndResourceAllocationManagedBean.doGetAvailableEmployees}" update=":form4:dataTableAvailableDoctors,growl" />
+
+                <p:dataTable id="dataTableAvailableDoctors" var="doc" value="#{schedulingAndResourceAllocationManagedBean.availableEmployees}">  
+                    <p:column headerText="Doctor ID">  
+                        <h:outputText value="#{doc.id}" />  
+                    </p:column>  
+                    <p:column headerText="Doctor User Name">  
+                        <h:outputText value="#{doc.username}" />  
+                    </p:column>  
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
