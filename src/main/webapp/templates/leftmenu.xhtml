@@ -56,6 +56,8 @@
                             ajax="false" icon="ui-icon-info"/>
                 <p:menuitem value="Check Patient" action="/ss/checkPatient.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-check"/>
+                <p:menuitem value="Get Available Doctors" action="/ss/getAvailableDoctors.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-check"/>
             </c:if>
             <c:if test="#{request.isUserInRole('Doctor')}">
                 <p:menuitem value="Home" action="/doctor/index.xhtml?faces-redirect=true" ajax="false"
