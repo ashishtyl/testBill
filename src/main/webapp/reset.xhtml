@@ -1,0 +1,32 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:panelGroup layout="block" rendered="#{resetController.valid}">
+            <h:form id="form">
+
+                <h:panelGrid columns="2" style="margin-bottom:10px">
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:inputText id="password" value="#{resetController.password}" />
+                    <h:outputLabel for="repeatpassword" value="Repeat Password:" />
+                    <p:inputText id="repeatpassword"  />
+                    <h:inputHidden id="id" value = "#{param['id']}" />
+
+                    <p:commandButton id="resetButton" value="Submit"/>
+
+                </h:panelGrid>
+
+                <f:metadata>
+                    <f:viewParam name="id" value="#{resetController.id}"/>
+                </f:metadata>
+            </h:form>
+
+        </h:panelGroup>
+        <h:panelGroup layout="block" rendered="#{!resetController.valid}">
+            <p>Reset failed! Please check the link on your address bar</p>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

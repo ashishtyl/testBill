@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/main.css"/>
+</h:head>
+<h:body>
+    <p:layout fullPage="true">
+        <p:layoutUnit position="north" size="75" header="IS3102 Project" resizable="false" closable="false"
+                      collapsible="false">
+<!--            <h:outputText value="Stateful Switcher:"/>
+            <p:themeSwitcher value="#{guestPreferences.theme}" style="width:165px" effect="fade" id="statefulSwitcher">
+                <f:selectItem itemLabel="Choose Theme" itemValue=""/>
+                <f:selectItems value="#{themeSwitcherBean.themes}"/>
+                <p:ajax listener="#{themeSwitcherBean.saveTheme}"/>
+            </p:themeSwitcher>-->
+        </p:layoutUnit>
+
+        <p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="true" collapsible="true">
+            <h:outputText value="South unit content."/>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="west" size="200" header="Menu" resizable="false" closable="false" collapsible="false">
+            <ui:include src="leftmenu.xhtml"/>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="east" size="200" header="Help" resizable="true" closable="true" collapsible="true"
+                      effect="drop">
+            <h:outputText value="Right unit content."/>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            <ui:insert name="content">Put default content here, if any.</ui:insert>
+            <h:form id="loginForm">
+
+                <p:dialog id="dialog" header="Login" widgetVar="dlg" resizable="false">
+
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="username" value="Username:"/>
+                        <p:inputText value="#{loginController.username}"
+                                     id="username" required="true" label="username"/>
+
+                        <h:outputLabel for="password" value="Password:"/>
+                        <p:password value="#{loginController.password}"
+                                    id="password" required="true" label="password"/>
+
+                        <!--                            <p:captcha label="Captcha"/>-->
+
+                        <f:facet name="footer">
+                            <p:commandButton id="loginButton" value="Login" ajax="false"
+                                             actionListener="#{loginController.login}"/>
+                        </f:facet>
+                    </h:panelGrid>
+
+                </p:dialog>
+            </h:form>
+            <h:form id="registerForm">
+                <p:growl id="grow2" showDetail="true" life="3000"/>
+
+                <p:dialog id="registerdialog" header="Register" widgetVar="registerdlg" resizable="false">
+
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="registerusername" value="Username:"/>
+                        <p:inputText value="#{registerController.username}"
+                                     id="registerusername" required="true" label="username"/>
+
+                        <h:outputLabel for="registerpassword" value="Password:"/>
+                        <p:password value="#{registerController.password}"
+                                    id="registerpassword" required="true" label="registerpassword"/>
+
+                        <h:outputLabel for="registeremail" value="Email:"/>
+                        <p:inputText value="#{registerController.email}"
+                                     id="registeremail" required="true" label="email"/>
+
+                        <h:outputLabel for="identification" value="Indentification card:"/>
+                        <p:inputText value="#{registerController.identification}"
+                                     id="identification" required="true" label="identification"/>
+
+                        <h:outputLabel for="groupid" value="Group:"/>
+                        <p:inputText value="#{registerController.groupid}"
+                                     id="groupid" required="true" label="groupid"/>
+
+                        <p:captcha label="Captcha"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton id="registerButton" value="Register" update="grow2"
+                                             actionListener="#{registerController.register}"/>
+                        </f:facet>
+                    </h:panelGrid>
+
+                </p:dialog>
+            </h:form>
+
+            <h:form id="resetForm">
+                <p:dialog id="resetdialog" header="Reset Password" widgetVar="resetdlg" resizable="false">
+
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="resetemail" value="Email:"/>
+                        <h:inputText value="#{resetController.email}"
+                                     id="resetemail" required="true" label="email"/>
+                        <f:facet name="footer">
+                            <p:commandButton id="resetButton" value="Reset"
+                                             actionListener="#{resetController.resetEmail}"/>
+                        </f:facet>
+                    </h:panelGrid>
+
+                </p:dialog>
+            </h:form>
+
+            <h:form id="idleForm">
+                <c:if test="#{request.getUserPrincipal() != null}">
+                    <p:idleMonitor timeout="10000"
+                                   onidle="idleDialog.show()"/>
+
+                    <p:dialog header="Inactivity log out?" resizable="false" widgetVar="idleDialog">
+                        <h:outputText
+                                value="You have been idle for 1 minute. Choose OK to continue or Log out to log out"/>
+                        <h:panelGrid columns="2">
+                            <f:facet name="footer">
+                                <p:button value="OK" onclick="idleDialog.hide()"/>
+                                <p:commandButton value="Log out" actionListener="#{loginController.logout}"
+                                                 ajax="false"/>
+                            </f:facet>
+                        </h:panelGrid>
+
+                    </p:dialog>
+                </c:if>
+            </h:form>
+        </p:layoutUnit>
+    </p:layout>
+</h:body>
+</html>

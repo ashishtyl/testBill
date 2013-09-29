@@ -1,0 +1,32 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGrid columns="2" >
+                    <h1> Add Anamnesis </h1>
+                    <h:outputText value="Case Id: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.caseId}" required="true" label="caseId"/>
+                    <h:outputText value="Patient Disease History: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.diseaseHistory}" required="true" label="diseaseHistory"/>
+                    <h:outputText value="Patient Social History: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.socialHistory}"  required="true" label="socialHistory"/>
+                    <h:outputText value="Patient Medical History: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.medicalHistory}" required="true" label="medicalHistory"/>
+                    <h:outputText value="Patient Family History: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.familyHistory}" required="true" label="familyHistory"/>
+                    <h:outputText value="Patient Allergies: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.allergies}" required="true" label="allergies"/>
+                    <h:outputText value="Patient Symptoms: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.symptoms}" required="true" label="symptoms"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{medicalAdmissionBeanManaged.DoAddAnamnesis}" update=":form1:growl"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

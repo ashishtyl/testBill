@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <title>Title</title>
+</h:head>
+<h:body>
+    <h:form>
+        <p:growl id="messages"/>
+        <p:menu style="width:95%">
+            <c:if test="#{request.isUserInRole('Administrator')}">
+                <p:menuitem value="Home" action="/admin/index.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-home"/>
+                <p:menuitem value="Employee" action="/admin/EmployeeList.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-person"/>
+                <p:menuitem value="Employee Group" action="/admin/EmployeeGroupList.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-person"/>
+                <p:menuitem value="Inbox" action="/admin/Inbox.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-closed"/>
+                <p:menuitem value="Sent box" action="/admin/Sent.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-closed"/>
+                <p:menuitem value="Event" action="/admin/EventList.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-calculator"/>
+                <p:menuitem value="Create Shift" action="/admin/createShift.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-plus"/>
+                <p:menuitem value="Assign Shift" action="/admin/createShift.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-tag"/>
+                <p:menuitem value="Create Shift" action="/admin/createShift.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-plus"/>
+                <p:menuitem value="Log" onclick="window.location = 'log.txt'" icon="ui-icon-info"/>
+            </c:if>
+            <c:if test="#{request.isUserInRole('Special Staff')}">
+                <p:menuitem value="Home" action="/ss/index.xhtml?faces-redirect=true" ajax="false" icon="ui-icon-home"/>
+                <p:menuitem value="Inbox" action="/admin/Inbox.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-closed"/>
+                <p:menuitem value="Sent box" action="/admin/Sent.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-closed"/>
+                <p:menuitem value="Event" action="/admin/EventList.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-calculator"/>
+                <p:menuitem value="Check Patient" action="/ss/checkPatient.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-check"/>
+                <p:menuitem value="Add Patient" action="/ss/addPatient.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-plus"/>
+                <p:menuitem value="Check Appointment" action="/ss/checkAppointment.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-check"/>
+                <p:menuitem value="Create Appintment" action="/ss/createAppointment.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-plus"/>
+                <p:menuitem value="Create Case" action="/ss/createCase.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-plus"/>
+                <p:menuitem value="Get Patient Information" action="/ss/getPatientInfo.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-info"/>
+                <p:menuitem value="Check Patient" action="/ss/checkPatient.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-check"/>
+            </c:if>
+            <c:if test="#{request.isUserInRole('Doctor')}">
+                <p:menuitem value="Home" action="/doctor/index.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-home"/>
+                <p:menuitem value="Inbox" action="/doctor/Inbox.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-closed"/>
+                <p:menuitem value="Sent box" action="/doctor/Sent.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-closed"/>
+                <p:menuitem value="Event" action="/doctor/EventList.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-calculator"/>
+                <p:menuitem value="Create Anamnesis" action="/doctor/CreateAnamnesis.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-check"/>
+                <p:menuitem value="ICD10-Code" action="/doctor/ICD10-Code.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-plus"/>
+                <p:menuitem value="Medical Admission" action="/doctor/MedicalAdmission.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-check"/>
+                <p:menuitem value="Mediacal Discharge" action="/doctor/MedicalDischarge.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-plus"/>
+                <p:menuitem value="Set Discharge Date" action="/doctor/setDischargeDate.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-plus"/>
+                <p:menuitem value="Transfer" action="/doctor/Transfer.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-info"/>
+                <p:menuitem value="View All Shifts" action="/doctor/viewAllShifts.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-check"/>
+                <p:menuitem value="View Shifts By Doctor" action="/doctor/viewShiftsByDoctor.xhtml?faces-redirect=true"
+                            ajax="false" icon="ui-icon-check"/>
+            </c:if>
+            <c:if test="#{request.isUserInRole('Financial Staff')}">
+                <p:menuitem value="Home" action="/fs/index.xhtml?faces-redirect=true" ajax="false" icon="ui-icon-home"/>
+                <p:menuitem value="Inbox" action="/fs/Inbox.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-closed"/>
+                <p:menuitem value="Sent box" action="/fs/Sent.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-closed"/>
+                <p:menuitem value="Event" action="/fs/EventList.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-mail-calculator"/>
+            </c:if>
+            <c:if test="#{request.getUserPrincipal() != null}">
+                <p:menuitem value="Logout" actionListener="#{loginController.logout}" icon="ui-icon-power"
+                            ajax="false"/>
+            </c:if>
+            <c:if test="#{request.getUserPrincipal() == null}">
+                <p:menuitem value="Login" onclick="dlg.show();registerdlg.hide();idleDialog.hide();resetdlg.hide()"
+                            icon="ui-icon-power"/>
+                <!--                   <p:menuitem value="Register" onclick="registerdlg.show();dlg.hide();idleDialog.hide();resetdlg.hide()" icon="ui-icon-power" />
+                 -->               <p:menuitem value="General Statistics" action="statistics.xhtml?faces-redirect=true"
+                                    ajax="false" icon="ui-icon-info"/>
+                <p:menuitem value="Reset Password"
+                            onclick="resetdlg.show();dlg.hide();idleDialog.hide();registerdlg.hide()"
+                            icon="ui-icon-power"/>
+            </c:if>
+        </p:menu>
+    </h:form>
+</h:body>
+</html>

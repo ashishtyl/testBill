@@ -1,0 +1,108 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form" onLoad="reset()">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:dataTable id="dataTable" var="event" value="#{eventController.lazyModel}"
+                         styleClass="eventDataTableStyle"
+                         paginator="true" rows="10" selection="#{eventController.selectedEvents}"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         lazy="true" rowsPerPageTemplate="10,15,50">
+                <f:facet name="header">
+                    Event List
+                </f:facet>
+                <p:column selectionMode="multiple" style="width:18px"/>
+                <p:column  sortBy="#{event.event}">
+                    <f:facet name="header">
+                        <h:outputText value="Event"/>
+                    </f:facet>
+                    <p:commandLink value="#{event.event}"  update=":eventDetailForm:display"
+                                   oncomplete="eventDialog.show()" title="View">
+                        <f:setPropertyActionListener value="#{event}"
+                                                     target="#{eventController.selectedEvent}"/>
+                    </p:commandLink>
+                </p:column>
+
+                <p:column sortBy="#{event.date}">
+                    <f:facet name="header">
+                        <h:outputText value="Event Date"/>
+                    </f:facet>
+                    <h:outputText value="#{event.date}"/>
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton value="New Event" oncomplete="newEventDialog.show()" icon="ui-icon-star"
+                                     title="Creates new event"/>
+                    <p:commandButton value="Delete Events" actionListener="#{eventController.doDeleteEvents}"
+                                     update="dataTable" icon="ui-icon-trash"/>
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Event Detail" widgetVar="eventDialog" resizable="false" id="eventDlg">
+            <h:form id="eventDetailForm">
+                <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                    <h:outputText value="Event :"></h:outputText>
+                    <p:inputText value="#{eventController.selectedEvent.event}" required="true"
+                                 requiredMessage="Please Enter First Name!">
+                        <f:validateLength minimum="2"/>
+                    </p:inputText>
+
+                    <h:outputText value="Date :"></h:outputText>
+                    <p:inputText value="#{eventController.selectedEvent.date}" required="true"
+                                 requiredMessage="Please Enter Last Name!"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Update" update=":form:dataTable"
+                                         oncomplete="handleSubmitRequest(xhr, status, args, 'eventDlg','newEventForm'); "
+                                         actionListener="#{eventController.doUpdateEvent}"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog header="Create New Event" widgetVar="newEventDialog" resizable="false" id="newEventDlg">
+        <h:form id="newEventForm">
+            <p:panelGrid id="displayNewEvent" columns="2" cellpadding="4" style="margin:0 auto;">
+                <h:outputText value="Event :"></h:outputText>
+                <p:inputText value="#{eventController.newEvent.event}" required="true"
+                             requiredMessage="Please Enter First Name!">
+                    <f:validateLength minimum="2"/>
+                </p:inputText>
+
+                <h:outputText value="Date :"></h:outputText>
+                <p:inputText value="#{eventController.newEvent.date}" required="true"
+                             requiredMessage="Please Enter Last Name!"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Submit" update=":form:dataTable"
+                                     oncomplete=" handleSubmitRequest(xhr, status, args, 'newEventDlg','newEventForm');"
+                                     actionListener="#{eventController.doCreateEvent}"/>
+                    <p:commandButton type="reset" value="Reset"></p:commandButton>
+                </f:facet>
+            </p:panelGrid>
+        </h:form>
+        </p:dialog>
+
+        <script type="text/javascript">
+            function handleSubmitRequest(xhr, status, args, dialogName, formName) {
+                dialog = jQuery('#' + dialogName);
+                if (args.validationFailed) {
+                    dialog.effect("shake", { times: 3 }, 100);
+                } else {
+                    clearForm(formName);
+                    newEventDialog.hide();
+                    eventDialog.hide();
+                }
+            }
+            function clearForm(formName) {
+                jQuery('#' + formName).each(function () {
+                    this.reset();
+                });
+            }
+        </script>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,66 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form3">
+            <p:growl id="growl" showDetail="true" sticky="true"/>
+            <p:panel>
+                <h1> Create Case </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Patient PIN: "/>
+                    <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN3}" required="true"
+                                 label="Patient PIN"/>
+                    <h:outputText value="Bed Number: "/>
+                    <p:inputText value="#{administrativeAdmissionManaged.bedNo}" required="true" label="Bed Number"/>
+                    <h:outputText value="Appointment ID: "/>
+                    <p:inputText value="#{administrativeAdmissionManaged.appID}" required="true"
+                                 label="Appointment ID"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{administrativeAdmissionManaged.doCreateCase}"
+                                 update=":form3:growl"/>
+                <h:outputText value="#{administrativeAdmissionManaged.CIN}"/>
+            </p:panel>
+        </h:form>
+        <h:form id="form4">
+            <p:panel>
+                <h:outputText value="Patient PIN: "/>
+                <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN4}" required="true" label="Patient PIN"/>
+                <p:commandButton value="Get Appointments"
+                                 actionListener="#{administrativeAdmissionManaged.showAppointments}"
+                                 update=":form4:dataTableAppointments"/>
+
+                <p:dataTable id="dataTableAppointments" var="app"
+                             value="#{administrativeAdmissionManaged.appointments}">
+                    <p:column headerText="Appointment ID">
+                        <h:outputText value="#{app.appId}"/>
+                    </p:column>
+                    <p:column headerText="Appointment Date">
+                        <h:outputText value="#{app.appDate}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        <h:form id="form5">
+            <p:panel>
+                <p:commandButton value="Get Availabe Beds"
+                                 actionListener="#{administrativeAdmissionManaged.doListAvailBeds}"
+                                 update=":form5:dataTableAvailableBeds"/>
+
+                <p:dataTable id="dataTableAvailableBeds" var="bed" value="#{administrativeAdmissionManaged.beds}">
+                    <p:column headerText="Bed Number">
+                        <h:outputText value="#{bed.bedNo}"/>
+                    </p:column>
+                    <p:column headerText="Room Number">
+                        <h:outputText value="#{bed.roomNo}"/>
+                    </p:column>
+                    <p:column headerText="Floor">
+                        <h:outputText value="#{bed.floor}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

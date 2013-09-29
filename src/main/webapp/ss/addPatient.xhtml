@@ -1,0 +1,29 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+    <h:form id="form1">
+        <p:growl id="growl" showDetail="true" sticky="true" />
+        <p:panel>
+            <h1> Add Patient </h1>
+            <h:panelGrid columns = "2">
+                <h:outputText value="Patient Name: " />
+                <p:inputText value="#{administrativeAdmissionManaged.name}" required="true" label="Patient Name"/>
+                <h:outputText value="Patient PIN: " />
+                <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN1}" required="true" label="Patient PIN"/>
+                <h:outputText value="Patient Birthday (YYYY-MM-dd): " />
+                <p:calendar value="#{administrativeAdmissionManaged.birthday}" pattern="yyyy-MM-dd"/>
+                <h:outputText value="Patient Address: " />
+                <p:inputText value="#{administrativeAdmissionManaged.address}" required="true" label="Patient Address"/>
+                <h:outputText value="Patient Contact: " />
+                <p:inputText value="#{administrativeAdmissionManaged.contact}" required="true" label="Patient Contact Number"/>
+            </h:panelGrid>
+            <p:commandButton value="Submit" actionListener="#{administrativeAdmissionManaged.doAddPatient}" update=":form1:growl"/>
+            <h:outputText value="#{administrativeAdmissionManaged.NRIC_PIN1}"  />
+        </p:panel>
+    </h:form>
+</ui:define>
+</ui:composition>

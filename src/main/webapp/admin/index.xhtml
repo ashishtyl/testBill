@@ -1,0 +1,18 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+            <p:commandButton styleClass="admin-dashboard-button" value="Employee List" action="/admin/EmployeeList.xhtml?faces-redirect=true" ajax="false" />
+            <p:commandButton styleClass="admin-dashboard-button" value="Employee Group List" action="/admin/EmployeeGroupList.xhtml?faces-redirect=true" ajax="false" />
+            <p:commandButton styleClass="admin-dashboard-button" value="Event List" action="/admin/EventList.xhtml?faces-redirect=true" ajax="false" />
+            <p:commandButton styleClass="admin-dashboard-button" value="Sent Box" action="/admin/Sent.xhtml?faces-redirect=true" ajax="false" />
+            <p:commandButton styleClass="admin-dashboard-button" value="Inbox" action="/admin/Inbox.xhtml?faces-redirect=true" ajax="false" />
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,27 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form2">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h1> Make Appointment </h1>
+                <h:panelGrid columns="2" >
+                    <h:outputText value="Patient PIN: " />
+                    <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN2}" required="true" label="Patient PIN"/>
+                    <h:outputText value="Appointment Date (YYYY-mm-dd): " />
+                    <p:calendar value="#{administrativeAdmissionManaged.appDate}" pattern="yyyy-MM-dd"/>
+                    <h:outputText value="Appointment Place: " />
+                    <p:inputText value="#{administrativeAdmissionManaged.place}" required="true" label="Appointment Place"/>
+                    <h:outputText value="Doctor ID: " />
+                    <p:inputText value="#{administrativeAdmissionManaged.docID}" required="true" label="Doctor ID"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{administrativeAdmissionManaged.doMakeAppointment}" update=":form2:growl"/>
+                <h:outputText value="#{administrativeAdmissionManaged.appID}"  />
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

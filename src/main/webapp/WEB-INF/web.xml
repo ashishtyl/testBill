@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+
+    <display-name>JavaServerFaces</display-name>
+
+    <!-- Change to "Production" when you are ready to deploy -->
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>com.sun.faces.writeStateAtFormEnd</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6LdeCegSAAAAADiNYBuin9V8xpXNbP7WvGbM3P80</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6LdeCegSAAAAAOYAbVm4cmlrzXpNR5o6s8ommMN-</param-value>
+    </context-param>
+
+    <!-- Welcome page -->
+    <welcome-file-list>
+        <welcome-file>faces/index.xhtml</welcome-file>
+    </welcome-file-list>
+
+    <!-- JSF mapping -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- Map these files with JSF -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <security-constraint>
+        <display-name>Administrator</display-name>
+        <web-resource-collection>
+            <web-resource-name>Admin Area</web-resource-name>
+            <description/>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Administrator</description>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Doctor</display-name>
+        <web-resource-collection>
+            <web-resource-name>Doctor Area</web-resource-name>
+            <description/>
+            <url-pattern>/doctor/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Doctor</description>
+            <role-name>Doctor</role-name>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Financial Staff</display-name>
+        <web-resource-collection>
+            <web-resource-name>Financial Staff Area</web-resource-name>
+            <description/>
+            <url-pattern>/fs/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Financial Staff</description>
+            <role-name>Financial Staff</role-name>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Special Staff</display-name>
+        <web-resource-collection>
+            <web-resource-name>Special Staff Area</web-resource-name>
+            <description/>
+            <url-pattern>/ss/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Special Staff</description>
+            <role-name>Special Staff</role-name>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>IS3102_Realm</realm-name>
+        <form-login-config>
+            <form-login-page>/index.xhtml</form-login-page>
+            <form-error-page>/error.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <role-name>Administrator</role-name>
+    </security-role>
+    <security-role>
+        <role-name>Doctor</role-name>
+    </security-role>
+    <security-role>
+        <role-name>Special Staff</role-name>
+    </security-role>
+    <security-role>
+        <role-name>Financial Staff</role-name>
+    </security-role>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/error.xhtml</location>
+    </error-page>
+</web-app>

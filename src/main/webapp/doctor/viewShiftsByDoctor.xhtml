@@ -1,0 +1,34 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+  
+    <h:form id="form5">
+        
+        <p:growl id="growl" showDetail="true" sticky="true" />
+
+        <p:panel>
+            <h1> Get Shifts by Doctor ID</h1>
+            <h:panelGrid columns="2">
+                <h:outputText value="Doctor ID: " />
+                <p:inputText value="#{schedulingAndResourceAllocationManagedBean.employeeID}" required="true" label="Doctor ID" />
+            </h:panelGrid>
+            <p:commandButton value="Submit" actionListener="#{schedulingAndResourceAllocationManagedBean.doGetShiftsByEmployee}" update=":form5:dataTableDoctorShifts, growl" />
+
+            <p:dataTable id="dataTableDoctorShifts" var="shift" value="#{schedulingAndResourceAllocationManagedBean.shiftsByEmployee}">  
+                    <p:column headerText="Shift Date">  
+                        <h:outputText value="#{shift.shiftDate}" />  
+                    </p:column>  
+                    <p:column headerText="Shift Code">  
+                        <h:outputText value="#{shift.shiftCode}" />  
+                    </p:column>  
+                </p:dataTable>
+        </p:panel>
+            
+         </h:form>  
+    
+    </ui:define>
+</ui:composition>

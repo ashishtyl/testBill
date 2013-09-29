@@ -1,0 +1,20 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form7">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGroup>
+                    <h1> General Statistics </h1>
+                </h:panelGroup>
+                <p:commandButton value="Number of Patients Admitted Today" actionListener="#{visitorInfoServiceManaged.dogetTodaysAdmissions}" update=":form7:growl"/>
+                <p:commandButton value="Number of Patients Admitted This Month" actionListener="#{visitorInfoServiceManaged.dogetCurrentPatients}" update=":form7:growl"/>
+                <p:commandButton value="Average Duration of Stay" actionListener="#{visitorInfoServiceManaged.dogetStayDuration}" update=":form7:growl"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

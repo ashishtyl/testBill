@@ -1,0 +1,34 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form6">
+            <p:panel>
+                <h1> Retrieve Patient Information </h1>
+                <h:panelGrid columns = "2">
+
+                    <h:outputText value="Patient PIN: " />
+                    <p:inputText value="#{visitorInfoServiceManaged.NRIC_PIN}" required="true" label="Patient PIN"/>
+                    <h:outputText value="Date of Admission (YYYY-mm-dd): " />
+                    <p:calendar value="#{visitorInfoServiceManaged.dateAdmitted}" pattern="yyyy-MM-dd"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{visitorInfoServiceManaged.doretrievePatientInfo}" update=":form6:dataTablePatientInfo" />
+
+                <p:dataTable id="dataTablePatientInfo" var="bed" value="#{visitorInfoServiceManaged.bed}">
+                    <p:column headerText="Bed Number">
+                        <h:outputText value="#{bed.bedNo}" />
+                    </p:column>
+                    <p:column headerText="Room Number">
+                        <h:outputText value="#{bed.roomNo}" />
+                    </p:column>
+                    <p:column headerText="Floor">
+                        <h:outputText value="#{bed.floor}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

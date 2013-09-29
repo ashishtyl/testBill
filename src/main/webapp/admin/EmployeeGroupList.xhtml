@@ -1,0 +1,104 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form" onLoad="reset()">
+            <p:dataTable id="dataTable" var="employeeGroup" value="#{employeeGroupController.lazyModel}"
+                         styleClass="employeeGroupDataTableStyle"
+                         paginator="true" rows="10" selection="#{employeeGroupController.selectedEmployeeGroups}"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         lazy="true" rowsPerPageTemplate="10,15,50">
+                <f:facet name="header">
+                    EmployeeGroup List
+                </f:facet>
+                <p:column selectionMode="multiple" style="width:18px"/>
+                <p:column  sortBy="#{employeeGroup.group_name}">
+                    <f:facet name="header">
+                        <h:outputText value="Group Name"/>
+                    </f:facet>
+                    <p:commandLink value="#{employeeGroup.group_name}" update=":employeeGroupDetailForm:display"
+                                   oncomplete="employeeGroupDialog.show()" title="View">
+                        <f:setPropertyActionListener value="#{employeeGroup}"
+                                                     target="#{employeeGroupController.selectedEmployeeGroup}"/>
+                    </p:commandLink>
+                </p:column>
+
+                <p:column sortBy="#{employeeGroup.groupdesc}">
+                    <f:facet name="header">
+                        <h:outputText value="Group description"/>
+                    </f:facet>
+                    <h:outputText value="#{employeeGroup.groupdesc}"/>
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton value="New EmployeeGroup" oncomplete="newEmployeeGroupDialog.show()" icon="ui-icon-star"
+                                     title="Creates new employeeGroup"/>
+                    <p:commandButton value="Delete EmployeeGroups" actionListener="#{employeeGroupController.doDeleteEmployeeGroups}"
+                                     update="dataTable" icon="ui-icon-trash"/>
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog header="EmployeeGroup Detail" widgetVar="employeeGroupDialog" resizable="false" id="employeeGroupDlg">
+            <h:form id="employeeGroupDetailForm">
+                <p:panelGrid id="display" columns="2" style="margin:0 auto;">
+                    <h:outputText value="Group Name :"></h:outputText>
+                    <p:inputText value="#{employeeGroupController.selectedEmployeeGroup.group_name}" required="true"
+                                 requiredMessage="Please Enter Group Name!"/>
+
+                    <h:outputText value="Group Description :"></h:outputText>
+                    <p:inputText value="#{employeeGroupController.selectedEmployeeGroup.groupdesc}" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Update" update=":form:dataTable, :growl"
+                                         oncomplete="handleSubmitRequest(xhr, status, args, 'employeeGroupDlg','newEmployeeGroupForm'); "
+                                         actionListener="#{employeeGroupController.doUpdateEmployeeGroup}"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog header="Create New EmployeeGroup" widgetVar="newEmployeeGroupDialog" resizable="false" id="newEmployeeGroupDlg">
+            <h:form id="newEmployeeGroupForm">
+                <p:panelGrid id="displayNewEmployeeGroup" columns="2" cellpadding="4" style="margin:0 auto;">
+                    <h:outputText value="Group Name :"></h:outputText>
+                    <p:inputText value="#{employeeGroupController.newEmployeeGroup.group_name}" required="true"
+                                 requiredMessage="Please Enter Group Name!"/>
+
+                    <h:outputText value="Group Description :"></h:outputText>
+                    <p:inputText value="#{employeeGroupController.newEmployeeGroup.groupdesc}" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Submit" update=":form:dataTable, :growl"
+                                         oncomplete=" handleSubmitRequest(xhr, status, args, 'newEmployeeGroupDlg','newEmployeeGroupForm');"
+                                         actionListener="#{employeeGroupController.doCreateEmployeeGroup}"/>
+                        <p:commandButton type="reset" value="Reset"></p:commandButton>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:growl id="growl" showDetail="true" life="5000"/>
+
+        <script type="text/javascript">
+            function handleSubmitRequest(xhr, status, args, dialogName, formName) {
+                dialog = jQuery('#' + dialogName);
+                if (args.validationFailed) {
+                    dialog.effect("shake", { times: 3 }, 100);
+                } else {
+                    clearForm(formName);
+                    newEmployeeGroupDialog.hide();
+                    employeeGroupDialog.hide();
+                }
+            }
+            function clearForm(formName) {
+                jQuery('#' + formName).each(function () {
+                    this.reset();
+                });
+            }
+        </script>
+    </ui:define>
+</ui:composition>

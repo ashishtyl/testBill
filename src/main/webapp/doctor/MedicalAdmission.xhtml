@@ -1,0 +1,130 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGrid columns="2" >
+                    <h1> Add Anamnesis </h1>
+                    <h:outputText value="Case Id: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.caseId}" required="true" label="caseId"/>
+                    <h:outputText value="Patient Disease History: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.diseaseHistory}" required="true" label="diseaseHistory"/>
+                    <h:outputText value="Patient Social History: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.socialHistory}"  required="true" label="socialHistory"/>
+                    <h:outputText value="Patient Medical History: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.medicalHistory}" required="true" label="medicalHistory"/>
+                    <h:outputText value="Patient Family History: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.familyHistory}" required="true" label="familyHistory"/>
+                    <h:outputText value="Patient Allergies: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.allergies}" required="true" label="allergies"/>
+                    <h:outputText value="Patient Symptoms: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.symptoms}" required="true" label="symptoms"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{medicalAdmissionBeanManaged.DoAddAnamnesis}" update=":form1:growl"/>
+            </p:panel>
+        </h:form>
+
+        <h:form id="form2">
+            <p:panel>
+                <h:panelGroup>
+                    <h1> Get Anamnesis </h1>
+                    <h:outputText value="Anamnesis ID: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.anamnesisId}" required="true" label="AnamnesisId"/>
+                </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{medicalAdmissionBeanManaged.DoGetAnamnesis}" update=":form2:dataTableAnamnesisInfo" />
+
+                <p:dataTable id="dataTableAnamnesisInfo" var="mAnamnesis" value="#{medicalAdmissionBeanManaged.mAnamnesis}">
+                <p:column headerText="AnamnesisId">
+                            <h:outputText value="#{mAnamnesis.anamnesisId}"/>
+                        </p:column>
+                        <p:column headerText="diseaseHistory">
+                            <h:outputText value="#{mAnamnesis.diseaseHistory}"/>
+                        </p:column>
+                        <p:column headerText="socialHistory">
+                            <h:outputText value="#{mAnamnesis.socialHistory}"/>
+                        </p:column>
+                        <p:column headerText="medicalHistory">
+                            <h:outputText value="#{mAnamnesis.medicalHistory}"/>
+                        </p:column>
+
+
+                        <p:column headerText="familyHistory">
+                        <h:outputText value="#{mAnamnesis.familyHistory}"/>
+                    </p:column>
+                    <p:column headerText="allergies">
+                        <h:outputText value="#{mAnamnesis.allergies}"/>
+                    </p:column>
+
+                        <p:column headerText="symptoms">
+                            <h:outputText value="#{mAnamnesis.symptoms}"/>
+                        </p:column>
+                    </p:dataTable>
+
+            </p:panel>
+        </h:form>
+
+        <h:form id="form3">
+            <p:panel>
+                <h:panelGroup>
+                    <h1> Remove Anamnesis </h1>
+                    <h:outputText value="Anamnesis ID: " />
+                    <p:inputText value="#{medicalAdmissionBeanManaged.anamnesisId}" required="true" label="AnamnesisId"/>
+                </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{medicalAdmissionBeanManaged.DoRemoveAnamnesis}"  />
+            </p:panel>
+        </h:form>
+
+
+        <h:form id="form4">
+            <p:panel>
+                <p:commandButton value="List Anamnesis" actionListener="#{medicalAdmissionBeanManaged.getList}" update=":form4:dataTableAnamnesis" />
+
+                <p:dataTable id="dataTableAnamnesis" var="mAnamnesis" value="#{medicalAdmissionBeanManaged.list}">
+                    <p:column headerText="AnamnesisId">
+                        <h:outputText value="#{mAnamnesis.anamnesisId}"/>
+                    </p:column>
+                    <p:column headerText="diseaseHistory">
+                        <h:outputText value="#{mAnamnesis.diseaseHistory}"/>
+                    </p:column>
+                    <p:column headerText="socialHistory">
+                        <h:outputText value="#{mAnamnesis.socialHistory}"/>
+                    </p:column>
+                    <p:column headerText="medicalHistory">
+                        <h:outputText value="#{mAnamnesis.medicalHistory}"/>
+                    </p:column>
+
+
+                    <p:column headerText="familyHistory">
+                        <h:outputText value="#{mAnamnesis.familyHistory}"/>
+                    </p:column>
+                    <p:column headerText="allergies">
+                        <h:outputText value="#{mAnamnesis.allergies}"/>
+                    </p:column>
+
+                    <p:column headerText="symptoms">
+                        <h:outputText value="#{mAnamnesis.symptoms}"/>
+                    </p:column>
+                </p:dataTable>
+
+            </p:panel>
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+
+
+

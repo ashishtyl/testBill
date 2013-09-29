@@ -1,0 +1,109 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <ui:define name="content">
+
+        <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGrid columns="2" >
+                    <h1> Add Code </h1>
+                    <h:outputText value="Code Id: " />
+                    <p:inputText value="#{codingBeanManaged.diseaseId}" required="true" label="Code Id"/>
+                    <h:outputText value="ICDChapter: " />
+                    <p:inputText value="#{codingBeanManaged.ICDChapter}" required="true" label="ICDChapter"/>
+                    <h:outputText value="ICDblock: " />
+                    <p:inputText value="#{codingBeanManaged.ICDblock}" required="true" label="ICDblock"/>
+                    <h:outputText value="diseaseName: " />
+                    <p:inputText value="#{codingBeanManaged.diseaseName}"  required="true" label="diseaseName"/>
+                    <h:outputText value="diseaseDescription: " />
+                    <p:inputText value="#{codingBeanManaged.diseaseDescription}" required="true" label="diseaseDescription"/>
+
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{codingBeanManaged.DoAddCode}" update=":form1:growl"/>
+            </p:panel>
+        </h:form>
+
+
+        <h:form id="form2">
+            <p:panel>
+                <p:commandButton value="List All Codes" actionListener="#{codingBeanManaged.DoListAllICD10Codes}" update=":form2:dataTableCodes" />
+
+                <p:dataTable id="dataTableCodes" var="c" value="#{codingBeanManaged.allicdCodes}">
+                    <p:column headerText="code id">
+                        <h:outputText value="#{c.code}"/>
+                    </p:column>
+                    <p:column headerText="chapter">
+                        <h:outputText value="#{c.chapter}"/>
+                    </p:column>
+                    <p:column headerText="block">
+                        <h:outputText value="#{c.block}"/>
+                    </p:column>
+                    <p:column headerText="disease">
+                        <h:outputText value="#{c.disease}"/>
+                    </p:column>
+                    <p:column headerText="name">
+                        <h:outputText value="#{c.name}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

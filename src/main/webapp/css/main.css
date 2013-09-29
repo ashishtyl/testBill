@@ -1,0 +1,21 @@
+#header > div:first-child
+{
+    height:100px !important;
+}
+.ui-widget {
+    font-size: 12px !important;
+}
+
+#dataTablePatientRecord{
+    margin-top: 20px;
+}
+
+table{
+    margin-top:20px !important;
+}
+
+textarea{
+    height:100px;   !important;
+    overflow:scroll;
+    max-height:100px; !important;
+}

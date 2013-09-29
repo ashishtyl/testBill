@@ -1,0 +1,128 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGrid columns="2" >
+                    <h1> Generate Medical Discharge </h1>
+                    <h:outputText value="Case Id: " />
+                    <p:inputText value="#{dischargeAndTransferManaged.caseId}" required="true" label="caseId"/>
+                    <h:outputText value="Diagnosis: " />
+                    <p:inputText value="#{dischargeAndTransferManaged.diagnosis}" required="true" label="Diagnosis"/>
+                    <h:outputText value="Findings: " />
+                    <p:inputText value="#{dischargeAndTransferManaged.findings}" required="true" label="Findings"/>
+                    <h:outputText value="Recommendation: " />
+                    <p:inputText value="#{dischargeAndTransferManaged.recommendation}"  required="true" label="Recommendation"/>
+                    <h:outputText value="Patient State: " />
+                    <p:inputText value="#{dischargeAndTransferManaged.patientState}" required="true" label="Patient State"/>
+                    <h:outputText value="Medical Procedure: " />
+                    <p:inputText value="#{dischargeAndTransferManaged.medicalProcedure}" required="true" label="Medical Procedure"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{dischargeAndTransferManaged.DogenerateDischargeSummary}" update=":form1:growl"/>
+            </p:panel>
+        </h:form>
+
+        <h:form id="form2">
+            <p:panel>
+                <h:panelGroup>
+                    <h1> Get Discharge Summary </h1>
+                    <h:outputText value="Discharge ID: " />
+                    <p:inputText value="#{dischargeAndTransferManaged.dischargeId}" required="true" label="dischargeId"/>
+                </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{dischargeAndTransferManaged.DogetDischargeSummary}" update=":form2:dataTableDischargeInfo" />
+
+                <p:dataTable id="dataTableDischargeInfo" var="discharge" value="#{dischargeAndTransferManaged.dischargeSummary}">
+                <p:column headerText="Discharge Id">
+                            <h:outputText value="#{discharge.id}"/>
+                        </p:column>
+                        <p:column headerText="Date">
+                            <h:outputText value="#{discharge.date}"/>
+                        </p:column>
+                        <p:column headerText="Diagnosis">
+                            <h:outputText value="#{discharge.diagnosis}"/>
+                        </p:column>
+                        <p:column headerText="Findings">
+                            <h:outputText value="#{discharge.findings}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Recommendation">
+                        <h:outputText value="#{discharge.recommendation}"/>
+                    </p:column>
+                    <p:column headerText="PatientState">
+                        <h:outputText value="#{discharge.patientState}"/>
+                    </p:column>
+
+                        <p:column headerText="MedicalProcedure">
+                            <h:outputText value="#{discharge.medicalProcedure}"/>
+                        </p:column>
+                    </p:dataTable>
+
+            </p:panel>
+        </h:form>
+
+        <h:form id="form3">
+            <p:panel>
+                <h:panelGroup>
+                    <h1> Delete Discharge Summary </h1>
+                    <h:outputText value="Discharge ID: " />
+                    <p:inputText value="#{dischargeAndTransferManaged.dischargeId}" required="true" label="dischargeId"/>
+                </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{dischargeAndTransferManaged.DoDeleteSummary}"  />
+            </p:panel>
+        </h:form>
+
+
+        <h:form id="form4">
+            <p:panel>
+                <p:commandButton value="List Discharge Summary" actionListener="#{dischargeAndTransferManaged.getListds}" update=":form4:dataTableDischarge" />
+
+                <p:dataTable id="dataTableDischarge" var="discharge" value="#{dischargeAndTransferManaged.listds}">
+                    <p:column headerText="Discharge Id">
+                        <h:outputText value="#{discharge.id}"/>
+                    </p:column>
+                    <p:column headerText="Date">
+                        <h:outputText value="#{discharge.date}"/>
+                    </p:column>
+                    <p:column headerText="Diagnosis">
+                        <h:outputText value="#{discharge.diagnosis}"/>
+                    </p:column>
+                    <p:column headerText="Findings">
+                        <h:outputText value="#{discharge.findings}"/>
+                    </p:column>
+
+
+                    <p:column headerText="Recommendation">
+                        <h:outputText value="#{discharge.recommendation}"/>
+                    </p:column>
+                    <p:column headerText="PatientState">
+                        <h:outputText value="#{discharge.patientState}"/>
+                    </p:column>
+
+                    <p:column headerText="MedicalProcedure">
+                        <h:outputText value="#{discharge.medicalProcedure}"/>
+                    </p:column>
+                </p:dataTable>
+
+            </p:panel>
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+
+
+

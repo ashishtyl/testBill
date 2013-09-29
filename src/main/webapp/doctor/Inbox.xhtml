@@ -1,0 +1,119 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form" onLoad="reset()">
+            <p:messages id="inboxs" showDetail="true" autoUpdate="true" closable="true" />
+            <p:dataTable id="dataTable" var="inbox" value="#{inboxController.lazyModel}"
+                         styleClass="inboxDataTableStyle"
+                         paginator="true" rows="10" selection="#{inboxController.selectedInboxs}"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         lazy="true" rowsPerPageTemplate="10,15,50">
+                <f:facet name="header">
+                    Message List
+                </f:facet>
+                <p:column selectionMode="multiple" style="width:18px"/>
+                <p:column  sortBy="#{inbox.sender.username}">
+                    <f:facet name="header">
+                        <h:outputText value="Sender"/>
+                    </f:facet>
+                    <p:commandLink value="#{inbox.sender.username}"  update=":inboxDetailForm:display"
+                                   oncomplete="inboxDialog.show()" title="View">
+                        <f:setPropertyActionListener value="#{inbox}"
+                                                     target="#{inboxController.selectedInbox}"/>
+                    </p:commandLink>
+                </p:column>
+
+                <p:column sortBy="#{inbox.message}">
+                    <f:facet name="header">
+                        <h:outputText value="Message Date"/>
+                    </f:facet>
+                    <h:outputText value="#{inbox.message}"/>
+                </p:column>
+
+                <p:column sortBy="#{inbox.date}">
+                    <f:facet name="header">
+                        <h:outputText value="Message Date"/>
+                    </f:facet>
+                    <h:outputText value="#{inbox.date}"/>
+                </p:column>
+
+                <f:facet name="footer">
+<!--                    <p:commandButton value="New Message" oncomplete="newInboxDialog.show()" icon="ui-icon-star"
+                                     title="Creates new message"/>-->
+                    <p:commandButton value="Delete Messages" actionListener="#{inboxController.doDeleteInboxs}"
+                                     update="dataTable" icon="ui-icon-trash"/>
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Message Detail" widgetVar="inboxDialog" resizable="false" id="inboxDlg">
+            <h:form id="inboxDetailForm">
+                <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                    <h:outputText value="Receiver :"></h:outputText>
+                    <p:inputText value="#{inboxController.selectedInbox.sender.username}" required="true"
+                                 requiredInbox="Please Enter Receiver Username!">
+                        <f:validateLength minimum="2"/>
+                    </p:inputText>
+
+                    <h:outputText value="Message :"></h:outputText>
+                    <p:inputTextarea id="inboxTextArea" value="#{inboxController.selectedInbox.message}" required="true"
+                                     requiredInbox="Please Enter Message!" maxlength="200"/>
+
+                    <h:outputText value="Date :"></h:outputText>
+                    <p:inputText value="#{inboxController.selectedInbox.date}" required="true"
+                                 requiredInbox="Please Enter Date!"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Update" update=":form:dataTable"
+                                         oncomplete="handleSubmitRequest(xhr, status, args, 'inboxDlg','newInboxForm'); "
+                                         actionListener="#{inboxController.doUpdateInbox}"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog header="Create New Inbox" widgetVar="newInboxDialog" resizable="false" id="newInboxDlg">
+        <h:form id="newInboxForm">
+            <p:panelGrid id="displayNewInbox" columns="2" cellpadding="4" style="margin:0 auto;">
+                <h:outputText value="To :"></h:outputText>
+                <p:inputText id="newsendername" required="true"
+                             requiredInbox="Please Enter Receiver Username!">
+                    <f:validateLength minimum="2"/>
+                </p:inputText>
+
+                <h:outputText value="Inbox :"></h:outputText>
+                <p:inputTextarea value="#{inboxController.newInbox.message}" required="true"
+                             requiredMessage="Please Enter Message!" maxlength="200"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Submit" update=":form:dataTable"
+                                     oncomplete=" handleSubmitRequest(xhr, status, args, 'newInboxDlg','newInboxForm');"
+                                     actionListener="#{inboxController.doCreateInbox}"/>
+                    <p:commandButton type="reset" value="Reset"></p:commandButton>
+                </f:facet>
+            </p:panelGrid>
+        </h:form>
+        </p:dialog>
+
+        <script type="text/javascript">
+            function handleSubmitRequest(xhr, status, args, dialogName, formName) {
+                dialog = jQuery('#' + dialogName);
+                if (args.validationFailed) {
+                    dialog.effect("shake", { times: 3 }, 100);
+                } else {
+                    clearForm(formName);
+                    newInboxDialog.hide();
+                    inboxDialog.hide();
+                }
+            }
+            function clearForm(formName) {
+                jQuery('#' + formName).each(function () {
+                    this.reset();
+                });
+            }
+        </script>
+    </ui:define>
+</ui:composition>

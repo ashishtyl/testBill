@@ -1,0 +1,119 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form" onLoad="reset()">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:dataTable id="dataTable" var="message" value="#{messageController.lazyModel}"
+                         styleClass="messageDataTableStyle"
+                         paginator="true" rows="10" selection="#{messageController.selectedMessages}"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         lazy="true" rowsPerPageTemplate="10,15,50">
+                <f:facet name="header">
+                    Message List
+                </f:facet>
+                <p:column selectionMode="multiple" style="width:18px"/>
+                <p:column  sortBy="#{message.receiver.username}">
+                    <f:facet name="header">
+                        <h:outputText value="Receiver"/>
+                    </f:facet>
+                    <p:commandLink value="#{message.receiver.username}"  update=":messageDetailForm:display"
+                                   oncomplete="messageDialog.show()" title="View">
+                        <f:setPropertyActionListener value="#{message}"
+                                                     target="#{messageController.selectedMessage}"/>
+                    </p:commandLink>
+                </p:column>
+
+                <p:column sortBy="#{message.message}">
+                    <f:facet name="header">
+                        <h:outputText value="Message Date"/>
+                    </f:facet>
+                    <h:outputText value="#{message.message}"/>
+                </p:column>
+
+                <p:column sortBy="#{message.date}">
+                    <f:facet name="header">
+                        <h:outputText value="Message Date"/>
+                    </f:facet>
+                    <h:outputText value="#{message.date}"/>
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton value="New Message" oncomplete="newMessageDialog.show()" icon="ui-icon-star"
+                                     title="Creates new message"/>
+                    <p:commandButton value="Delete Messages" actionListener="#{messageController.doDeleteMessages}"
+                                     update="dataTable" icon="ui-icon-trash"/>
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Message Detail" widgetVar="messageDialog" resizable="false" id="messageDlg">
+            <h:form id="messageDetailForm">
+                <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                    <h:outputText value="Message :"></h:outputText>
+                    <p:inputText value="#{messageController.selectedMessage.receiver.username}" required="true"
+                                 requiredMessage="Please Enter Receiver Username!">
+                        <f:validateLength minimum="2"/>
+                    </p:inputText>
+
+                    <h:outputText value="Message :"></h:outputText>
+                    <p:inputTextarea id="messageTextArea" value="#{messageController.selectedMessage.message}" required="true"
+                                     requiredMessage="Please Enter Message!" maxlength="200"/>
+
+                    <h:outputText value="Date :"></h:outputText>
+                    <p:inputText value="#{messageController.selectedMessage.date}" required="true"
+                                 requiredMessage="Please Enter Date!"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Update" update=":form:dataTable"
+                                         oncomplete="handleSubmitRequest(xhr, status, args, 'messageDlg','newMessageForm'); "
+                                         actionListener="#{messageController.doUpdateMessage}"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog header="Create New Message" widgetVar="newMessageDialog" resizable="false" id="newMessageDlg">
+        <h:form id="newMessageForm">
+            <p:panelGrid id="displayNewMessage" columns="2" cellpadding="4" style="margin:0 auto;">
+                <h:outputText value="To :"></h:outputText>
+                <p:inputText id="newreceivername" required="true"
+                             requiredMessage="Please Enter Receiver Username!">
+                    <f:validateLength minimum="2"/>
+                </p:inputText>
+
+                <h:outputText value="Message :"></h:outputText>
+                <p:inputTextarea value="#{messageController.newMessage.message}" required="true"
+                             requiredMessage="Please Enter Message!" maxlength="200"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Submit" update=":form:dataTable"
+                                     oncomplete=" handleSubmitRequest(xhr, status, args, 'newMessageDlg','newMessageForm');"
+                                     actionListener="#{messageController.doCreateMessage}"/>
+                    <p:commandButton type="reset" value="Reset"></p:commandButton>
+                </f:facet>
+            </p:panelGrid>
+        </h:form>
+        </p:dialog>
+
+        <script type="text/javascript">
+            function handleSubmitRequest(xhr, status, args, dialogName, formName) {
+                dialog = jQuery('#' + dialogName);
+                if (args.validationFailed) {
+                    dialog.effect("shake", { times: 3 }, 100);
+                } else {
+                    clearForm(formName);
+                    newMessageDialog.hide();
+                    messageDialog.hide();
+                }
+            }
+            function clearForm(formName) {
+                jQuery('#' + formName).each(function () {
+                    this.reset();
+                });
+            }
+        </script>
+    </ui:define>
+</ui:composition>

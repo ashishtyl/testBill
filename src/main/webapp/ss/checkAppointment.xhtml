@@ -1,0 +1,31 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form9">
+            <p:panel>
+                <h1> Check for Past Appointments </h1>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Patient PIN: "/>
+                    <p:inputText value="#{patientIdandCheckingManaged.NRIC_PIN2}" required="true" label="Patient PIN"/>
+                    <h:outputText value="Appointment Date (YYYY-mm-dd): "/>
+                    <p:calendar value="#{patientIdandCheckingManaged.appDate}" pattern="yyyy-MM-dd"/>
+                    <p:commandButton value="Check for Existing Appointment"
+                                     actionListener="#{patientIdandCheckingManaged.DoCheckAppointment}"
+                                     update=":form9:dataTableAppointments"/>
+                </h:panelGrid>
+                <p:separator id="separator"/>
+                <p:dataTable id="dataTableAppointments" var="app" value="#{patientIdandCheckingManaged.appointments}">
+                    <p:column headerText="Appointment ID">
+                        <h:outputText value="#{app.appId}"/>
+                    </p:column>
+                    <p:column headerText="Appointment Date">
+                        <h:outputText value="#{app.appDate}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

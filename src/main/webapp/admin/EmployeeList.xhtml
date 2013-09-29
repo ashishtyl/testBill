@@ -1,0 +1,213 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+    <h:form id="form" onLoad="reset()">
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <p:dataTable id="dataTable" var="employee" value="#{employeeController.lazyModel}"
+                     styleClass="employeeDataTableStyle"
+                     paginator="true" rows="10" selection="#{employeeController.selectedEmployees}"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     lazy="true" rowsPerPageTemplate="10,15,50">
+            <f:facet name="header">
+                Employee List
+            </f:facet>
+            <p:column selectionMode="multiple" style="width:18px"/>
+            <p:column sortBy="#{employee.username}">
+                <f:facet name="header">
+                    <h:outputText value="username"/>
+                </f:facet>
+                <p:commandLink value="#{employee.username}" update=":employeeDetailForm:display"
+                               oncomplete="employeeDialog.show()" title="View">
+                    <f:setPropertyActionListener value="#{employee}"
+                                                 target="#{employeeController.selectedEmployee}"/>
+                </p:commandLink>
+            </p:column>
+
+            <p:column sortBy="#{employee.password}">
+                <f:facet name="header">
+                    <h:outputText value="password"/>
+                </f:facet>
+                <h:outputText value="#{employee.password}"/>
+            </p:column>
+
+            <p:column sortBy="#{employee.firstname}">
+                <f:facet name="header">
+                    <h:outputText value="firstname"/>
+                </f:facet>
+                <h:outputText value="#{employee.firstname}"/>
+            </p:column>
+
+            <p:column sortBy="#{employee.lastname}">
+                <f:facet name="header">
+                    <h:outputText value="lastname"/>
+                </f:facet>
+                <h:outputText value="#{employee.lastname}"/>
+            </p:column>
+
+            <p:column sortBy="#{employee.email}">
+                <f:facet name="header">
+                    <h:outputText value="email"/>
+                </f:facet>
+                <h:outputText value="#{employee.email}"/>
+            </p:column>
+
+            <p:column sortBy="#{employee.identification}">
+                <f:facet name="header">
+                    <h:outputText value="Identification"/>
+                </f:facet>
+                <h:outputText value="#{employee.identification}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="registerDate"/>
+                </f:facet>
+                <h:outputText value="#{employee.registerDate}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="lastResetDate"/>
+                </f:facet>
+                <h:outputText value="#{employee.lastResetDate}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="resetCount"/>
+                </f:facet>
+                <h:outputText value="#{employee.resetCount}"/>
+            </p:column>
+
+            <f:facet name="footer">
+                <p:commandButton value="New Employee" oncomplete="newEmployeeDialog.show()" icon="ui-icon-star"
+                                 title="Creates new employee"/>
+                <p:commandButton value="Delete Employees" actionListener="#{employeeController.doDeleteEmployees}"
+                                 update="dataTable" icon="ui-icon-trash"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
+
+    <p:dialog header="Employee Detail" widgetVar="employeeDialog" resizable="false" id="employeeDlg">
+        <h:form id="employeeDetailForm">
+            <p:messages id="msgs"/>
+            <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                <h:outputText value="First name :"></h:outputText>
+                <p:inputText value="#{employeeController.selectedEmployee.firstname}" required="true"
+                             requiredMessage="Please Enter First Name!">
+                    <f:validateLength minimum="2"/>
+                </p:inputText>
+
+                <h:outputText value="Last name :"></h:outputText>
+                <p:inputText value="#{employeeController.selectedEmployee.lastname}" required="true"
+                             requiredMessage="Please Enter Last Name!"/>
+
+                <h:outputText value="Username :"></h:outputText>
+                <p:inputText value="#{employeeController.selectedEmployee.username}" required="true"
+                            requiredMessage="Please Enter User Name!"/>
+
+                <h:outputText value="Password :"></h:outputText>
+                <p:password value="#{employeeController.selectedEmployee.password}" required="true"
+                            requiredMessage="Please Enter Password!">
+                </p:password>
+
+                <h:outputText value="Email :"></h:outputText>
+                <p:inputText value="#{employeeController.selectedEmployee.email}" required="true"
+                             requiredMessage="Please Enter email!" validatorMessage="Email is not valid.">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                </p:inputText>
+
+                <h:outputText value="Identification :"></h:outputText>
+                <p:inputText value="#{employeeController.selectedEmployee.identification}"/>
+
+                <h:outputText value="Group :"></h:outputText>
+                <p:selectManyMenu id="selectedEmployeeGroups" required="true"
+                                  value="#{employeeController.selectedEmployee.employeeGroups}"
+                                  requiredMessage="A Group must be chosen!">
+                    <f:selectItems value="#{employeeController.groupList}" var="_group" itemValue="#{_group}"
+                                   itemLabel="#{_group.group_name}"></f:selectItems>
+                    <f:converter converterId="com.is3102.util.ObjectConverter"/>
+                </p:selectManyMenu>
+
+
+                <f:facet name="footer">
+                    <p:commandButton value="Update" update=":form:dataTable, :growl"
+                                     oncomplete="handleSubmitRequest(xhr, status, args, 'employeeDlg','newEmployeeForm'); "
+                                     actionListener="#{employeeController.doUpdateEmployee}"/>
+                </f:facet>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+
+    <p:dialog header="Create New Employee" widgetVar="newEmployeeDialog" resizable="false" id="newEmployeeDlg">
+        <h:form id="newEmployeeForm">
+            <p:panelGrid id="displayNewEmployee" columns="2" cellpadding="4" style="margin:0 auto;">
+                <h:outputText value="First name :"></h:outputText>
+                <p:inputText value="#{employeeController.newEmployee.firstname}" required="true"
+                             requiredMessage="Please Enter First Name!"/>
+
+                <h:outputText value="Last name :"></h:outputText>
+                <p:inputText value="#{employeeController.newEmployee.lastname}" required="true"
+                             requiredMessage="Please Enter Last Name!"/>
+
+                <h:outputText value="Username :"></h:outputText>
+                <p:inputText id="newUserName" value="#{employeeController.newEmployee.username}" required="true"/>
+
+                <h:outputText value="Password :"></h:outputText>
+                <p:password value="#{employeeController.newEmployee.password}" required="true"
+                            requiredMessage="Please Enter Name!">
+                    <f:converter converterId="com.is3102.util.SHAConverter"></f:converter>
+                </p:password>
+
+                <h:outputText value="Email :"></h:outputText>
+                <p:inputText value="#{employeeController.newEmployee.email}"  validatorMessage="Email is not valid.">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                </p:inputText>
+
+                <h:outputText value="Identification :"></h:outputText>
+                <p:inputText value="#{employeeController.newEmployee.identification}"/>
+
+                <h:outputText value="Group :"></h:outputText>
+                <p:selectManyMenu id="newEmployeeGroup" required="true"
+                                  value="#{employeeController.newEmployee.employeeGroups}"
+                                  requiredMessage="A Group must be chosen!">
+                    <f:selectItems value="#{employeeController.groupList}" var="_group" itemValue="#{_group}"
+                                   itemLabel="#{_group.group_name}"></f:selectItems>
+                    <f:converter converterId="com.is3102.util.ObjectConverter"/>
+                </p:selectManyMenu>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Submit" update=":form:dataTable"
+                                     oncomplete=" handleSubmitRequest(xhr, status, args, 'newEmployeeDlg','newEmployeeForm');"
+                                     actionListener="#{employeeController.doCreateEmployee}"/>
+                    <p:commandButton type="reset" value="Reset"></p:commandButton>
+                </f:facet>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+
+    <p:growl id="growl" showDetail="true" life="5000"/>
+
+    <script type="text/javascript">
+        function handleSubmitRequest(xhr, status, args, dialogName, formName) {
+            dialog = jQuery('#' + dialogName);
+            if (args.validationFailed) {
+                dialog.effect("shake", { times: 3 }, 100);
+            } else {
+                clearForm(formName);
+                newEmployeeDialog.hide();
+                employeeDialog.hide();
+            }
+        }
+        function clearForm(formName) {
+            jQuery('#' + formName).each(function () {
+                this.reset();
+            });
+        }
+    </script>
+</ui:define>
+</ui:composition>
