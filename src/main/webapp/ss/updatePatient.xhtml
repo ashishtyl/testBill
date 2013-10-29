@@ -1,0 +1,87 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form10">
+            <p:growl id="messages" showDetail="true"/>
+
+            <h:outputText value="Patient PIN: " />
+            <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN5}" required="true" label="Patient PIN"/>
+            <p:commandButton value="Check for Existing Record" actionListener="#{administrativeAdmissionManaged.doUpdatePatient}" update=":form10:dataTablePatientRecord"/>
+
+            <p:dataTable id="dataTablePatientRecord" var="patient" value="#{administrativeAdmissionManaged.patient}" editable="true">
+
+                <f:facet name="header">
+                    Patient Record
+                </f:facet>
+
+                <p:ajax event="rowEdit" listener="#{administrativeAdmissionManaged.onEdit}" update=":form10:messages" />
+                <p:ajax event="rowEditCancel" listener="#{administrativeAdmissionManaged.onCancel}" update=":form10:messages" />
+
+                <p:column headerText="Name" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{patient.name}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{patient.name}" style="width:50%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Address" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{patient.address}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{patient.address}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Birthday" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{patient.birthday}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:calendar value="#{patient.birthday}" style="width:100%" pattern="yyyy-MM-dd"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Contact Number" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{patient.cNumber}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{patient.cNumber}" style="width:70%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="Weight" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{patient.weight}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{patient.weight}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:6%">
+                    <p:rowEditor />
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

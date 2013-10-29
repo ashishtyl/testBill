@@ -1,0 +1,37 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form" onLoad="reset()">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h1> Profile </h1>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Username: "/>
+                    <p:inputText value="#{employeeController.current.username}" required="true"
+                                 label="Username" disabled = "true"/>
+                    <h:outputText value="Password: "/>
+                    <p:inputText value="#{employeeController.current.password}" required="true"
+                                 label="Password"/>
+                    <h:outputText value="First Name: "/>
+                    <p:inputText value="#{employeeController.current.firstname}" required="true"
+                                 label="First Name"/>
+                    <h:outputText value="Last Name: "/>
+                    <p:inputText value="#{employeeController.current.lastname}" required="true"
+                                 label="Last Name"/>
+                    <h:outputText value="Email: "/>
+                    <p:inputText value="#{employeeController.current.email}" required="true"
+                                 label="Email"/>
+                    <h:outputText value="Identification number: "/>
+                    <p:inputText value="#{employeeController.current.identification}" required="true"
+                                 label="Identification"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{employeeController.doUpdateProfile}"
+                                 update=":form:growl"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
