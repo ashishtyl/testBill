@@ -124,6 +124,9 @@
                 <h:outputText value="Identification :"></h:outputText>
                 <p:inputText value="#{employeeController.selectedEmployee.identification}"/>
 
+                <h:outputText value="Activate: " />
+                <p:selectBooleanButton value="#{employeeController.selectedEmployee.activate}" onLabel="Yes" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+
                 <h:outputText value="Group :"></h:outputText>
                 <p:selectManyMenu id="selectedEmployeeGroups" required="true"
                                   value="#{employeeController.selectedEmployee.employeeGroups}"
@@ -159,7 +162,7 @@
 
                 <h:outputText value="Password :"></h:outputText>
                 <p:password value="#{employeeController.newEmployee.password}" required="true"
-                            requiredMessage="Please Enter Name!">
+                            requiredMessage="Please Enter Password!">
                     <f:converter converterId="com.is3102.util.SHAConverter"></f:converter>
                 </p:password>
 

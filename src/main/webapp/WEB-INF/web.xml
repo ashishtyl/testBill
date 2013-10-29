@@ -20,12 +20,12 @@
 
     <context-param>
         <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
-        <param-value>6LdeCegSAAAAADiNYBuin9V8xpXNbP7WvGbM3P80</param-value>
+        <param-value>6LdfSekSAAAAAJMdw5X__3KFR82SqmepbvLOx33K</param-value>
     </context-param>
 
     <context-param>
         <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
-        <param-value>6LdeCegSAAAAAOYAbVm4cmlrzXpNR5o6s8ommMN-</param-value>
+        <param-value>6LdfSekSAAAAAHjcDKtXGWQrfWUbOn72TkGAmolZ</param-value>
     </context-param>
 
     <!-- Welcome page -->
@@ -63,6 +63,7 @@
             <web-resource-name>Admin Area</web-resource-name>
             <description/>
             <url-pattern>/admin/*</url-pattern>
+            <url-pattern>/faces/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description>Administrator</description>
@@ -75,6 +76,7 @@
             <web-resource-name>Doctor Area</web-resource-name>
             <description/>
             <url-pattern>/doctor/*</url-pattern>
+            <url-pattern>/faces/doctor/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description>Doctor</description>
@@ -88,6 +90,7 @@
             <web-resource-name>Financial Staff Area</web-resource-name>
             <description/>
             <url-pattern>/fs/*</url-pattern>
+            <url-pattern>/faces/fs/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description>Financial Staff</description>
@@ -101,6 +104,7 @@
             <web-resource-name>Special Staff Area</web-resource-name>
             <description/>
             <url-pattern>/ss/*</url-pattern>
+            <url-pattern>/faces/ss/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description>Special Staff</description>

@@ -20,5 +20,10 @@ public class DateUtility {
             return dateFormat.format(date);
 	}
 
-
+    public static Date getStringFromDate(Date date){
+        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        dateFormat.format(date);
+        System.out.println(date.toString());
+        return date;
+    }
 }

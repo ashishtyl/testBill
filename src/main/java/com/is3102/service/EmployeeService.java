@@ -198,4 +198,13 @@ public class EmployeeService extends DataAccessService<Employee> implements Seri
         }
         return null;
     }
+
+    public List<String> getCompleteEmployee(String query){
+        Map<String, String> params = new HashMap<String, String>();
+        List<String> results = new ArrayList<String>();
+        params.put("username", query + "%");
+        List<Employee> employees = this.findWithNamedQuery(Employee.COMPLETE, params);
+        for (int i = 0; i < employees.size(); i++) results.add(employees.get(i).getUsername());
+        return results;
+    }
 }

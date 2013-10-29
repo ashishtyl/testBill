@@ -1,6 +1,9 @@
 package com.is3102.entity;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +21,8 @@ public class Event extends BaseEntity implements Serializable{
 
     public String event;
 
-    public String Date;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    public Date date;
 
     @ManyToOne
     @JoinColumn(name = "employeeid")
@@ -32,12 +36,12 @@ public class Event extends BaseEntity implements Serializable{
         this.event = event;
     }
 
-    public String getDate() {
-        return Date;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDate(String date) {
-        Date = date;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Employee getEmployee() {

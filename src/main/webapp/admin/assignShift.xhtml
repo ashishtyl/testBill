@@ -6,9 +6,7 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
     <h:form id="form2">
-        
         <p:growl id="growl" showDetail="true" sticky="true" />
-
         <p:panel>
             <h1> Assign Shift</h1>
             <h:panelGrid columns="2" >
@@ -19,8 +17,7 @@
                 <h:outputText value="Doctor ID: " />
                 <p:inputText value="#{schedulingAndResourceAllocationManagedBean.employeeID}" required="true" label="Shift Code"/>
             </h:panelGrid>
-            <p:commandButton value="Submit" actionListener="#{schedulingAndResourceAllocationManagedBean.doAssignShiftEmployee}" update=":form2:growl"/>
-            <h:outputText value="#{schedulingAndResourceAllocationManagedBean.employeeID}"  />
+            <p:commandButton value="Submit" actionListener="#{schedulingAndResourceAllocationManagedBean.doAssignShiftEmployee}" update="form2:growl"/>
         </p:panel>
         
     </h:form>   

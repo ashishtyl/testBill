@@ -10,14 +10,15 @@
             <p:growl id="growl" showDetail="true" sticky="true" />
             <p:panel>
                 <h1> Set Discharge Date</h1>
-                    <h1> Recode Transfer Information </h1>
+                <h1> Recode Transfer Information </h1>
+                <p:panelGrid columns = "2">
                     <h:outputText value="Case Id: " />
                     <p:inputText value="#{dischargeAndTransferManaged.caseId}" required="true" label="caseId"/>
                     <h:outputText value="Refer Doctor: " />
                     <p:inputText value="#{dischargeAndTransferManaged.referDoctor}" required="true" label="referDoctor"/>
                     <h:outputText value="Transfer Reason: " />
                     <p:inputText value="#{dischargeAndTransferManaged.reason}" required="true" label="reason"/>
-                </h:panelGrid>
+                </p:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{dischargeAndTransferManaged.DoRecordTransfer}" update=":form1:growl"/>
             </p:panel>
         </h:form>
@@ -35,9 +36,6 @@
                 <p:column headerText="Transferid">
                         <h:outputText value="#{trans.transferid}"/>
                 </p:column>
-                        <p:column headerText="Date">
-                            <h:outputText value="#{trans.date}"/>
-                        </p:column>
                         <p:column headerText="Refer Doctor">
                             <h:outputText value="#{trans.referDoctor}"/>
                         </p:column>
@@ -68,9 +66,6 @@
                 <p:dataTable id="dataTableTransfer" var="transf" value="#{dischargeAndTransferManaged.listt}">
                     <p:column headerText="Transferid">
                         <h:outputText value="#{transf.transferid}"/>
-                    </p:column>
-                    <p:column headerText="Date">
-                        <h:outputText value="#{transf.date}"/>
                     </p:column>
                     <p:column headerText="Refer Doctor">
                         <h:outputText value="#{transf.referDoctor}"/>

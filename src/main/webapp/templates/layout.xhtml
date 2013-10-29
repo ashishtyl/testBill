@@ -49,7 +49,7 @@
                         <p:password value="#{loginController.password}"
                                     id="password" required="true" label="password"/>
 
-                        <!--                            <p:captcha label="Captcha"/>-->
+                                                    <p:captcha label="Captcha"/>
 
                         <f:facet name="footer">
                             <p:commandButton id="loginButton" value="Login" ajax="false"
@@ -114,7 +114,7 @@
 
             <h:form id="idleForm">
                 <c:if test="#{request.getUserPrincipal() != null}">
-                    <p:idleMonitor timeout="10000"
+                    <p:idleMonitor timeout="100000"
                                    onidle="idleDialog.show()"/>
 
                     <p:dialog header="Inactivity log out?" resizable="false" widgetVar="idleDialog">

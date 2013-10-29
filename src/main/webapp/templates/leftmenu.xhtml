@@ -32,15 +32,17 @@
                             icon="ui-icon-tag"/>
                 <p:menuitem value="Create Shift" action="/admin/createShift.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-plus"/>
+                <p:menuitem value="Get Available Doctors" action="/admin/getAvailableDoctors.xhtml?faces-redirect=true" ajax="false"
+                            icon="ui-icon-check"/>
                 <p:menuitem value="Log" onclick="window.location = 'log.txt'" icon="ui-icon-info"/>
             </c:if>
             <c:if test="#{request.isUserInRole('Special Staff')}">
                 <p:menuitem value="Home" action="/ss/index.xhtml?faces-redirect=true" ajax="false" icon="ui-icon-home"/>
-                <p:menuitem value="Inbox" action="/admin/Inbox.xhtml?faces-redirect=true" ajax="false"
+                <p:menuitem value="Inbox" action="/ss/Inbox.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-mail-closed"/>
-                <p:menuitem value="Sent box" action="/admin/Sent.xhtml?faces-redirect=true" ajax="false"
+                <p:menuitem value="Sent box" action="/ss/Sent.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-mail-closed"/>
-                <p:menuitem value="Event" action="/admin/EventList.xhtml?faces-redirect=true" ajax="false"
+                <p:menuitem value="Event" action="/ss/EventList.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-mail-calculator"/>
                 <p:menuitem value="Check Patient" action="/ss/checkPatient.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-check"/>
@@ -48,13 +50,13 @@
                             icon="ui-icon-plus"/>
                 <p:menuitem value="Check Appointment" action="/ss/checkAppointment.xhtml?faces-redirect=true"
                             ajax="false" icon="ui-icon-check"/>
-                <p:menuitem value="Create Appintment" action="/ss/createAppointment.xhtml?faces-redirect=true"
+                <p:menuitem value="Make Appointment" action="/ss/makeAppointment.xhtml?faces-redirect=true"
                             ajax="false" icon="ui-icon-plus"/>
                 <p:menuitem value="Create Case" action="/ss/createCase.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-plus"/>
                 <p:menuitem value="Get Patient Information" action="/ss/getPatientInfo.xhtml?faces-redirect=true"
                             ajax="false" icon="ui-icon-info"/>
-                <p:menuitem value="Check Patient" action="/ss/checkPatient.xhtml?faces-redirect=true" ajax="false"
+                <p:menuitem value="Update Patient Record" action="/ss/updatePatient.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-check"/>
                 <p:menuitem value="Get Available Doctors" action="/ss/getAvailableDoctors.xhtml?faces-redirect=true" ajax="false"
                             icon="ui-icon-check"/>

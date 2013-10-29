@@ -15,7 +15,9 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -33,6 +35,10 @@ public class EmployeeController implements Serializable  {
     private Employee newEmployee = new Employee();
     // Selected employee that will be updated
     private Employee selectedEmployee = new Employee();
+
+    private Employee current = new Employee();
+
+    private Employee find = new Employee();
 
     // Available groups list
     private List<EmployeeGroup> groupList;
@@ -53,6 +59,16 @@ public class EmployeeController implements Serializable  {
     @PostConstruct
     public void init(){
         logger.log("postConstruct " +  (das == null ? "null" : "notnull"));
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        String username = request.getUserPrincipal().toString();
+        if (username == null) return;
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", username);
+
+        List<Employee> users = das.findWithNamedQuery(Employee.USERNAME, params);
+        current = users.get(0);
+
         lazyModel = new LazyEmployeeDataModel(das);
         groupList = das.findWithNamedQuery(EmployeeGroup.ALL);
         logger.log("grouplistsize" + groupList.size());
@@ -83,6 +99,29 @@ public class EmployeeController implements Serializable  {
         SHA sha = new SHA();
         this.selectedEmployee.setPassword(sha.convert(this.selectedEmployee.getPassword()));
         das.update(selectedEmployee);
+    }
+
+    /**
+     *
+     * @param actionEvent
+     */
+    public void doUpdateProfile(ActionEvent actionEvent){
+        logger.log("doUpdateProfile");
+        SHA sha = new SHA();
+        this.current.setPassword(sha.convert(this.current.getPassword()));
+        das.update(current);
+    }
+
+    public void doUpdateFind(ActionEvent actionEvent){
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> params2 = (Map<String, String>) context.getExternalContext().getRequestParameterMap();
+        String username = params2.get("form:username_input");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", username);
+
+        List<Employee> users = das.findWithNamedQuery(Employee.USERNAME, params);
+        find = users.get(0);
     }
         
     /**
@@ -177,5 +216,25 @@ public class EmployeeController implements Serializable  {
         this.groupList = groupList;
     }
 
+    public List<String> complete(String query){
+        System.out.println("in complete");
+         return das.getCompleteEmployee(query);
+    }
+
+    public Employee getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Employee current) {
+        this.current = current;
+    }
+
+    public Employee getFind() {
+        return find;
+    }
+
+    public void setFind(Employee find) {
+        this.find = find;
+    }
 }
                     

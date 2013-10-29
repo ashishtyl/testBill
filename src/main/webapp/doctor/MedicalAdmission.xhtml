@@ -9,8 +9,8 @@
         <h:form id="form1">
             <p:growl id="growl" showDetail="true" sticky="true" />
             <p:panel>
+                <h1> Add Anamnesis </h1>
                 <h:panelGrid columns="2" >
-                    <h1> Add Anamnesis </h1>
                     <h:outputText value="Case Id: " />
                     <p:inputText value="#{medicalAdmissionBeanManaged.caseId}" required="true" label="caseId"/>
                     <h:outputText value="Patient Disease History: " />
@@ -32,8 +32,8 @@
 
         <h:form id="form2">
             <p:panel>
+                <h1> Get Anamnesis </h1>
                 <h:panelGroup>
-                    <h1> Get Anamnesis </h1>
                     <h:outputText value="Anamnesis ID: " />
                     <p:inputText value="#{medicalAdmissionBeanManaged.anamnesisId}" required="true" label="AnamnesisId"/>
                 </h:panelGroup>

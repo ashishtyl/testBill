@@ -8,19 +8,15 @@
         <h:form id="form2">
             <p:growl id="growl" showDetail="true" sticky="true" />
             <p:panel>
-                <h1> Make Appointment </h1>
+                <h1> Create Shift</h1>
                 <h:panelGrid columns="2" >
-                    <h:outputText value="Patient PIN: " />
-                    <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN2}" required="true" label="Patient PIN"/>
-                    <h:outputText value="Appointment Date (YYYY-mm-dd): " />
-                    <p:calendar value="#{administrativeAdmissionManaged.appDate}" pattern="yyyy-MM-dd"/>
-                    <h:outputText value="Appointment Place: " />
-                    <p:inputText value="#{administrativeAdmissionManaged.place}" required="true" label="Appointment Place"/>
-                    <h:outputText value="Doctor ID: " />
-                    <p:inputText value="#{administrativeAdmissionManaged.docID}" required="true" label="Doctor ID"/>
+                    <h:outputText value="Shift Date: (YYYY-MM-dd)" />
+                    <p:inputText value="#{schedulingAndResourceAllocationManagedBean.shiftDate}" required="true" label="Shift Date" />
+                    <h:outputText value="Shift Code: " />
+                    <p:inputText value="#{schedulingAndResourceAllocationManagedBean.shiftCode}" required="true" label="Shift Code"/>
                 </h:panelGrid>
-                <p:commandButton value="Submit" actionListener="#{administrativeAdmissionManaged.doMakeAppointment}" update=":form2:growl"/>
-                <h:outputText value="#{administrativeAdmissionManaged.appID}"  />
+                <p:commandButton value="Submit" actionListener="#{schedulingAndResourceAllocationManagedBean.doCreateShift}" update="form2:growl"/>
+                <h:outputText value="#{schedulingAndResourceAllocationManagedBean.shiftDate}"  />
             </p:panel>
         </h:form>
     </ui:define>

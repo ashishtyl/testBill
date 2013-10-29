@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -21,6 +23,10 @@ import javax.persistence.Temporal;
 @Entity(name="Patient")
 public class Patient implements Serializable {
     private static final long serialVersionUID = 1L;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //private Long id;
+    
     @Id
     private String NRIC_PIN;
     private String name;
@@ -28,9 +34,42 @@ public class Patient implements Serializable {
     private Date birthday;
     private String address;
     private String cNumber;
-    private String blood_group; // DO WE NEED THIS HERE????
+    private String bloodgroup; // DO WE NEED THIS HERE????
     private String height; // DO WE NEED THIS HERE????
     private String weight; // DO WE NEED THIS HERE????
+    private String gender;
+
+    public String getBloodGroup() {
+        return bloodgroup;
+    }
+
+    public void setBloodGroup(String bloodgroup) {
+        this.bloodgroup = bloodgroup;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
     
     @OneToMany(cascade={CascadeType.ALL}, mappedBy="patient")
     private Collection<Appointment> appointment = new ArrayList<Appointment>();
@@ -40,13 +79,25 @@ public class Patient implements Serializable {
     
     public Patient(){}
     
-    public void create(String NRIC_PIN, String name, Date birthday, String address, String cNumber) {
+    public void create(String NRIC_PIN, String name, Date birthday, String address, String cNumber, String height, String weight, String gender, String bloodgroup) {
         this.setNRIC_PIN(NRIC_PIN);
         this.setName(name);
         this.setBirthday(birthday);
         this.setAddress(address);
         this.setcNumber(cNumber);
+        this.setGender(gender);
+        this.setBloodGroup(bloodgroup);
+        this.setHeight(height);
+        this.setWeight(weight);
     }
+    
+   /* public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    } */
     
    public String getNRIC_PIN() {
         return NRIC_PIN;
@@ -55,9 +106,6 @@ public class Patient implements Serializable {
     public void setNRIC_PIN(String NRIC_PIN) {
         this.NRIC_PIN = NRIC_PIN;
     }
-
-  
-
     
     public String getName(){
        return name;

@@ -60,6 +60,28 @@ public class Transfer implements Serializable {
     public void setReason(String reason) {
         this.reason = reason;
     }
-    
-    
+
+    public Long getTransferid() {
+        return Transferid;
+    }
+
+    public void setTransferid(Long transferid) {
+        Transferid = transferid;
+    }
+
+    public String getReferDoctor() {
+        return referDoctor;
+    }
+
+    public void setReferDoctor(String referDoctor) {
+        this.referDoctor = referDoctor;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

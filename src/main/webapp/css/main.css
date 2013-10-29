@@ -14,6 +14,10 @@ table{
     margin-top:20px !important;
 }
 
+table td{
+    max-width: 200px;
+}
+
 textarea{
     height:100px;   !important;
     overflow:scroll;

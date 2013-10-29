@@ -38,15 +38,16 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     public AdministrativeAdmissionBean() {
     }
 
-    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber) throws ExistException, ParseException, Exception {
+    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
         Date bDate = HandleDates.getDateFromString(birthday);
+        System.out.println(bloodgroup);
         patient = em.find(Patient.class, NRIC_PIN);
         if (patient != null) // Patient Exists
         {
             throw new ExistException("PATIENT ALREADY EXISTS");
         }
         patient = new Patient();
-        patient.create(NRIC_PIN, name, bDate, address, cNumber);
+        patient.create(NRIC_PIN, name, bDate, address, cNumber, height, weight, gender, bloodgroup);
         em.persist(patient);
         return patient.getNRIC_PIN();
     }
@@ -88,8 +89,9 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     public long createCase(String bedNo, String appId) throws ExistException {
         mCase mcase;
         Appointment appointment = em.find(Appointment.class, new Long(appId));
-        if(appointment==null)
+        if (appointment == null) {
             throw new ExistException("CASE DOES NOT EXIST");
+        }
         mcase = appointment.getmCase();
         Date dateAdmitted = new Date();
         mcase.create(dateAdmitted);
@@ -167,5 +169,17 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
 
     public Patient getPatient(String NRIC_PIN) {
         return em.find(Patient.class, NRIC_PIN);
+    }
+
+    @Override
+    public void update(String NRIC_PIN, String newName, String newAddress, String newBirthday, String newNumber, String newWeight) throws ExistException, ParseException, Exception {
+        Date bDate = HandleDates.getDateFromString(newBirthday);
+        Patient patient = em.find(Patient.class, NRIC_PIN);
+        patient.setName(newName);
+        patient.setAddress(newAddress);
+        patient.setBirthday(bDate);
+        patient.setcNumber(newNumber);
+        patient.setWeight(newWeight);
+        em.merge(patient);
     }
 }

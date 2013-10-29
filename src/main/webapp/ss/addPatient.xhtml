@@ -4,26 +4,48 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-<ui:define name="content">
-    <h:form id="form1">
-        <p:growl id="growl" showDetail="true" sticky="true" />
-        <p:panel>
-            <h1> Add Patient </h1>
-            <h:panelGrid columns = "2">
-                <h:outputText value="Patient Name: " />
-                <p:inputText value="#{administrativeAdmissionManaged.name}" required="true" label="Patient Name"/>
-                <h:outputText value="Patient PIN: " />
-                <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN1}" required="true" label="Patient PIN"/>
-                <h:outputText value="Patient Birthday (YYYY-MM-dd): " />
-                <p:calendar value="#{administrativeAdmissionManaged.birthday}" pattern="yyyy-MM-dd"/>
-                <h:outputText value="Patient Address: " />
-                <p:inputText value="#{administrativeAdmissionManaged.address}" required="true" label="Patient Address"/>
-                <h:outputText value="Patient Contact: " />
-                <p:inputText value="#{administrativeAdmissionManaged.contact}" required="true" label="Patient Contact Number"/>
-            </h:panelGrid>
-            <p:commandButton value="Submit" actionListener="#{administrativeAdmissionManaged.doAddPatient}" update=":form1:growl"/>
-            <h:outputText value="#{administrativeAdmissionManaged.NRIC_PIN1}"  />
-        </p:panel>
-    </h:form>
-</ui:define>
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h1> Add Patient </h1>
+                <h:panelGrid columns = "2" style="margin-bottom:10px" cellpadding="5">  
+                    <h:outputText value="Patient Name: " />
+                    <p:inputText value="#{administrativeAdmissionManaged.name}" required="true" label="Patient Name"/>
+                    <h:outputText value="Patient PIN: " />
+                    <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN1}" required="true" label="Patient PIN"/>
+                    <h:outputText value="Patient Birthday (YYYY-MM-dd): " />
+                    <p:calendar value="#{administrativeAdmissionManaged.birthday}" pattern="yyyy-MM-dd"/>
+                    <h:outputText value="Patient Address: " />
+                    <p:inputText value="#{administrativeAdmissionManaged.address}" required="true" label="Patient Address"/>
+                    <h:outputText value="Patient Contact: " />
+                    <p:inputText value="#{administrativeAdmissionManaged.contact}" required="true" label="Patient Contact Number"/>
+                    <h:outputText value="Patient Height: (in cms)" />
+                    <p:inputText value="#{administrativeAdmissionManaged.height}" required="true" label="Patient Height"/>
+                    <h:outputText value="Patient Weight: (in kgs) " />
+                    <p:inputText value="#{administrativeAdmissionManaged.weight}" required="true" label="Patient Weight"/>
+
+                    <h:outputText value="Gender: " />  
+                    <p:selectOneRadio id="gender" value="#{administrativeAdmissionManaged.gender}">  
+                        <f:selectItem itemLabel="Male " itemValue="Male" />  
+                        <f:selectItem itemLabel="Female" itemValue="Female" />  
+                    </p:selectOneRadio>  
+                    
+                    <h:outputText value="Blood Group " />  
+                    <p:selectOneRadio id="bloodgroup" value="#{administrativeAdmissionManaged.bloodgroup}">  
+                        <f:selectItem itemLabel="A +ve " itemValue="A +ve" />
+                        <f:selectItem itemLabel="A -ve " itemValue="A -ve" />
+                        <f:selectItem itemLabel="B +ve " itemValue="B +ve" />
+                        <f:selectItem itemLabel="B -ve " itemValue="B -ve" />
+                        <f:selectItem itemLabel="O +ve " itemValue="O +ve" />
+                        <f:selectItem itemLabel="O -ve " itemValue="O -ve" />
+                        <f:selectItem itemLabel="AB +ve " itemValue="AB +ve" />
+                        <f:selectItem itemLabel="AB -ve " itemValue="Ab -ve" />
+                    </p:selectOneRadio>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{administrativeAdmissionManaged.doAddPatient}" update=":form1:growl"/>
+                <h:outputText value="#{administrativeAdmissionManaged.NRIC_PIN1}"  />
+            </p:panel>
+        </h:form>
+    </ui:define>
 </ui:composition>

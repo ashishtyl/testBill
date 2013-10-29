@@ -15,13 +15,15 @@ import javax.persistence.*;
         @NamedQuery(name = Employee.ALL, query = "SELECT u FROM Employee u "),
         @NamedQuery(name = Employee.TOTAL, query = "SELECT COUNT(u) FROM Employee u"),
         @NamedQuery(name = Employee.EMAIL, query = "SELECT u FROM Employee u where  u.email = :email"),
-        @NamedQuery(name = Employee.USERNAME, query = "SELECT u FROM Employee u where  u.username = :username")})
+        @NamedQuery(name = Employee.USERNAME, query = "SELECT u FROM Employee u where  u.username = :username"),
+        @NamedQuery(name = Employee.COMPLETE, query = "SELECT u FROM Employee u where  u.username like :username")})
 public class        Employee extends BaseEntity implements Serializable{
 
     public final static String ALL = "Employee.populateEmployees";
     public final static String TOTAL = "Employee.countEmployeesTotal";
     public final static String EMAIL = "Employee.getUsingEmail";
     public final static String USERNAME = "Employee.getUsingUsername";
+    public final static String COMPLETE = "Employee.completeUsername";
 
     private String firstname;
 
@@ -48,6 +50,8 @@ public class        Employee extends BaseEntity implements Serializable{
     private String access;
 
     private String reset;
+
+    private int activate;
 
     @OneToMany(cascade={CascadeType.ALL}, mappedBy="employee")
     private Collection<Appointment> appointment = new ArrayList<Appointment>();
@@ -240,5 +244,13 @@ public class        Employee extends BaseEntity implements Serializable{
 
     public void addSchedule(Schedule schedule){
         this.schedules.add(schedule);
+    }
+
+    public boolean getActivate() {
+        return activate == 1;
+    }
+
+    public void setActivate(boolean act) {
+        this.activate = act ? 1 : 0;
     }
 }

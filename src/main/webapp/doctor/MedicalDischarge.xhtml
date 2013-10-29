@@ -9,8 +9,8 @@
         <h:form id="form1">
             <p:growl id="growl" showDetail="true" sticky="true" />
             <p:panel>
+                <h1> Generate Medical Discharge </h1>
                 <h:panelGrid columns="2" >
-                    <h1> Generate Medical Discharge </h1>
                     <h:outputText value="Case Id: " />
                     <p:inputText value="#{dischargeAndTransferManaged.caseId}" required="true" label="caseId"/>
                     <h:outputText value="Diagnosis: " />
@@ -40,9 +40,6 @@
                 <p:dataTable id="dataTableDischargeInfo" var="discharge" value="#{dischargeAndTransferManaged.dischargeSummary}">
                 <p:column headerText="Discharge Id">
                             <h:outputText value="#{discharge.id}"/>
-                        </p:column>
-                        <p:column headerText="Date">
-                            <h:outputText value="#{discharge.date}"/>
                         </p:column>
                         <p:column headerText="Diagnosis">
                             <h:outputText value="#{discharge.diagnosis}"/>
@@ -86,9 +83,6 @@
                 <p:dataTable id="dataTableDischarge" var="discharge" value="#{dischargeAndTransferManaged.listds}">
                     <p:column headerText="Discharge Id">
                         <h:outputText value="#{discharge.id}"/>
-                    </p:column>
-                    <p:column headerText="Date">
-                        <h:outputText value="#{discharge.date}"/>
                     </p:column>
                     <p:column headerText="Diagnosis">
                         <h:outputText value="#{discharge.diagnosis}"/>

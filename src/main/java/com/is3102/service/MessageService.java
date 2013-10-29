@@ -35,11 +35,12 @@ public class MessageService extends DataAccessService<Message> implements Serial
 
         List<Employee> users = this.findWithNamedQuery(Employee.USERNAME, params);
         Employee user = users.get(0);
+        System.out.println(user.getUsername());
         t.setSender(user);
 
         Map<String, String> parameters = context.getExternalContext().getRequestParameterMap();
-        String receivername = parameters.get("newMessageForm:newreceivername");
-        System.out.println(receivername);
+        String receivername = parameters.get("newMessageForm:newreceivername_input");
+        System.out.println("receivename" + receivername);
         params = new HashMap<String, String>();
         params.put("username", receivername);
 

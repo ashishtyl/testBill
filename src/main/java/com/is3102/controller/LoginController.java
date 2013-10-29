@@ -95,6 +95,21 @@ public class LoginController implements Serializable {
                 for (int i = 0; i < employees.size(); i++){
                     Employee e = employees.get(i);
                     String activation = e.getActivation();
+                    boolean isLocked = !e.getActivate();
+                    System.out.println(isLocked ? "locked" : "nolocked");
+                    if (isLocked){
+                        context.addMessage(null, new FacesMessage("Account is locked", "Your account is locked")) ;
+                        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+                        session.invalidate();
+/*                        navigateString = "/index.xhtml";
+                        try{
+                            context.getExternalContext().redirect(request.getContextPath() + navigateString);
+                        }
+                        catch (Exception et){
+                            logger.log(et.toString()) ;
+                        }*/
+                        return;
+                    }
                     if (activation.equals("")){
                         Principal principal = request.getUserPrincipal();
 
@@ -105,6 +120,12 @@ public class LoginController implements Serializable {
                         } else if (request.isUserInRole("Doctor")) {
                             logger.log(username + " has group as Doctor");
                             navigateString = "/doctor/index.xhtml";
+                        } else if (request.isUserInRole("Special Staff")) {
+                            logger.log(username + " has group as Special Staff");
+                            navigateString = "/ss/index.xhtml";
+                        } else if (request.isUserInRole("Financial Staff")) {
+                            logger.log(username + " has group as Financial Staff");
+                            navigateString = "/fs/index.xhtml";
                         }
                     }  else {
                         request.logout();

@@ -21,7 +21,7 @@ import java.util.List;
 @Remote
 public interface AdministrativeAdmissionRemote {
 
-    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber) throws ExistException, ParseException, Exception;
+    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception;
     
     public String makeAppointment(String NRIC_PIN, String appDate, String place, int docId) throws ExistException, ParseException;
 
@@ -36,4 +36,6 @@ public interface AdministrativeAdmissionRemote {
     public Employee getEmployee(int docId);
     
     public Patient getPatient(String NRIC_PIN);
+
+    public void update(String NRIC_PIN, String newName, String newAddress, String newBirthday, String newNumber, String newWeight) throws ExistException, ParseException, Exception;
 }

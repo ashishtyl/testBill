@@ -70,6 +70,10 @@ public class EventController implements Serializable  {
         das.deleteItems(selectedEvents);
     }
 
+    public void shareEvent(ActionEvent actionEvent){
+        das.shareEvents(this.getSelectedEvents());
+    }
+
     /**
      * Getters, Setters
      * @return
