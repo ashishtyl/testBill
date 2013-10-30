@@ -5,7 +5,10 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-        <h:form id="form" onLoad="reset()">
+        <h:form id="form">
+        <!--
+            <h:form id="form" onLoad="reset()">
+        -->
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             <p:dataTable id="dataTable" var="message" value="#{messageController.lazyModel}"
                          styleClass="messageDataTableStyle"
@@ -51,7 +54,8 @@
         </h:form>
         <p:dialog header="Message Detail" widgetVar="messageDialog" resizable="false" id="messageDlg">
             <h:form id="messageDetailForm">
-                <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                <p:panelGrid id="display" columns="2" style="margin:0 auto;">
+                    <!--cellpadding="4" -->
                     <h:outputText value="Message :"></h:outputText>
                     <p:inputText value="#{messageController.selectedMessage.receiver.username}" required="true"
                                  requiredMessage="Please Enter Receiver Username!">
@@ -71,7 +75,8 @@
 
         <p:dialog header="Create New Message" widgetVar="newMessageDialog" resizable="false" id="newMessageDlg">
         <h:form id="newMessageForm">
-            <p:panelGrid id="displayNewMessage" columns="2" cellpadding="4" style="margin:0 auto;">
+            <p:panelGrid id="displayNewMessage" columns="2" style="margin:0 auto;">
+                <!--cellpadding="4" -->
                 <h:outputText value="To :"></h:outputText>
                 <p:autoComplete  id="newreceivername" required="true"
                              requiredMessage="Please Enter Receiver Username!" minQueryLength="2" completeMethod="#{employeeController.complete}" >

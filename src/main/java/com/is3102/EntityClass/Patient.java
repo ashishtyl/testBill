@@ -20,13 +20,13 @@ import javax.persistence.Temporal;
  *
  * @author Ben
  */
-@Entity(name="Patient")
+@Entity(name = "Patient")
 public class Patient implements Serializable {
+
     private static final long serialVersionUID = 1L;
     //@Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
     //private Long id;
-    
     @Id
     private String NRIC_PIN;
     private String name;
@@ -34,9 +34,9 @@ public class Patient implements Serializable {
     private Date birthday;
     private String address;
     private String cNumber;
-    private String bloodgroup; // DO WE NEED THIS HERE????
-    private String height; // DO WE NEED THIS HERE????
-    private String weight; // DO WE NEED THIS HERE????
+    private String bloodgroup;
+    private String height;
+    private String weight;
     private String gender;
 
     public String getBloodGroup() {
@@ -70,15 +70,14 @@ public class Patient implements Serializable {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    
-    @OneToMany(cascade={CascadeType.ALL}, mappedBy="patient")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private Collection<Appointment> appointment = new ArrayList<Appointment>();
-    
-    @OneToMany(cascade={CascadeType.ALL}, mappedBy="patient")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private Collection<mCase> mcase = new ArrayList<mCase>();
-    
-    public Patient(){}
-    
+
+    public Patient() {
+    }
+
     public void create(String NRIC_PIN, String name, Date birthday, String address, String cNumber, String height, String weight, String gender, String bloodgroup) {
         this.setNRIC_PIN(NRIC_PIN);
         this.setName(name);
@@ -90,37 +89,37 @@ public class Patient implements Serializable {
         this.setHeight(height);
         this.setWeight(weight);
     }
-    
-   /* public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    } */
-    
-   public String getNRIC_PIN() {
+    /* public Long getId() {
+     return id;
+     }
+
+     public void setId(Long id) {
+     this.id = id;
+     } */
+    public String getNRIC_PIN() {
         return NRIC_PIN;
     }
 
     public void setNRIC_PIN(String NRIC_PIN) {
         this.NRIC_PIN = NRIC_PIN;
     }
-    
-    public String getName(){
-       return name;
-   }
-   
-   public void setName(String name){
-       this.name=name;
-   }
-   
-   public String getAddress(){
-       return address;
-   }
-   public void setAddress(String address){
-       this.address=address;
-   }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Date getBirthday() {
         return birthday;
@@ -129,7 +128,7 @@ public class Patient implements Serializable {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
-    
+
     public String getcNumber() {
         return cNumber;
     }
@@ -137,7 +136,7 @@ public class Patient implements Serializable {
     public void setcNumber(String cNumber) {
         this.cNumber = cNumber;
     }
-    
+
     public Collection<Appointment> getAppointments() {
         return appointment;
     }
@@ -145,13 +144,12 @@ public class Patient implements Serializable {
     public void setAppointments(Collection<Appointment> appointment) {
         this.appointment = appointment;
     }
-    
-     public Collection<mCase> getmCases() {
+
+    public Collection<mCase> getmCases() {
         return mcase;
     }
 
     public void setmCases(Collection<mCase> mcase) {
         this.mcase = mcase;
     }
-    
 }

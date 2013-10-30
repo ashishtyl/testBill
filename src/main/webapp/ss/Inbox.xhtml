@@ -5,7 +5,10 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-        <h:form id="form" onLoad="reset()">
+        <h:form id="form">
+        <!--
+            <h:form id="form" onLoad="reset()">
+        -->
             <p:messages id="inboxs" showDetail="true" autoUpdate="true" closable="true" />
             <p:dataTable id="dataTable" var="inbox" value="#{inboxController.lazyModel}"
                          styleClass="inboxDataTableStyle"
@@ -51,7 +54,8 @@
         </h:form>
         <p:dialog header="Message Detail" widgetVar="inboxDialog" resizable="false" id="inboxDlg">
             <h:form id="inboxDetailForm">
-                <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                <p:panelGrid id="display" columns="2" style="margin:0 auto;">
+                    <!--cellpadding="4" -->
                     <h:outputText value="Receiver :"></h:outputText>
                     <p:inputText value="#{inboxController.selectedInbox.sender.username}" required="true"
                                  requiredInbox="Please Enter Receiver Username!">
@@ -71,7 +75,8 @@
 
         <p:dialog header="Create New Inbox" widgetVar="newInboxDialog" resizable="false" id="newInboxDlg">
         <h:form id="newInboxForm">
-            <p:panelGrid id="displayNewInbox" columns="2" cellpadding="4" style="margin:0 auto;">
+            <p:panelGrid id="displayNewInbox" columns="2" style="margin:0 auto;">
+                <!--cellpadding="4" -->
                 <h:outputText value="To :"></h:outputText>
                 <p:inputText id="newsendername" required="true"
                              requiredInbox="Please Enter Receiver Username!">

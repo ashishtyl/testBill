@@ -5,7 +5,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-        <h:form id="form" onLoad="reset()">
+        <h:form id="form">
+            <!--onLoad="reset()"-->
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
             <p:dataTable id="dataTable" var="event" value="#{eventController.lazyModel}"
                          styleClass="eventDataTableStyle"
@@ -46,7 +47,8 @@
         </h:form>
         <p:dialog header="Event Detail" widgetVar="eventDialog" resizable="false" id="eventDlg">
             <h:form id="eventDetailForm">
-                <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                <p:panelGrid id="display" columns="2" style="margin:0 auto;">
+                    <!--cellpadding="4" -->
                     <h:outputText value="ID :"></h:outputText>
                     <p:inputText value="#{eventController.selectedEvent.id}" disabled="true"/>
 
@@ -71,7 +73,8 @@
 
         <p:dialog header="Create New Event" widgetVar="newEventDialog" resizable="false" id="newEventDlg">
             <h:form id="newEventForm">
-                <p:panelGrid id="displayNewEvent" columns="2" cellpadding="4" style="margin:0 auto;">
+                <p:panelGrid id="displayNewEvent" columns="2" style="margin:0 auto;">
+                    <!--cellpadding="4" -->
                     <h:outputText value="Event :"></h:outputText>
                     <p:inputText value="#{eventController.newEvent.event}" required="true"
                                  requiredMessage="Please Enter First Name!">
@@ -96,7 +99,8 @@
 
         <p:dialog header="Share Event" widgetVar="shareEventDialog" resizable="false" id="shareEventDlg">
             <h:form id="shareEventForm">
-                <p:panelGrid id="shareEvent" columns="2" cellpadding="4" style="margin:0 auto;">
+                <p:panelGrid id="shareEvent" columns="2" style="margin:0 auto;">
+                    <!--cellpadding="4" -->
                     <h:outputText value="To :"></h:outputText>
                     <p:autoComplete  id="sharename" required="true"
                                      requiredMessage="Please Enter Username You Want to Share!" minQueryLength="2" completeMethod="#{employeeController.complete}" >

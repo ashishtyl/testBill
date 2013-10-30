@@ -2,19 +2,18 @@ package com.is3102.controller;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import com.is3102.EntityClass.Bed;
 import com.is3102.EntityClass.Patient;
 import com.is3102.Exception.ExistException;
 import com.is3102.service.VisitorInfoServiceRemote;
 import com.is3102.util.Logger;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 /**
  *
