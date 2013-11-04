@@ -38,7 +38,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     public AdministrativeAdmissionBean() {
     }
 
-    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
+    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
         Date bDate = HandleDates.getDateFromString(birthday);
         System.out.println(bloodgroup);
         patient = em.find(Patient.class, NRIC_PIN);
@@ -47,13 +47,13 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
             throw new ExistException("PATIENT ALREADY EXISTS");
         }
         patient = new Patient();
-        patient.create(NRIC_PIN, name, bDate, address, cNumber, height, weight, gender, bloodgroup);
+        patient.create(NRIC_PIN, name, bDate, address, cNumber, nationality, height, weight, gender, bloodgroup);
         em.persist(patient);
         return patient.getNRIC_PIN();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public String makeAppointment(String NRIC_PIN, String appDate, String place, int id) throws ExistException, ParseException {
+    public String makeAppointment(String NRIC_PIN, String appDate, int id) throws ExistException, ParseException {
         Date aDate = HandleDates.getDateFromString(appDate);
         //Doctor doctor = new Doctor();
         Employee doctor = em.find(Employee.class, id);
@@ -69,7 +69,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
                 appointment = new Appointment();
                 mCase mcase = new mCase();
                 System.out.println("Test");
-                appointment.create(aDate, place);
+                appointment.create(aDate);
                 doctor.getAppointments().add(appointment);
                 System.out.println("Appointment ID: " + appointment.getAppId());
                 appointment.setEmployee(doctor);

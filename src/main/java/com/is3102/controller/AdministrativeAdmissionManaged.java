@@ -41,6 +41,8 @@ public class AdministrativeAdmissionManaged implements Serializable {
     Date birthday2;
     String address;
     String addres2;
+    String nationality;
+
     String contact;
     String contact2;
     String height;
@@ -50,7 +52,6 @@ public class AdministrativeAdmissionManaged implements Serializable {
     String gender;
     String bloodgroup;
     Date appDate;
-    String place;
     int docID;
     String bedNo;
     String appID;
@@ -101,6 +102,15 @@ public class AdministrativeAdmissionManaged implements Serializable {
     public void setBloodgroup(String bloodgroup) {
         this.bloodgroup = bloodgroup;
     }
+    
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+    
     public List<Appointment> getAppointments() {
         return appointments;
     }
@@ -229,14 +239,6 @@ public class AdministrativeAdmissionManaged implements Serializable {
         this.appDate = appDate;
     }
 
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
     public int getDocID() {
         return docID;
     }
@@ -268,7 +270,7 @@ public class AdministrativeAdmissionManaged implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String pin = am.addPatient(NRIC_PIN1, name, format.format(birthday), address, contact, height, weight, gender, bloodgroup);
+            String pin = am.addPatient(NRIC_PIN1, name, format.format(birthday), address, contact, nationality, height, weight, gender, bloodgroup);
             context.addMessage(null, new FacesMessage("Patient Record " + name + " with PIN " + NRIC_PIN1 + " successfully created!"));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -280,7 +282,7 @@ public class AdministrativeAdmissionManaged implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String id = am.makeAppointment(NRIC_PIN2, format.format(appDate), place, docID);
+            String id = am.makeAppointment(NRIC_PIN2, format.format(appDate), docID);
 
             Employee employee = am.getEmployee(docID);
             context.addMessage(null, new FacesMessage("Appointment " + id + " for " + NRIC_PIN2 + " on date " + format.format(appDate) + " by doctor " + employee.getUsername() + " successfully made!"));

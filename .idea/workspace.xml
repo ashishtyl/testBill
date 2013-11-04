@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbb3bcf9-a5cb-47ec-a91b-48cfdecfe4ea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/ss/EventList.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/ss/EventList.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/ss/Inbox.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/ss/Inbox.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/ss/Sent.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/ss/Sent.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="IS3102.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,7 +70,7 @@
       <file leaf-file-name="Patient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/is3102/EntityClass/Patient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="13" selection-start="559" selection-end="559" vertical-scroll-proportion="0.0">
+            <state line="23" column="13" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -83,9 +81,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="48" column="85" selection-start="2585" selection-end="2585" vertical-scroll-proportion="-0.65384614">
               <folding>
-                <marker date="1383113573180" expanded="true" signature="1185:1195" placeholder="{...}" />
-                <marker date="1383113573180" expanded="true" signature="3051:3065" placeholder="{...}" />
-                <marker date="1383113573180" expanded="true" signature="4255:4269" placeholder="{...}" />
+                <marker date="1383121251475" expanded="true" signature="1185:1195" placeholder="{...}" />
+                <marker date="1383121251475" expanded="true" signature="3051:3065" placeholder="{...}" />
+                <marker date="1383121251475" expanded="true" signature="4255:4269" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -94,7 +92,7 @@
       <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.6153846">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.4329159">
               <folding />
             </state>
           </provider>
@@ -113,6 +111,13 @@
   <component name="GitLogSettings">
     <option name="myDateState">
       <MyDateState />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
     </option>
   </component>
   <component name="MavenImportPreferences">
@@ -441,9 +446,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="48" column="85" selection-start="2585" selection-end="2585" vertical-scroll-proportion="0.0">
           <folding>
-            <marker date="1383113573180" expanded="true" signature="1185:1195" placeholder="{...}" />
-            <marker date="1383113573180" expanded="true" signature="3051:3065" placeholder="{...}" />
-            <marker date="1383113573180" expanded="true" signature="4255:4269" placeholder="{...}" />
+            <marker date="1383121251475" expanded="true" signature="1185:1195" placeholder="{...}" />
+            <marker date="1383121251475" expanded="true" signature="3051:3065" placeholder="{...}" />
+            <marker date="1383121251475" expanded="true" signature="4255:4269" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -457,7 +462,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/is3102/EntityClass/Patient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="13" selection-start="559" selection-end="559" vertical-scroll-proportion="0.0">
+        <state line="23" column="13" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -466,16 +471,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="48" column="85" selection-start="2585" selection-end="2585" vertical-scroll-proportion="-0.65384614">
           <folding>
-            <marker date="1383113573180" expanded="true" signature="1185:1195" placeholder="{...}" />
-            <marker date="1383113573180" expanded="true" signature="3051:3065" placeholder="{...}" />
-            <marker date="1383113573180" expanded="true" signature="4255:4269" placeholder="{...}" />
+            <marker date="1383121251475" expanded="true" signature="1185:1195" placeholder="{...}" />
+            <marker date="1383121251475" expanded="true" signature="3051:3065" placeholder="{...}" />
+            <marker date="1383121251475" expanded="true" signature="4255:4269" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.6153846">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.4329159">
           <folding />
         </state>
       </provider>

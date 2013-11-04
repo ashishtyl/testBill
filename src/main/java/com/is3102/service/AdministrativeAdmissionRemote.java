@@ -21,9 +21,9 @@ import java.util.List;
 @Remote
 public interface AdministrativeAdmissionRemote {
 
-    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception;
+    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception;
     
-    public String makeAppointment(String NRIC_PIN, String appDate, String place, int docId) throws ExistException, ParseException;
+    public String makeAppointment(String NRIC_PIN, String appDate, int docId) throws ExistException, ParseException;
 
     public long createCase(String bedNo, String appId) throws ExistException;
 
