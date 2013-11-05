@@ -1,6 +1,6 @@
 package com.is3102.entity;
 import com.is3102.EntityClass.Appointment;
-import com.is3102.EntityClass.Order;
+import com.is3102.EntityClass.POEOrder;
 import com.is3102.EntityClass.Schedule;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class        Employee extends BaseEntity implements Serializable{
     private Collection<Appointment> appointment = new ArrayList<Appointment>();
     
     @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
-    private Collection<Order> order = new ArrayList<Order>();
+    private Collection<POEOrder> order = new ArrayList<POEOrder>();
 
     @OneToMany(mappedBy = "employee", cascade=CascadeType.ALL)
     private List<Event> events;
@@ -258,11 +258,11 @@ public class        Employee extends BaseEntity implements Serializable{
         this.activate = act ? 1 : 0;
     }
 
-    public Collection<Order> getOrder() {
+    public Collection<POEOrder> getOrder() {
         return order;
     }
 
-    public void setOrder(Collection<Order> order) {
+    public void setOrder(Collection<POEOrder> order) {
         this.order = order;
     }    
 }

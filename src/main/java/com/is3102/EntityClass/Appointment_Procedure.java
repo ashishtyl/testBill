@@ -22,7 +22,7 @@ public class Appointment_Procedure implements Serializable {
     @Id
     private Long id;
     @OneToOne(mappedBy = "appointment_procedure")
-    private Order order;
+    private POEOrder order;
 
     public Long getId() {
         return id;
@@ -32,11 +32,11 @@ public class Appointment_Procedure implements Serializable {
         this.id = id;
     }
 
-    public Order getOrder() {
+    public POEOrder getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(POEOrder order) {
         this.order = order;
     }
 }

@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
  * @author Ben
  */
 @Entity
-public class Order implements Serializable {
+public class POEOrder implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id

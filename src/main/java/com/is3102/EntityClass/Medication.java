@@ -34,7 +34,7 @@ public class Medication implements Serializable {
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private mCase mcase;
     @OneToOne(mappedBy = "medication")
-    private Order order;
+    private POEOrder order;
 
     public Medication() {
     }
@@ -85,11 +85,11 @@ public class Medication implements Serializable {
         this.mcase = mcase;
     }
 
-    public Order getOrder() {
+    public POEOrder getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(POEOrder order) {
         this.order = order;
     }
 }

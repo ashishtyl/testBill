@@ -48,7 +48,7 @@ public class Medical_Procedure implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
     @OneToOne(mappedBy = "medical_procedure")
-    private Order order;
+    private POEOrder order;
     //@OneToOne(cascade = {CascadeType.PERSIST})
     //private Report report;
 
@@ -223,11 +223,11 @@ public class Medical_Procedure implements Serializable {
         this.code = code;
     }
 
-    public Order getOrder() {
+    public POEOrder getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(POEOrder order) {
         this.order = order;
     }
 }
