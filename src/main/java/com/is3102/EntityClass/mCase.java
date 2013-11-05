@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
  *
  * @author Ashish
  */
-@Entity(name="mcase")
+@Entity(name = "mcase")
 public class mCase implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,32 +34,36 @@ public class mCase implements Serializable {
     private Date dateAdmitted;
     @Temporal(value = TemporalType.DATE)
     private Date dateDischarged;
-
-    @OneToMany(cascade={CascadeType.ALL})
-    private List<Medical_Procedure> mProcedures= new ArrayList<Medical_Procedure>();
-    @OneToMany(cascade={CascadeType.ALL})
-    private List<Nursing_Procedure> nProcedures= new ArrayList<Nursing_Procedure>();
-    @OneToOne(cascade={CascadeType.ALL})
+    private String type;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Medical_Procedure> mProcedures = new ArrayList<Medical_Procedure>();
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Nursing_Procedure> nProcedures = new ArrayList<Nursing_Procedure>();
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Medication> medication = new ArrayList<Medication>();
+    @OneToOne(cascade = {CascadeType.ALL})
     private Transfer transfer;
-    @OneToOne(mappedBy="mcase")
+    @OneToOne(mappedBy = "mcase")
     private Appointment appointment;
-    @OneToOne(cascade={CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL})
     private DischargeSummary dischargeSummary;
-    @OneToOne(cascade={CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL})
     private Medical_Anamnesis medicalAnamnesis;
-    @OneToOne(cascade={CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL})
     private Nursing_Anamnesis nursingAnamnesis;
-    @ManyToOne(cascade={CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     private Bed bed;
     @ManyToOne
     private Patient patient;
-    @OneToMany(cascade={CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.PERSIST})
     private Collection<Diagnosis> diagnosis = new ArrayList<Diagnosis>();
 
-    public mCase() {}
+    public mCase() {
+    }
 
-    public void create(Date dateAdmitted) {
+    public void create(Date dateAdmitted, String type) {
         this.setDateAdmitted(dateAdmitted);
+        this.setType(type);
     }
 
     public Long getCIN() {
@@ -78,14 +82,21 @@ public class mCase implements Serializable {
         this.dateAdmitted = dateAdmitted;
     }
 
-    public Date getdateDischarged() {
+    public Date getDateDischarged() {
         return dateDischarged;
     }
 
-    public void setdateDischarged(Date dateDischarged) {
+    public void setDateDischarged(Date dateDischarged) {
         this.dateDischarged = dateDischarged;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public List<Medical_Procedure> getmProcedures() {
         return mProcedures;
@@ -93,6 +104,14 @@ public class mCase implements Serializable {
 
     public void setmProcedures(List<Medical_Procedure> mProcedures) {
         this.mProcedures = mProcedures;
+    }
+
+    public List<Medication> getMedication() {
+        return medication;
+    }
+
+    public void setMedication(List<Medication> medication) {
+        this.medication = medication;
     }
 
     public Appointment getAppointment() {
@@ -135,7 +154,7 @@ public class mCase implements Serializable {
         this.transfer = transfer;
     }
 
-    public void addmedicaProcedure (Medical_Procedure procedure){
+    public void addmedicaProcedure(Medical_Procedure procedure) {
         this.mProcedures.add(procedure);
 
     }
@@ -164,12 +183,11 @@ public class mCase implements Serializable {
         this.nursingAnamnesis = nursingAnamnesis;
     }
 
-
-    public Collection<Diagnosis> getDiagnosis(){
+    public Collection<Diagnosis> getDiagnosis() {
         return diagnosis;
     }
 
-    public void setDiagnosis(Collection<Diagnosis> diagnosis){
-        this.diagnosis=diagnosis;
+    public void setDiagnosis(Collection<Diagnosis> diagnosis) {
+        this.diagnosis = diagnosis;
     }
 }

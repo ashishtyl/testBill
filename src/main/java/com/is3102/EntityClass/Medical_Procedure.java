@@ -139,16 +139,10 @@ public class Medical_Procedure implements Serializable {
         this.consent = consent;
     }
 
-    /**
-     * @return the mcase
-     */
     public mCase getMcase() {
         return mcase;
     }
 
-    /**
-     * @param mcase the mcase to set
-     */
     public void setMcase(mCase mcase) {
         this.mcase = mcase;
     }

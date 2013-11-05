@@ -42,18 +42,17 @@ public class AdministrativeAdmissionManaged implements Serializable {
     String address;
     String addres2;
     String nationality;
-
     String contact;
     String contact2;
     String height;
     String weight;
     String weight2;
-
     String gender;
     String bloodgroup;
     Date appDate;
     int docID;
     String bedNo;
+    String type;
     String appID;
     long CIN;
     Patient patient;
@@ -83,6 +82,7 @@ public class AdministrativeAdmissionManaged implements Serializable {
     public void setWeight(String weight) {
         this.weight = weight;
     }
+
     public long getCIN() {
         return CIN;
     }
@@ -98,11 +98,11 @@ public class AdministrativeAdmissionManaged implements Serializable {
     public String getBloodgroup() {
         return bloodgroup;
     }
-    
+
     public void setBloodgroup(String bloodgroup) {
         this.bloodgroup = bloodgroup;
     }
-    
+
     public String getNationality() {
         return nationality;
     }
@@ -110,7 +110,7 @@ public class AdministrativeAdmissionManaged implements Serializable {
     public void setNationality(String nationality) {
         this.nationality = nationality;
     }
-    
+
     public List<Appointment> getAppointments() {
         return appointments;
     }
@@ -198,11 +198,11 @@ public class AdministrativeAdmissionManaged implements Serializable {
     public void setContact(String contact) {
         this.contact = contact;
     }
-    
+
     public String getWeight2() {
         return weight2;
     }
-    
+
     public void setWeight2(String weight2) {
         this.weight2 = weight2;
     }
@@ -229,6 +229,14 @@ public class AdministrativeAdmissionManaged implements Serializable {
 
     public void setContact2(String contact2) {
         this.contact2 = contact2;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Date getAppDate() {
@@ -299,7 +307,7 @@ public class AdministrativeAdmissionManaged implements Serializable {
             beds = am.getAvailBeds();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date dateCreated = new Date();
-            CIN = am.createCase(bedNo, appID);
+            CIN = am.createCase(bedNo, appID, type);
             context.addMessage(null, new FacesMessage("Case " + CIN + " for " + NRIC_PIN3 + " on date " + format.format(dateCreated) + " successfully created!"));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -333,7 +341,7 @@ public class AdministrativeAdmissionManaged implements Serializable {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String newBirthday = format.format(((Patient) event.getObject()).getBirthday());
             String newNumber = (String) ((Patient) event.getObject()).getcNumber();
-            String newWeight= (String) ((Patient) event.getObject()).getWeight();
+            String newWeight = (String) ((Patient) event.getObject()).getWeight();
             am.update(patient.getNRIC_PIN(), newName, newAddress, newBirthday, newNumber, newWeight);
             FacesMessage msg = new FacesMessage("Patient Record Edited", ((Patient) event.getObject()).getNRIC_PIN());
             FacesContext.getCurrentInstance().addMessage(null, msg);

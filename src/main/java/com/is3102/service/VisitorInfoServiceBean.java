@@ -108,7 +108,7 @@ public class VisitorInfoServiceBean implements VisitorInfoServiceRemote {
         System.out.println("Test1");
         for (mCase mc : mcases) {
             Date dateAdmitted = mc.getDateAdmitted();
-            Date dateDischarged = mc.getdateDischarged();
+            Date dateDischarged = mc.getDateDischarged();
             if (mc.getDateAdmitted() != null) {
                 if (dateDischarged != null) {
                     counter++;

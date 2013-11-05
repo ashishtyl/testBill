@@ -4,11 +4,15 @@
  */
 package com.is3102.EntityClass;
 
+import com.is3102.entity.Employee;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -16,10 +20,12 @@ import javax.persistence.Id;
  */
 @Entity
 public class Order implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
+
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private Long id;
+    @ManyToOne
+    private Employee employeeDoctor;
 
     public Long getId() {
         return id;
@@ -29,29 +35,11 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public Employee getEmployeeDoctor() {
+        return employeeDoctor;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Order)) {
-            return false;
-        }
-        Order other = (Order) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setEmployeeDoctor(Employee employeeDoctor) {
+        this.employeeDoctor = employeeDoctor;
     }
-
-    @Override
-    public String toString() {
-        return "EntityClass.Order[ id=" + id + " ]";
-    }
-    
 }

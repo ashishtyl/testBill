@@ -18,6 +18,12 @@
                     <h:outputText value="Appointment ID: "/>
                     <p:inputText value="#{administrativeAdmissionManaged.appID}" required="true"
                                  label="Appointment ID"/>
+                    
+                    <h:outputText value="Patient Type " />  
+                    <p:selectOneMenu  id="type" value="#{administrativeAdmissionManaged.type}">
+                        <f:selectItem itemLabel="Select One" itemValue="" /> 
+                        <f:selectItem itemLabel="Inpatient" itemValue="Inpatient" />
+                        <f:selectItem itemLabel="Outpatient" itemValue="Outpatient" />
                 </h:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{administrativeAdmissionManaged.doCreateCase}"
                                  update=":form3:growl"/>

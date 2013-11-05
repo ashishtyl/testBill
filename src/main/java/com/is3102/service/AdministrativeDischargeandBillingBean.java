@@ -45,7 +45,7 @@ public class AdministrativeDischargeandBillingBean implements AdministrativeDisc
           mcase = em.find(mCase.class, cin);
            if (mcase == null)
             throw new ExistException("MCASE ID DOES NOT EXIST.");
-          mcase.setdateDischarged(dateDis);
+          mcase.setDateDischarged(dateDis);
                  
           
       }
@@ -54,7 +54,7 @@ public class AdministrativeDischargeandBillingBean implements AdministrativeDisc
           
           mcase = em.find(mCase.class, cin);
           
-          return mcase.getdateDischarged();
+          return mcase.getDateDischarged();
       }
 
 }

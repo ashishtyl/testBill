@@ -86,7 +86,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public long createCase(String bedNo, String appId) throws ExistException {
+    public long createCase(String bedNo, String appId, String type) throws ExistException {
         mCase mcase;
         Appointment appointment = em.find(Appointment.class, new Long(appId));
         if (appointment == null) {
@@ -94,7 +94,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         }
         mcase = appointment.getmCase();
         Date dateAdmitted = new Date();
-        mcase.create(dateAdmitted);
+        mcase.create(dateAdmitted, type);
 
         Bed bed = em.find(Bed.class, new Long(bedNo));
         if (bed == null) { // Bed does not exist
@@ -128,7 +128,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
                 Boolean available = true;
 
                 for (mCase mc : mcases) {
-                    if (mc.getdateDischarged() == null) {
+                    if (mc.getDateDischarged() == null) {
                         if (mc.getBed() != null) {
                             if (mc.getBed().getBedNo().equals(bed.getBedNo())) {
                                 available = false;

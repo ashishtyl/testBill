@@ -1,5 +1,6 @@
 package com.is3102.entity;
 import com.is3102.EntityClass.Appointment;
+import com.is3102.EntityClass.Order;
 import com.is3102.EntityClass.Schedule;
 
 import java.io.Serializable;
@@ -53,8 +54,12 @@ public class        Employee extends BaseEntity implements Serializable{
 
     private int activate;
 
-    @OneToMany(cascade={CascadeType.ALL}, mappedBy="employee")
+    @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
+    //@OneToMany(cascade={CascadeType.ALL}, mappedBy="employee")
     private Collection<Appointment> appointment = new ArrayList<Appointment>();
+    
+    @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
+    private Collection<Order> order = new ArrayList<Order>();
 
     @OneToMany(mappedBy = "employee", cascade=CascadeType.ALL)
     private List<Event> events;

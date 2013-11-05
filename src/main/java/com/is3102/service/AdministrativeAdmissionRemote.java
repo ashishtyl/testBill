@@ -25,7 +25,7 @@ public interface AdministrativeAdmissionRemote {
     
     public String makeAppointment(String NRIC_PIN, String appDate, int docId) throws ExistException, ParseException;
 
-    public long createCase(String bedNo, String appId) throws ExistException;
+    public long createCase(String bedNo, String appId, String type) throws ExistException;
 
     public List<Bed> getAvailBeds();
 
