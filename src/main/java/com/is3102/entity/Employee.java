@@ -2,7 +2,6 @@ package com.is3102.entity;
 import com.is3102.EntityClass.Appointment;
 import com.is3102.EntityClass.Order;
 import com.is3102.EntityClass.Schedule;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -258,4 +257,12 @@ public class        Employee extends BaseEntity implements Serializable{
     public void setActivate(boolean act) {
         this.activate = act ? 1 : 0;
     }
+
+    public Collection<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(Collection<Order> order) {
+        this.order = order;
+    }    
 }

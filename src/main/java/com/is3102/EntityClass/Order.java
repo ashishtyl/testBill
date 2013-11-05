@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -26,6 +26,12 @@ public class Order implements Serializable {
     private Long id;
     @ManyToOne
     private Employee employeeDoctor;
+    @OneToOne(cascade = {CascadeType.PERSIST})
+    private Medication medication;
+    @OneToOne(cascade = {CascadeType.PERSIST})
+    private Medical_Procedure mProcedure;
+    @OneToOne(cascade = {CascadeType.PERSIST})
+    private Appointment_Procedure aProcedure;
 
     public Long getId() {
         return id;
@@ -41,5 +47,29 @@ public class Order implements Serializable {
 
     public void setEmployeeDoctor(Employee employeeDoctor) {
         this.employeeDoctor = employeeDoctor;
+    }
+
+    public Medication getMedication() {
+        return medication;
+    }
+
+    public void setMedication(Medication medication) {
+        this.medication = medication;
+    }
+
+    public Medical_Procedure getmProcedure() {
+        return mProcedure;
+    }
+
+    public void setmProcedure(Medical_Procedure mProcedure) {
+        this.mProcedure = mProcedure;
+    }
+
+    public Appointment_Procedure getaProcedure() {
+        return aProcedure;
+    }
+
+    public void setaProcedure(Appointment_Procedure aProcedure) {
+        this.aProcedure = aProcedure;
     }
 }

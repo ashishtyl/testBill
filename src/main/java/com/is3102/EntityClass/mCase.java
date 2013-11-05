@@ -36,11 +36,11 @@ public class mCase implements Serializable {
     private Date dateDischarged;
     private String type;
     @OneToMany(cascade = {CascadeType.ALL})
+    private List<Medication> medication = new ArrayList<Medication>();
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Medical_Procedure> mProcedures = new ArrayList<Medical_Procedure>();
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Nursing_Procedure> nProcedures = new ArrayList<Nursing_Procedure>();
-    @OneToMany(cascade = {CascadeType.ALL})
-    private List<Medication> medication = new ArrayList<Medication>();
     @OneToOne(cascade = {CascadeType.ALL})
     private Transfer transfer;
     @OneToOne(mappedBy = "mcase")

@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -32,6 +33,8 @@ public class Medication implements Serializable {
     String details;
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private mCase mcase;
+    @OneToOne(mappedBy = "medication")
+    private Order order;
 
     public Medication() {
     }
@@ -80,5 +83,13 @@ public class Medication implements Serializable {
 
     public void setMcase(mCase mcase) {
         this.mcase = mcase;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
