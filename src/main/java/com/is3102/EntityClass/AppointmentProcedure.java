@@ -15,13 +15,13 @@ import javax.persistence.OneToOne;
  *
  * @author Swarit
  */
-@Entity
-public class Appointment_Procedure implements Serializable {
+@Entity(name = "AppointmentProcedure")
+public class AppointmentProcedure implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
-    @OneToOne(mappedBy = "appointment_procedure")
+    @OneToOne(mappedBy = "aProcedure")
     private POEOrder order;
 
     public Long getId() {

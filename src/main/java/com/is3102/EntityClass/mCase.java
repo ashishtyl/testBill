@@ -38,13 +38,15 @@ public class mCase implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Medication> medication = new ArrayList<Medication>();
     @OneToMany(cascade = {CascadeType.ALL})
-    private List<Medical_Procedure> mProcedures = new ArrayList<Medical_Procedure>();
+    private List<MedicalProcedure> mProcedures = new ArrayList<MedicalProcedure>();
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Nursing_Procedure> nProcedures = new ArrayList<Nursing_Procedure>();
     @OneToOne(cascade = {CascadeType.ALL})
     private Transfer transfer;
+    
     @OneToOne(mappedBy = "mcase")
     private Appointment appointment;
+    
     @OneToOne(cascade = {CascadeType.ALL})
     private DischargeSummary dischargeSummary;
     @OneToOne(cascade = {CascadeType.ALL})
@@ -98,11 +100,11 @@ public class mCase implements Serializable {
         this.type = type;
     }
 
-    public List<Medical_Procedure> getmProcedures() {
+    public List<MedicalProcedure> getmProcedures() {
         return mProcedures;
     }
 
-    public void setmProcedures(List<Medical_Procedure> mProcedures) {
+    public void setmProcedures(List<MedicalProcedure> mProcedures) {
         this.mProcedures = mProcedures;
     }
 
@@ -154,7 +156,7 @@ public class mCase implements Serializable {
         this.transfer = transfer;
     }
 
-    public void addmedicaProcedure(Medical_Procedure procedure) {
+    public void addmedicaProcedure(MedicalProcedure procedure) {
         this.mProcedures.add(procedure);
 
     }

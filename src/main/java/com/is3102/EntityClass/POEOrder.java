@@ -25,13 +25,15 @@ public class POEOrder implements Serializable {
     @Id
     private Long id;
     @ManyToOne
-    private Employee employeeDoctor;
+    private Employee employee;
     @OneToOne(cascade = {CascadeType.PERSIST})
     private Medication medication;
+    
     @OneToOne(cascade = {CascadeType.PERSIST})
-    private Medical_Procedure mProcedure;
+    private MedicalProcedure mProcedure;
+    
     @OneToOne(cascade = {CascadeType.PERSIST})
-    private Appointment_Procedure aProcedure;
+    private AppointmentProcedure aProcedure;
 
     public Long getId() {
         return id;
@@ -42,11 +44,11 @@ public class POEOrder implements Serializable {
     }
 
     public Employee getEmployeeDoctor() {
-        return employeeDoctor;
+        return employee;
     }
 
     public void setEmployeeDoctor(Employee employeeDoctor) {
-        this.employeeDoctor = employeeDoctor;
+        this.employee = employeeDoctor;
     }
 
     public Medication getMedication() {
@@ -57,19 +59,19 @@ public class POEOrder implements Serializable {
         this.medication = medication;
     }
 
-    public Medical_Procedure getmProcedure() {
+    public MedicalProcedure getmProcedure() {
         return mProcedure;
     }
 
-    public void setmProcedure(Medical_Procedure mProcedure) {
+    public void setmProcedure(MedicalProcedure mProcedure) {
         this.mProcedure = mProcedure;
     }
 
-    public Appointment_Procedure getaProcedure() {
+    public AppointmentProcedure getaProcedure() {
         return aProcedure;
     }
 
-    public void setaProcedure(Appointment_Procedure aProcedure) {
+    public void setaProcedure(AppointmentProcedure aProcedure) {
         this.aProcedure = aProcedure;
     }
 }

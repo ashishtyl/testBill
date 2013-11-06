@@ -25,8 +25,8 @@ import javax.persistence.Temporal;
  *
  * @author Ben
  */
-@Entity(name = "Medical_Procedure")
-public class Medical_Procedure implements Serializable {
+@Entity(name = "MedicalProcedure")
+public class MedicalProcedure implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,12 +47,12 @@ public class Medical_Procedure implements Serializable {
     private String comments;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
-    @OneToOne(mappedBy = "medical_procedure")
+    @OneToOne(mappedBy = "mProcedure")
     private POEOrder order;
     //@OneToOne(cascade = {CascadeType.PERSIST})
     //private Report report;
 
-    public Medical_Procedure() {
+    public MedicalProcedure() {
     }
 
     public void create(String code, String name, Finding finding, String comments) {
@@ -83,11 +83,11 @@ public class Medical_Procedure implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Medical_Procedure)) {
+        if (!(object instanceof MedicalProcedure)) {
             return false;
         }
 
-        Medical_Procedure other = (Medical_Procedure) object;
+        MedicalProcedure other = (MedicalProcedure) object;
         if ((this.getMpId() == null && other.getMpId() != null) || (this.getMpId() != null && !this.mpId.equals(other.mpId))) {
             return false;
         }

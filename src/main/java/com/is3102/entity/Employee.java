@@ -55,10 +55,10 @@ public class        Employee extends BaseEntity implements Serializable{
 
     @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
     //@OneToMany(cascade={CascadeType.ALL}, mappedBy="employee")
-    private Collection<Appointment> appointment = new ArrayList<Appointment>();
+    private List<Appointment> appointment = new ArrayList<Appointment>();
     
     @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
-    private Collection<POEOrder> order = new ArrayList<POEOrder>();
+    private List<POEOrder> order = new ArrayList<POEOrder>();
 
     @OneToMany(mappedBy = "employee", cascade=CascadeType.ALL)
     private List<Event> events;
@@ -198,11 +198,11 @@ public class        Employee extends BaseEntity implements Serializable{
         this.reset = reset;
     }
 
-    public Collection<Appointment> getAppointments() {
+    public List<Appointment> getAppointments() {
         return appointment;
     }
 
-    public void setAppointments(Collection<Appointment> appointment) {
+    public void setAppointments(List<Appointment> appointment) {
         this.appointment = appointment;
     }
 
@@ -210,7 +210,7 @@ public class        Employee extends BaseEntity implements Serializable{
         return appointment;
     }
 
-    public void setAppointment(Collection<Appointment> appointment) {
+    public void setAppointment(List<Appointment> appointment) {
         this.appointment = appointment;
     }
 
@@ -258,11 +258,11 @@ public class        Employee extends BaseEntity implements Serializable{
         this.activate = act ? 1 : 0;
     }
 
-    public Collection<POEOrder> getOrder() {
+    public List<POEOrder> getOrder() {
         return order;
     }
 
-    public void setOrder(Collection<POEOrder> order) {
+    public void setOrder(List<POEOrder> order) {
         this.order = order;
     }    
 }
