@@ -13,4 +13,5 @@ import javax.ejb.Remote;
 @Remote
 public interface OrderEntryRemote {
     
+    public void prescribeMedication(String name, Long dosage, int quantity, String details, Long totalPrice);
 }

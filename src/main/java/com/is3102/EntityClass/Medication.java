@@ -5,18 +5,13 @@
 package com.is3102.EntityClass;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -28,9 +23,10 @@ public class Medication implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long medId;
-    String name;
-    String dosage;
-    String details;
+    private String name;
+    private Long dosage;
+    private String details;
+    private Long totalPrice;
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private mCase mcase;
     @OneToOne(mappedBy = "medication")
@@ -39,10 +35,11 @@ public class Medication implements Serializable {
     public Medication() {
     }
 
-    public void create(String name, String dosage, String details) {
+    public void create(String name, Long dosage, String details, Long totalPrice) {
         this.setName(name);
         this.setDosage(dosage);
         this.setDetails(details);
+        this.setTotalPrice(totalPrice);
     }
 
     public Long getMedId() {
@@ -61,11 +58,11 @@ public class Medication implements Serializable {
         this.name = name;
     }
 
-    public String getDosage() {
+    public Long getDosage() {
         return dosage;
     }
 
-    public void setDosage(String dosage) {
+    public void setDosage(Long dosage) {
         this.dosage = dosage;
     }
 
@@ -91,5 +88,13 @@ public class Medication implements Serializable {
 
     public void setOrder(POEOrder order) {
         this.order = order;
+    }
+
+    public Long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Long totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
