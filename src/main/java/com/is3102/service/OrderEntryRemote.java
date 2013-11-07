@@ -4,6 +4,9 @@
  */
 package com.is3102.service;
 
+import com.is3102.EntityClass.DrugCatalog;
+import com.is3102.Exception.DrugException;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -13,5 +16,7 @@ import javax.ejb.Remote;
 @Remote
 public interface OrderEntryRemote {
     
-    public void prescribeMedication(String name, Long dosage, int quantity, String details, Long totalPrice);
+    public String prescribeMedication(String CIN, String name, Long dosage, int quantity, String details, double unitPrice)  throws DrugException, Exception;
+    
+    public List<DrugCatalog> displayDrugCatalog();
 }

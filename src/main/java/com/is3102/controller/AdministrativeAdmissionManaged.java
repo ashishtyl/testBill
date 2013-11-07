@@ -15,7 +15,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-
 import com.is3102.service.AdministrativeAdmissionRemote;
 import org.primefaces.event.RowEditEvent;
 
@@ -321,7 +320,6 @@ public class AdministrativeAdmissionManaged implements Serializable {
     }
 
     public void doUpdatePatient(ActionEvent actionEvent) {
-
         patient = am.getPatient(NRIC_PIN5);
     }
 

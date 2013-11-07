@@ -26,7 +26,8 @@ public class Medication implements Serializable {
     private String name;
     private Long dosage;
     private String details;
-    private Long totalPrice;
+    private double totalPrice;
+    private int quantity;
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private mCase mcase;
     @OneToOne(mappedBy = "medication")
@@ -35,9 +36,10 @@ public class Medication implements Serializable {
     public Medication() {
     }
 
-    public void create(String name, Long dosage, String details, Long totalPrice) {
+    public void create(String name, Long dosage, int quantity, String details, double totalPrice) {
         this.setName(name);
         this.setDosage(dosage);
+        this.setQuantity(quantity);
         this.setDetails(details);
         this.setTotalPrice(totalPrice);
     }
@@ -90,11 +92,19 @@ public class Medication implements Serializable {
         this.order = order;
     }
 
-    public Long getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Long totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

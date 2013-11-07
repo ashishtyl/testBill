@@ -1,0 +1,50 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form">
+            <!--<p:panel>-->
+
+            <p:dataTable id="dataTabledrugCatalog" var="drugCatalog" value="#{orderEntryManagedBean.drugsCatalog}"
+                         selection="#{orderEntryManagedBean.selectedDrugs}">
+                <p:column selectionMode="multiple" style="width:2%" />  
+                <p:column headerText="Drug Name">
+                    <h:outputText value="#{drugCatalog.name}"/>
+                </p:column>
+                <p:column headerText="Drug Type"> 
+                    <h:outputText value="#{drugCatalog.type}"/>
+                </p:column>
+                <p:column headerText="Method of Administration">
+                    <h:outputText value="#{drugCatalog.method}"/>
+                </p:column>
+                <p:column headerText="Recommended Dosage (in mg)">
+                    <h:outputText value="#{drugCatalog.recommendedDosage}"/>
+                </p:column>
+                <p:column headerText="Side Effects">
+                    <h:outputText value="#{drugCatalog.sideEffect}"/>
+                </p:column>
+                <p:column headerText="Unit Price">
+                    <h:outputText value="#{drugCatalog.price}"/>
+                </p:column>
+
+                <f:facet name="footer">  
+                    <p:commandButton id="multiViewButton" value="View" icon="ui-icon-search"  
+                                     update=":form:displayMulti" oncomplete="PF('multiDrugDialog').show()"/> 
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog id="multiDialog" header="Drug Details" widgetVar="multiDrugDialog"  
+                      height="300" showEffect="fade" hideEffect="explode">  
+
+                <p:dataList id="displayMulti" value="#{orderEntryManagedBean.selectedDrugs}" var="selectedDrug">  
+                    Name: #{selectedDrug.name}, Recommended Dosage: #{selectedDrug.recommendedDosage}  
+                </p:dataList>  
+
+            </p:dialog>  
+            <!--</p:panel>-->
+        </h:form>
+    </ui:define>
+</ui:composition>
