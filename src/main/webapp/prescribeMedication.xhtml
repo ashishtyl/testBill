@@ -5,46 +5,69 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-        <h:form id="form">
-            <!--<p:panel>-->
+        <h:form id="form1">
+            <p:panel>
+                <p:commandButton value="Display Drug Catalog"
+                                 actionListener="#{orderEntryManagedBean.doDisplayDrugsCatalog}"
+                                 update=":form1:dataTabledrugCatalog"/>
+                <p:dataTable id="dataTabledrugCatalog" var="drugsCatalog" value="#{orderEntryManagedBean.drugsCatalog}">
+                    <p:column headerText="Drug Name">
+                        <h:outputText value="#{drugsCatalog.name}"/>
+                    </p:column>
+                    <p:column headerText="Drug Type"> 
+                        <h:outputText value="#{drugsCatalog.type}"/>
+                    </p:column>
+                    <p:column headerText="Method of Administration">
+                        <h:outputText value="#{drugsCatalog.method}"/>
+                    </p:column>
+                    <p:column headerText="Recommended Dosage (in mg)">
+                        <h:outputText value="#{drugsCatalog.recommendedDosage}"/>
+                    </p:column>
+                    <p:column headerText="Side Effects">
+                        <h:outputText value="#{drugsCatalog.sideEffect}"/>
+                    </p:column>
+                    <p:column headerText="Unit Price">
+                        <h:outputText value="#{drugsCatalog.price}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        <h:form id="form2">
+            <!--<p:growl id="growl" showDetail="true" sticky="true" />-->
+            <p:panel id="panel">
+                <h1> Prescribe Medication </h1>
+                <p:messages id="messages" />  
+                <h:panelGrid columns="3">  
+                    <h:outputLabel for="CIN" value="Case Identification Number: *" />
+                    <p:inputText id="CIN" value="#{orderEntryManagedBean.CIN}" required="true" label="CIN">
+                        <f:validateLength minimum="2" />  
+                    </p:inputText>  
+                    <p:message for="CIN" />
 
-            <p:dataTable id="dataTabledrugCatalog" var="drugCatalog" value="#{orderEntryManagedBean.drugsCatalog}"
-                         selection="#{orderEntryManagedBean.selectedDrugs}">
-                <p:column selectionMode="multiple" style="width:2%" />  
-                <p:column headerText="Drug Name">
-                    <h:outputText value="#{drugCatalog.name}"/>
-                </p:column>
-                <p:column headerText="Drug Type"> 
-                    <h:outputText value="#{drugCatalog.type}"/>
-                </p:column>
-                <p:column headerText="Method of Administration">
-                    <h:outputText value="#{drugCatalog.method}"/>
-                </p:column>
-                <p:column headerText="Recommended Dosage (in mg)">
-                    <h:outputText value="#{drugCatalog.recommendedDosage}"/>
-                </p:column>
-                <p:column headerText="Side Effects">
-                    <h:outputText value="#{drugCatalog.sideEffect}"/>
-                </p:column>
-                <p:column headerText="Unit Price">
-                    <h:outputText value="#{drugCatalog.price}"/>
-                </p:column>
+                    <h:outputLabel for="dName" value="Drug Name: *" />
+                    <p:inputText id="dName" value="#{orderEntryManagedBean.name}" required="true" label="dName">
+                        <f:validateLength minimum="2" />  
+                    </p:inputText>  
+                    <p:message for="dName" />
 
-                <f:facet name="footer">  
-                    <p:commandButton id="multiViewButton" value="View" icon="ui-icon-search"  
-                                     update=":form:displayMulti" oncomplete="PF('multiDrugDialog').show()"/> 
-                </f:facet>
-            </p:dataTable>
+                    <h:outputLabel for="dDosage" value="Drug Dosage: " />
+                    <p:inputText id="dDosage" value="#{orderEntryManagedBean.dosage}" required="true" label="dDosage">
+                    </p:inputText>  
+                    <p:message for="dDosage" />
 
-            <p:dialog id="multiDialog" header="Drug Details" widgetVar="multiDrugDialog"  
-                      height="300" showEffect="fade" hideEffect="explode">  
+                    <h:outputLabel for="dQty" value="Quantity: " />
+                    <p:inputText id="dQty" value="#{orderEntryManagedBean.quantity}" required="true" label="dQty">
+                    </p:inputText>  
+                    <p:message for="dQty" />
 
-                <p:dataList id="displayMulti" value="#{orderEntryManagedBean.selectedDrugs}" var="selectedDrug">  
-                    Name: #{selectedDrug.name}, Recommended Dosage: #{selectedDrug.recommendedDosage}  
-                </p:dataList>  
-
-            </p:dialog>  
-            <!--</p:panel>-->
+                    <h:outputLabel for="dDetails" value="Prescription Details: " />
+                    <p:inputText id="dDetails" value="#{orderEntryManagedBean.details}" required="true" label="dDetails">
+                        <f:validateLength minimum="2" />  
+                    </p:inputText>  
+                    <p:message for="dDetails" />
+                </h:panelGrid>
+            </p:panel>
+            <p:commandButton value="Submit" update="panel" process="@this" actionListener="#{orderEntryManagedBean.doPrescribeMedication}"/>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -7,14 +7,12 @@ package com.is3102.controller;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import com.is3102.EntityClass.DrugCatalog;
-import com.is3102.entity.Employee;
 import java.util.List;
-import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import com.is3102.service.OrderEntryRemote;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -28,15 +26,16 @@ public class OrderEntryManagedBean implements Serializable {
 
     @EJB
     public OrderEntryRemote oem;
-    List<DrugCatalog> drugsCatalog;// = new ArrayList<DrugCatalog>();
-    private DrugCatalog selectedDrug;
-    private DrugCatalog[] selectedDrugs;
+    List<DrugCatalog> drugsCatalog = new ArrayList<DrugCatalog>();
+    //private DrugCatalog selectedDrug;
+    //private DrugCatalog[] selectedDrugs;
     private String CIN;
     private String name;
     private long dosage;
     private int quantity;
     private String details;
-    private double unitPrice;
+    private double price;
+    private String category;
 
     //private SelectItem[] drugTypeOptions;
     //private String[] drugTypes = new String[100];
@@ -81,37 +80,27 @@ public class OrderEntryManagedBean implements Serializable {
         this.details = details;
     }
 
-    public double getUnitPrice() {
-        return unitPrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setUnitPrice(double unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public OrderEntryManagedBean() {
-        //drugsCatalog = oem.displayDrugCatalog();
-        //drugTypeOptions = createFilterOptions(drugTypes);
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public List<DrugCatalog> getDrugsCatalog() {
         return drugsCatalog;
     }
 
-    public DrugCatalog getSelectedDrug() {
-        return selectedDrug;
-    }
-
-    public void setSelectedDrug(DrugCatalog selectedDrug) {
-        this.selectedDrug = selectedDrug;
-    }
-
-    public DrugCatalog[] getSelectedDrugs() {
-        return selectedDrugs;
-    }
-
-    public void setSelectedDrugs(DrugCatalog[] selectedDrugs) {
-        this.selectedDrugs = selectedDrugs;
+    public OrderEntryManagedBean() {
     }
 
     public void doDisplayDrugsCatalog(ActionEvent actionEvent) {
@@ -124,15 +113,16 @@ public class OrderEntryManagedBean implements Serializable {
     public void doPrescribeMedication(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            String medName = oem.prescribeMedication(CIN, name, dosage, quantity, details, unitPrice);
-
+            String medName = oem.prescribeMedication(CIN, name, dosage, quantity, details);
             context.addMessage(null, new FacesMessage("Medication " + medName + " successfully ordered!"));
         } catch (Exception ex) {
+            //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
+            //FacesContext.getCurrentInstance().addMessage(null, msg);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
         }
     }
-
+    
     /*private SelectItem[] createFilterOptions(String[] drugTypes) {
      SelectItem[] options = new SelectItem[drugTypes.length + 1];
 

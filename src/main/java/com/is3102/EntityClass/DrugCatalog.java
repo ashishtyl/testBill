@@ -26,6 +26,7 @@ public class DrugCatalog implements Serializable {
     private Long recommendedDosage; // 500 (mg)
     private String sideEffect;
     private Long price;
+    private String category;
 
     public DrugCatalog() {
     }
@@ -37,6 +38,7 @@ public class DrugCatalog implements Serializable {
         this.setRecommendedDosage(recommendedDosage);
         this.setSideEffect(sideEffect);
         this.setPrice(price);
+        this.setCategory(category);
     }
 
     public Long getId() {
@@ -93,5 +95,13 @@ public class DrugCatalog implements Serializable {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

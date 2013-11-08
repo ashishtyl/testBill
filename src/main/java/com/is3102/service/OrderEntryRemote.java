@@ -16,7 +16,7 @@ import javax.ejb.Remote;
 @Remote
 public interface OrderEntryRemote {
     
-    public String prescribeMedication(String CIN, String name, Long dosage, int quantity, String details, double unitPrice)  throws DrugException, Exception;
-    
+    public String prescribeMedication(String CIN, String name, Long dosage, int quantity, String details) throws DrugException, Exception;
+    public boolean checkDrugOverDose(String name, Long dosage);
     public List<DrugCatalog> displayDrugCatalog();
 }
