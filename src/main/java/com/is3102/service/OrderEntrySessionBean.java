@@ -11,6 +11,7 @@ import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.DrugException;
 import com.is3102.Exception.ExistException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -94,14 +95,33 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             qdc.setParameter("name", drugName);
             DrugCatalog drugc = (DrugCatalog) qdc.getSingleResult();
             if (category.equals(drugc.getCategory())) {
-                System.out.println("DRUG-DRUG INTERACTION!");
-                return true;
+                if (drug.getName().equalsIgnoreCase(drugc.getName())) {
+                    continue;
+                } else {
+                    System.out.println("DRUG-DRUG INTERACTION!");
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    public boolean checkDrugAllergy() {
+    public boolean checkDrugAllergy(String CIN, String name) {
+        /*Query q = em.createQuery("SELECT dc FROM DrugCatalog dc WHERE dc.name = :name");
+         q.setParameter("name", name);
+         DrugCatalog drug = (DrugCatalog) q.getSingleResult();*/
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        String allergies = mcase.getMedicalAnamnesis().getAllergies();
+        //String allergies = "Penicillin; Paracetamol";
+        System.out.println(allergies);
+        List<String> allergyList = Arrays.asList(allergies.split("[\\s,;]+"));
+        System.out.println(allergyList.toString());
+        for (String str : allergyList) {
+            if (name.equalsIgnoreCase(str)) {
+                return true;
+            }
+            System.out.println(str);
+        }
         return true;
     }
 
