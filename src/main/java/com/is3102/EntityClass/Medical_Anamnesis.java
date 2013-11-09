@@ -31,9 +31,7 @@ public class Medical_Anamnesis implements Serializable {
     public Medical_Anamnesis() {
     }
 
-    public void create(String diseaseHistory,
-            String socialHistory, String medicalHistory,
-            String familyHistory, String allergies, String symptoms) {
+    public void create(String diseaseHistory, String socialHistory, String medicalHistory, String familyHistory, String allergies, String symptoms) {
         this.setDiseaseHistory(diseaseHistory);
         this.setSocialHistory(socialHistory);
         this.setMedicalHistory(medicalHistory);

@@ -81,8 +81,8 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             return (medication.getName());
         }
     }
-    
-        @TransactionAttribute(TransactionAttributeType.REQUIRED)
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public String orderLabRadProcedure(String CIN, String name, int quantity, String details) throws ExistException, ProcedureException {
         mCase mcase = em.find(mCase.class, new Long(CIN));
         if (mcase == null) {
@@ -96,22 +96,20 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             double unitPrice = service.getPrice();
             double totalPrice = quantity * unitPrice;
             if (!checkProcedureSafety(CIN, name)) {
-    
-                        POEOrder order = new POEOrder();
-                        Date dateOrdered = new Date();
-                        order.create(dateOrdered);
-                        labradprocedure.create(name, quantity, details, totalPrice);
-                        mcase.getLabRadProcedure().add(labradprocedure);
-                        labradprocedure.setMcase(mcase);
-                        order.setLabRadProcedure(labradprocedure);
-                        mcase.getOrders().add(order);
-                        order.setMcase(mcase);
-                        em.persist(order);
-                        em.persist(labradprocedure);
-                        em.persist(mcase);
-                        em.flush();
-                    
-                
+
+                POEOrder order = new POEOrder();
+                Date dateOrdered = new Date();
+                order.create(dateOrdered);
+                labradprocedure.create(name, quantity, details, totalPrice);
+                mcase.getLabRadProcedure().add(labradprocedure);
+                labradprocedure.setMcase(mcase);
+                order.setLabRadProcedure(labradprocedure);
+                mcase.getOrders().add(order);
+                order.setMcase(mcase);
+                em.persist(order);
+                em.persist(labradprocedure);
+                em.persist(mcase);
+                em.flush();
             } else {
                 throw new ProcedureException("Procedure cannot be ordered due to pregnancy!");
             }
@@ -153,22 +151,21 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         }
         return false;
     }
-    
-        public boolean checkProcedureSafety(String CIN, String name) {
+
+    public boolean checkProcedureSafety(String CIN, String name) {
         Query q = em.createQuery("SELECT sc FROM ServiceCatalog sc WHERE sc.name = :name");
         q.setParameter("name", name);
         ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
         Boolean safe = service.isSafeForPregnant();
         mCase mcase = em.find(mCase.class, new Long(CIN));
         Boolean pregnant = mcase.getMedicalAnamnesis().isIsPregnant();
-        if (safe){
+        if (safe) {
+            return true;
+        } else if (!safe) {
+            if (!pregnant) {
                 return true;
             }
-        else if (!safe){
-            if (!pregnant){
-                return true;
-            }
-        }    
+        }
         return false;
     }
 
@@ -195,11 +192,25 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         System.out.println(drugCatalog.size());
         return drugCatalog;
     }
-    
-        public List<ServiceCatalog> displayServiceCatalog() {
-        Query qdc = em.createQuery("SELECT dc FROM DrugCatalog dc");
+
+    public List<ServiceCatalog> displayServiceCatalog() {
+        Query qdc = em.createQuery("SELECT dc FROM ServiceCatalos dc");
         List<ServiceCatalog> serviceCatalog = qdc.getResultList();
         System.out.println(serviceCatalog.size());
         return serviceCatalog;
+    }
+
+    public List<Medication> listMedication(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        List<Medication> medication= mcase.getMedication();
+        System.out.println(medication.size());
+        return medication;
+    }
+
+    public List<LabRadProcedure> listLabRadProcedures(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        List<LabRadProcedure> labradProc= mcase.getLabRadProcedure();
+        System.out.println(labradProc.size());
+        return labradProc;
     }
 }

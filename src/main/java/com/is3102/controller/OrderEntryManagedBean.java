@@ -39,7 +39,6 @@ public class OrderEntryManagedBean implements Serializable {
     private String details;
     private double price;
     private String category;
-
     private String lrpCIN;
     private String lrpName;
     private int lrpQuantity;

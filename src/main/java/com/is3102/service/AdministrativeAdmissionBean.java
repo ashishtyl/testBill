@@ -167,7 +167,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     }
 
     public mCase getmCase(String CIN) {
-        mCase mcase = em.find(mCase.class, CIN);
+        mCase mcase = em.find(mCase.class, new Long(CIN));
         return mcase;
     }
 
@@ -212,7 +212,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     }
 
     @Override
-    public void update(Long id, String newPassport_NRIC, String newName, String newAddress, String newBirthday, String newNumber, String newWeight) throws ExistException, ParseException, Exception {
+    public void updatePatient(Long id, String newPassport_NRIC, String newName, String newAddress, String newBirthday, String newNumber, String newWeight) throws ExistException, ParseException, Exception {
         Date bDate = HandleDates.getDateFromString(newBirthday);
         //Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :passport_NRIC");
         //q.setParameter("passport_NRIC", newPassport_NRIC);
@@ -225,5 +225,17 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         patient.setcNumber(newNumber);
         patient.setWeight(newWeight);
         em.merge(patient);
+    }
+    
+    @Override
+    public void updateCase(Long id, String newDateDischarge, String newType) throws ExistException, ParseException, Exception {
+        Date dDate = HandleDates.getDateFromString(newDateDischarge);
+        //Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :passport_NRIC");
+        //q.setParameter("passport_NRIC", newPassport_NRIC);
+        //patient = (Patient) q.getSingleResult();
+        mCase mcase = em.find(mCase.class, id);
+        mcase.setDateDischarged(dDate);
+        mcase.setType(newType);
+        em.merge(mcase);
     }
 }

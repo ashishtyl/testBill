@@ -37,7 +37,9 @@ public interface AdministrativeAdmissionRemote {
     
     public Patient getPatient(String NRIC_PIN);
 
-    public void update(Long id, String Passport_NRIC, String newName, String newAddress, String newBirthday, String newNumber, String newWeight) throws ExistException, ParseException, Exception;
+    public void updatePatient(Long id, String Passport_NRIC, String newName, String newAddress, String newBirthday, String newNumber, String newWeight) throws ExistException, ParseException, Exception;
+    
+    public void updateCase(Long id, String newDateDischarge, String newType) throws ExistException, ParseException, Exception;
     
     public List<mCase> getPatientCases(String name, String passport_NRIC);
 }
