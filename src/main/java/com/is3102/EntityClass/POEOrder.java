@@ -6,6 +6,7 @@ package com.is3102.EntityClass;
 
 import com.is3102.entity.Employee;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -24,16 +27,26 @@ public class POEOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOrdered;
     @ManyToOne
     private Employee employee;
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    private mCase mcase;
     @OneToOne(cascade = {CascadeType.PERSIST})
     private Medication medication;
-    
     @OneToOne(cascade = {CascadeType.PERSIST})
-    private MedicalProcedure mProcedure;
+    private LabRadProcedure lrProcedure;
     
     @OneToOne(cascade = {CascadeType.PERSIST})
     private AppointmentProcedure aProcedure;
+    
+    public POEOrder() {
+    }
+
+    public void create(Date setDateOrdered) {
+        this.setDateOrdered(dateOrdered);
+    }
 
     public Long getId() {
         return id;
@@ -43,12 +56,28 @@ public class POEOrder implements Serializable {
         this.id = id;
     }
 
-    public Employee getEmployeeDoctor() {
+    public Date getDateOrdered() {
+        return dateOrdered;
+    }
+
+    public void setDateOrdered(Date dateOrdered) {
+        this.dateOrdered = dateOrdered;
+    }
+
+    public Employee getEmployee() {
         return employee;
     }
 
-    public void setEmployeeDoctor(Employee employeeDoctor) {
+    public void setEmployee(Employee employeeDoctor) {
         this.employee = employeeDoctor;
+    }
+    
+    public mCase getMcase() {
+        return mcase;
+    }
+
+    public void setMcase(mCase mcase) {
+        this.mcase = mcase;
     }
 
     public Medication getMedication() {
@@ -59,12 +88,12 @@ public class POEOrder implements Serializable {
         this.medication = medication;
     }
 
-    public MedicalProcedure getmProcedure() {
-        return mProcedure;
+    public LabRadProcedure getlrProcedure() {
+        return lrProcedure;
     }
 
-    public void setmProcedure(MedicalProcedure mProcedure) {
-        this.mProcedure = mProcedure;
+    public void setlrProcedure(LabRadProcedure lrProcedure) {
+        this.lrProcedure = lrProcedure;
     }
 
     public AppointmentProcedure getaProcedure() {

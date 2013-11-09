@@ -102,6 +102,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         }
         if (mcase.getBed() == null) {
             mcase.setBed(bed);
+            mcase.setType(type);
             appointment.setmCase(mcase);
             mcase.setPatient(appointment.getPatient());
             //em.persist(appointment);

@@ -12,6 +12,7 @@ import com.is3102.Exception.DrugException;
 import com.is3102.Exception.ExistException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -55,10 +56,14 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
                 } else {
                     //if (!checkDrugOverDose(name, dosage)) {
                     POEOrder order = new POEOrder();
+                    Date dateOrdered = new Date();
+                    order.create(dateOrdered);
                     medication.create(name, dosage, quantity, details, totalPrice);
                     mcase.getMedication().add(medication);
                     medication.setMcase(mcase);
                     order.setMedication(medication);
+                    mcase.getOrders().add(order);
+                    order.setMcase(mcase);
                     em.persist(order);
                     em.persist(medication);
                     em.persist(mcase);
