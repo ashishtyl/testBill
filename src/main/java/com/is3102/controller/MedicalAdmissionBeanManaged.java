@@ -5,16 +5,14 @@
 package com.is3102.controller;
 
 import com.is3102.EntityClass.Medical_Anamnesis;
+import com.is3102.EntityClass.mCase;
 import com.is3102.service.MedicalAdmissionBean1;
 import com.is3102.service.MedicalAdmissionBean1Remote;
-
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +35,8 @@ public class MedicalAdmissionBeanManaged {
     private Medical_Anamnesis mAnamnesis;
     //list testing
     private List<Medical_Anamnesis> list;
+    private List<mCase> caseList;
+    private mCase mcase;
     //list testing
 
     /*public void addAnamnesis(Long caseId, Long AnamnesisId, String diseaseHistory,
@@ -162,16 +162,24 @@ public class MedicalAdmissionBeanManaged {
         this.mab = mab;
     }
 
-    //list testing
     public List<Medical_Anamnesis> getList() {
         System.out.println("Hello");
         list = mab.ListMedical_Anamnesis();
         System.out.println("HelloHello");
         return list;
     }
-    //list testing
-
+ 
     public void setList(List<Medical_Anamnesis> list) {
         this.list = list;
     }
+    
+     public List<mCase> getCaseList() {
+        caseList = mab.ListmCase();
+        return caseList;
+    }
+
+    public void setCaseList(List<mCase> list1) {
+        this.caseList = list1;
+    }
+    
 }

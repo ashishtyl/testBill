@@ -5,9 +5,7 @@
 package com.is3102.controller;
 
 import com.is3102.EntityClass.DischargeSummary;
-import com.is3102.EntityClass.Medical_Anamnesis;
 import com.is3102.EntityClass.Transfer;
-import com.is3102.Exception.CaseException;
 import com.is3102.service.DischargeAndTransferBean1Remote;
 
 import javax.ejb.EJB;

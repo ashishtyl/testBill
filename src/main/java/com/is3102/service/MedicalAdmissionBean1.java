@@ -4,14 +4,12 @@
  */
 package com.is3102.service;
 
-import com.is3102.EntityClass.Bed;
 import com.is3102.EntityClass.Diagnosis;
 import com.is3102.EntityClass.Medical_Anamnesis;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.CaseException;
 import com.is3102.Exception.ExistException;
 import javax.ejb.Stateful;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -29,6 +27,7 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
     EntityManager em;
     Medical_Anamnesis anamnesis;
     List<Medical_Anamnesis> anamnesisList;
+    List<mCase> caseList;
     Diagnosis diagnosis;
     mCase mcase;
 
@@ -54,12 +53,9 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
         anamnesis.create(diseaseHistory,
                 socialHistory, medicalHistory,
                 familyHistory, allergies, symptoms);
-       // System.out.println("Test2");
         mcase.setMedicalAnamnesis(anamnesis);
-        //System.out.println("Test3");
         em.persist(mcase);
-        //System.out.println("Test4");
-        //em.flush();
+    
     }
 
     @Override
@@ -95,6 +91,23 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
             throw new ExistException("Anamnesis does not exsit");
         }
         em.remove(anamnesis);
+    }
+    
+ 
+    @Override
+      public List<mCase> ListmCase() {
+        caseList = new ArrayList<mCase>();
+        try {
+            Query qb = em.createQuery("SELECT m FROM mcase m");
+
+            for (Object ob : qb.getResultList()) {
+                mcase = (mCase) ob;
+                caseList.add(mcase);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return caseList;
     }
     //lack of query sentence to database?
     //following methods have been codded in the coding bean
