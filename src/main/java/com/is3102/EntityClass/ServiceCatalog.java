@@ -23,7 +23,8 @@ public class ServiceCatalog implements Serializable {
     private String name; // blood test
     private String details; // blood test for cancer; blood test for dengue
     private Long price;
-
+    private boolean safeForPregnant;
+    
     public ServiceCatalog() {
     }
 
@@ -63,5 +64,19 @@ public class ServiceCatalog implements Serializable {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    /**
+     * @return the safeForPregnant
+     */
+    public boolean isSafeForPregnant() {
+        return safeForPregnant;
+    }
+
+    /**
+     * @param safeForPregnant the safeForPregnant to set
+     */
+    public void setSafeForPregnant(boolean safeForPregnant) {
+        this.safeForPregnant = safeForPregnant;
     }
 }

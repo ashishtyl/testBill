@@ -5,11 +5,14 @@
 package com.is3102.service;
 
 import com.is3102.EntityClass.DrugCatalog;
+import com.is3102.EntityClass.LabRadProcedure;
 import com.is3102.EntityClass.Medication;
 import com.is3102.EntityClass.POEOrder;
+import com.is3102.EntityClass.ServiceCatalog;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.DrugException;
 import com.is3102.Exception.ExistException;
+import com.is3102.Exception.ProcedureException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -78,6 +81,43 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             return (medication.getName());
         }
     }
+    
+        @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public String orderLabRadProcedure(String CIN, String name, int quantity, String details) throws ExistException, ProcedureException {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        if (mcase == null) {
+            em.clear();
+            throw new ExistException("CASE DOES NOT EXIST");
+        } else {
+            LabRadProcedure labradprocedure = new LabRadProcedure();
+            Query q = em.createQuery("SELECT sc FROM ServiceCatalog sc WHERE sc.name = :name");
+            q.setParameter("name", name);
+            ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
+            double unitPrice = service.getPrice();
+            double totalPrice = quantity * unitPrice;
+            if (!checkProcedureSafety(CIN, name)) {
+    
+                        POEOrder order = new POEOrder();
+                        Date dateOrdered = new Date();
+                        order.create(dateOrdered);
+                        labradprocedure.create(name, quantity, details, totalPrice);
+                        mcase.getLabRadProcedure().add(labradprocedure);
+                        labradprocedure.setMcase(mcase);
+                        order.setLabRadProcedure(labradprocedure);
+                        mcase.getOrders().add(order);
+                        order.setMcase(mcase);
+                        em.persist(order);
+                        em.persist(labradprocedure);
+                        em.persist(mcase);
+                        em.flush();
+                    
+                
+            } else {
+                throw new ProcedureException("Procedure cannot be ordered due to pregnancy!");
+            }
+            return (labradprocedure.getName());
+        }
+    }
 
     public boolean checkDrugOverDose(String name, Long dosage) {
         Query q = em.createQuery("SELECT dc FROM DrugCatalog dc WHERE dc.name = :name");
@@ -113,6 +153,24 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         }
         return false;
     }
+    
+        public boolean checkProcedureSafety(String CIN, String name) {
+        Query q = em.createQuery("SELECT sc FROM ServiceCatalog sc WHERE sc.name = :name");
+        q.setParameter("name", name);
+        ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
+        Boolean safe = service.isSafeForPregnant();
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        Boolean pregnant = mcase.getMedicalAnamnesis().isIsPregnant();
+        if (safe){
+                return true;
+            }
+        else if (!safe){
+            if (!pregnant){
+                return true;
+            }
+        }    
+        return false;
+    }
 
     public boolean checkDrugAllergy(String CIN, String name) {
         /*Query q = em.createQuery("SELECT dc FROM DrugCatalog dc WHERE dc.name = :name");
@@ -136,5 +194,12 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         List<DrugCatalog> drugCatalog = qdc.getResultList();
         System.out.println(drugCatalog.size());
         return drugCatalog;
+    }
+    
+        public List<ServiceCatalog> displayServiceCatalog() {
+        Query qdc = em.createQuery("SELECT dc FROM DrugCatalog dc");
+        List<ServiceCatalog> serviceCatalog = qdc.getResultList();
+        System.out.println(serviceCatalog.size());
+        return serviceCatalog;
     }
 }
