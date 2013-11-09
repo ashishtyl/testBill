@@ -36,11 +36,10 @@ public class POEOrder implements Serializable {
     @OneToOne(cascade = {CascadeType.PERSIST})
     private Medication medication;
     @OneToOne(cascade = {CascadeType.PERSIST})
-    private LabRadProcedure lrProcedure;
-    
+    private LabRadProcedure labRadProcedure;
     @OneToOne(cascade = {CascadeType.PERSIST})
     private AppointmentProcedure aProcedure;
-    
+
     public POEOrder() {
     }
 
@@ -71,7 +70,7 @@ public class POEOrder implements Serializable {
     public void setEmployee(Employee employeeDoctor) {
         this.employee = employeeDoctor;
     }
-    
+
     public mCase getMcase() {
         return mcase;
     }
@@ -88,14 +87,14 @@ public class POEOrder implements Serializable {
         this.medication = medication;
     }
 
-    public LabRadProcedure getlrProcedure() {
-        return lrProcedure;
+    public LabRadProcedure getLabRadProcedure() {
+        return labRadProcedure;
     }
 
-    public void setlrProcedure(LabRadProcedure lrProcedure) {
-        this.lrProcedure = lrProcedure;
+    public void setLabRadProcedure(LabRadProcedure labRadProcedure) {
+        this.labRadProcedure = labRadProcedure;
     }
-
+    
     public AppointmentProcedure getaProcedure() {
         return aProcedure;
     }

@@ -38,19 +38,17 @@ public class mCase implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Medication> medication = new ArrayList<Medication>();
     @OneToMany(cascade = {CascadeType.ALL})
+    private List<LabRadProcedure> labRadProcedure = new ArrayList<LabRadProcedure>();
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<POEOrder> orders = new ArrayList<POEOrder>();
     @OneToMany(cascade = {CascadeType.ALL})
     private List<MedicalProcedure> mProcedures = new ArrayList<MedicalProcedure>();
     @OneToMany(cascade = {CascadeType.ALL})
-    private List<LabRadProcedure> lrProcedures = new ArrayList<LabRadProcedure>();
-    @OneToMany(cascade = {CascadeType.ALL})
     private List<Nursing_Procedure> nProcedures = new ArrayList<Nursing_Procedure>();
     @OneToOne(cascade = {CascadeType.ALL})
     private Transfer transfer;
-    
     @OneToOne(mappedBy = "mcase")
     private Appointment appointment;
-    
     @OneToOne(cascade = {CascadeType.ALL})
     private DischargeSummary dischargeSummary;
     @OneToOne(cascade = {CascadeType.ALL})
@@ -112,12 +110,12 @@ public class mCase implements Serializable {
         this.mProcedures = mProcedures;
     }
 
-    public List<LabRadProcedure> getLrProcedures() {
-        return lrProcedures;
+    public List<LabRadProcedure> getLabRadProcedure() {
+        return labRadProcedure;
     }
 
-    public void setLrProcedures(List<LabRadProcedure> lrProcedures) {
-        this.lrProcedures = lrProcedures;
+    public void setLabRadProcedure(List<LabRadProcedure> labRadProcedure) {
+        this.labRadProcedure = labRadProcedure;
     }
 
     public List<Medication> getMedication() {

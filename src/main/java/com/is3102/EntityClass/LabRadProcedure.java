@@ -18,13 +18,13 @@ import javax.persistence.OneToOne;
  * @author Swarit
  */
 @Entity(name = "LabRadProcedure")
-public class LabRadProcedure  implements Serializable {
-    
+public class LabRadProcedure implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long procId;
-    private String name;
-    private String details;
+    private String name; // blood test (get from ServiceCatalog)
+    private String details; // blood test for cancer; blood test for dengue (get from ServiceCatalog)
     private double totalPrice;
     private int quantity;
     @ManyToOne(cascade = {CascadeType.PERSIST})

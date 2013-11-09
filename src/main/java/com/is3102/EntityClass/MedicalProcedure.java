@@ -13,9 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -25,7 +22,7 @@ import javax.persistence.Temporal;
  *
  * @author Ben
  */
-@Entity(name = "MedicalProcedure")
+@Entity(name = "mProcedures")
 public class MedicalProcedure implements Serializable {
 
     @Id
@@ -47,8 +44,6 @@ public class MedicalProcedure implements Serializable {
     private String comments;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
-    @OneToOne(mappedBy = "mProcedure")
-    private POEOrder order;
     //@OneToOne(cascade = {CascadeType.PERSIST})
     //private Report report;
 
@@ -221,13 +216,5 @@ public class MedicalProcedure implements Serializable {
      */
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public POEOrder getOrder() {
-        return order;
-    }
-
-    public void setOrder(POEOrder order) {
-        this.order = order;
     }
 }

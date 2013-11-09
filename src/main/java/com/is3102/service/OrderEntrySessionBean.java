@@ -54,20 +54,23 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
                 if (checkDrugInteraction(CIN, name)) {
                     throw new DrugException("Patient is already using a medicine which reacts with " + name + "!");
                 } else {
-                    //if (!checkDrugOverDose(name, dosage)) {
-                    POEOrder order = new POEOrder();
-                    Date dateOrdered = new Date();
-                    order.create(dateOrdered);
-                    medication.create(name, dosage, quantity, details, totalPrice);
-                    mcase.getMedication().add(medication);
-                    medication.setMcase(mcase);
-                    order.setMedication(medication);
-                    mcase.getOrders().add(order);
-                    order.setMcase(mcase);
-                    em.persist(order);
-                    em.persist(medication);
-                    em.persist(mcase);
-                    em.flush();
+                    if (checkDrugAllergy(name, CIN)) {
+                        throw new DrugException("Patient is allergic to " + name + "!");
+                    } else {
+                        POEOrder order = new POEOrder();
+                        Date dateOrdered = new Date();
+                        order.create(dateOrdered);
+                        medication.create(name, dosage, quantity, details, totalPrice);
+                        mcase.getMedication().add(medication);
+                        medication.setMcase(mcase);
+                        order.setMedication(medication);
+                        mcase.getOrders().add(order);
+                        order.setMcase(mcase);
+                        em.persist(order);
+                        em.persist(medication);
+                        em.persist(mcase);
+                        em.flush();
+                    }
                 }
             } else {
                 throw new DrugException("Drug Overdose!");
@@ -117,7 +120,6 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
          DrugCatalog drug = (DrugCatalog) q.getSingleResult();*/
         mCase mcase = em.find(mCase.class, new Long(CIN));
         String allergies = mcase.getMedicalAnamnesis().getAllergies();
-        //String allergies = "Penicillin; Paracetamol";
         System.out.println(allergies);
         List<String> allergyList = Arrays.asList(allergies.split("[\\s,;]+"));
         System.out.println(allergyList.toString());
@@ -125,9 +127,8 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             if (name.equalsIgnoreCase(str)) {
                 return true;
             }
-            System.out.println(str);
         }
-        return true;
+        return false;
     }
 
     public List<DrugCatalog> displayDrugCatalog() {

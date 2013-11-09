@@ -20,8 +20,8 @@ public class ServiceCatalog implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private String details;
+    private String name; // blood test
+    private String details; // blood test for cancer; blood test for dengue
     private Long price;
 
     public ServiceCatalog() {

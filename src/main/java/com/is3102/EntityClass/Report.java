@@ -21,8 +21,8 @@ public class Report implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long reportId;
-    @OneToOne(mappedBy = "medication")
-    private LabRadProcedure procedure;
+    @OneToOne(mappedBy = "report")
+    private LabRadProcedure labRadProcedure;
 
     public Long getReportId() {
         return reportId;
@@ -32,11 +32,11 @@ public class Report implements Serializable {
         this.reportId = reportId;
     }
 
-    public LabRadProcedure getProcedure() {
-        return procedure;
+    public LabRadProcedure getLabRadProcedure() {
+        return labRadProcedure;
     }
 
-    public void setProcedure(LabRadProcedure procedure) {
-        this.procedure = procedure;
+    public void setLabRadProcedure(LabRadProcedure labRadProcedure) {
+        this.labRadProcedure = labRadProcedure;
     }
 }
