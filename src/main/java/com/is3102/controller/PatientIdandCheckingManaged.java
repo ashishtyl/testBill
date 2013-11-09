@@ -25,6 +25,8 @@ public class PatientIdandCheckingManaged implements Serializable {
 
     @EJB
     public PatientIdandCheckingRemote pm;
+    String name1;
+    String name2;
     String NRIC_PIN1;
     String NRIC_PIN2;
     Date appDate;
@@ -42,6 +44,22 @@ public class PatientIdandCheckingManaged implements Serializable {
 
     public List<mCase> getCases() {
         return cases;
+    }
+
+    public String getName1() {
+        return name1;
+    }
+
+    public void setName1(String name1) {
+        this.name1 = name1;
+    }
+
+    public String getName2() {
+        return name2;
+    }
+
+    public void setName2(String name2) {
+        this.name2 = name2;
     }
 
     public String getNRIC_PIN1() {
@@ -69,24 +87,19 @@ public class PatientIdandCheckingManaged implements Serializable {
     }
 
     public void DoCheckRecurrence(ActionEvent actionEvent) {
-        //FacesContext context = FacesContext.getCurrentInstance();
-        if (pm.checkRecurrence(NRIC_PIN1)) {
-            //getPatientCases(String NRIC_PIN)
-            patient = pm.getPatientInfo(NRIC_PIN1);
-            //context.addMessage(null, new FacesMessage("Patient has an existing Record!"));
-            //context.addMessage(null, new FacesMessage("Patient ID: " + p.getNRIC_PIN() + "\nPatient Name: " + p.getName() + "\nPatient Address: " + p.getAddress() + "\nPatient Contact Number: " + p.getcNumber()));
+        if (pm.checkRecurrence(name1, NRIC_PIN1)) {
+            patient = pm.getPatientInfo(name1, NRIC_PIN1);
         } else {
             patient = null;
-            //context.addMessage(null, new FacesMessage("Patient does not have an existing Record!"));
         }
     }
 
     public void DoCheckAppointment(ActionEvent actionEvent) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Patient patient = pm.getPatient(NRIC_PIN2);
+        Patient patient = pm.getPatientInfo(name2, NRIC_PIN2);
         if (patient != null) {
-            if (pm.checkAppointment(NRIC_PIN2, appDate)) {
-                appointments = pm.getPatientAppointments(NRIC_PIN2, format.format(appDate));
+            if (pm.checkAppointment(name2, NRIC_PIN2, appDate)) {
+                appointments = pm.getPatientAppointments(name2, NRIC_PIN2, format.format(appDate));
             } else {
                 appointments = null;
             }

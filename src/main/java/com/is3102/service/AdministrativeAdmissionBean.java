@@ -19,6 +19,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -37,22 +38,28 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     public AdministrativeAdmissionBean() {
     }
 
-    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
+    public String addPatient(String passport_NRIC, String name, String birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
         Date bDate = HandleDates.getDateFromString(birthday);
-        System.out.println(bloodgroup);
-        patient = em.find(Patient.class, NRIC_PIN);
-        if (patient != null) // Patient Exists
-        {
-            throw new ExistException("PATIENT ALREADY EXISTS");
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :passport_NRIC");
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
+            if (patient != null) // Patient Exists
+            {
+                throw new ExistException("PATIENT ALREADY EXISTS");
+            }
+        } catch (NoResultException ex) {
+            System.out.println("PATIENT DOES NOT EXIST");
+            patient = new Patient();
+            patient.create(passport_NRIC, name, bDate, address, cNumber, nationality, height, weight, gender, bloodgroup);
+            em.persist(patient);
+            return patient.getPassport_NRIC();
         }
-        patient = new Patient();
-        patient.create(NRIC_PIN, name, bDate, address, cNumber, nationality, height, weight, gender, bloodgroup);
-        em.persist(patient);
-        return patient.getNRIC_PIN();
+        return null;
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public String makeAppointment(String NRIC_PIN, String appDate, int id) throws ExistException, ParseException {
+    public String makeAppointment(String passport_NRIC, String appDate, int id) throws ExistException, ParseException {
         Date aDate = HandleDates.getDateFromString(appDate);
         //Doctor doctor = new Doctor();
         Employee doctor = em.find(Employee.class, id);
@@ -60,17 +67,14 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
             em.clear();
             throw new ExistException("DOCTOR DOES NOT EXIST");
         } else {
-            Patient patient = em.find(Patient.class, NRIC_PIN);
-            if (patient == null) {
-                em.clear();
-                throw new ExistException("PATIENT DOES NOT EXIST");
-            } else {
+            try {
+                Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :passport_NRIC");
+                q.setParameter("passport_NRIC", passport_NRIC);
+                patient = (Patient) q.getSingleResult();
                 appointment = new Appointment();
                 mCase mcase = new mCase();
-                System.out.println("Test");
                 appointment.create(aDate);
                 doctor.getAppointments().add(appointment);
-                System.out.println("Appointment ID: " + appointment.getAppId());
                 appointment.setEmployee(doctor);
                 patient.getAppointments().add(appointment);
                 appointment.setPatient(patient);
@@ -79,27 +83,41 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
                 em.persist(patient);
                 em.persist(appointment);
                 em.flush();
+                return (appointment.getAppId()).toString();
+            } catch (Exception ex) {
+                em.clear();
+                throw new ExistException("PATIENT DOES NOT EXIST");
             }
         }
-        return (appointment.getAppId()).toString();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public long createCase(String bedNo, String appId, String type) throws ExistException {
+    public long createCase(String bedNo, String roomNo, String floor, String appId, String type) throws ExistException {
         mCase mcase;
         Appointment appointment = em.find(Appointment.class, new Long(appId));
-        if (appointment == null) {
+        if (appointment
+                == null) {
             throw new ExistException("CASE DOES NOT EXIST");
         }
         mcase = appointment.getmCase();
         Date dateAdmitted = new Date();
         mcase.create(dateAdmitted, type);
+        Query q = em.createQuery("SELECT b FROM Bed b WHERE b.bedNo = :bedNo AND b.roomNo = :roomNo AND b.floor = :floor");
+        q.setParameter("bedNo", bedNo);
+        q.setParameter("roomNo", roomNo);
+        q.setParameter("floor", floor);
+        Bed bed = (Bed) q.getSingleResult();
+        System.out.println(bed.getBedId());
+        System.out.println(bed.getBedNo());
+        System.out.println(bed.getRoomNo());
+        System.out.println(bed.getFloor());
 
-        Bed bed = em.find(Bed.class, new Long(bedNo));
-        if (bed == null) { // Bed does not exist
-            em.clear();
-            throw new ExistException("BED DOES NOT EXIST");
-        }
+        /* if (bed
+         == null) { // Bed does not exist
+         em.clear();
+         throw new ExistException("BED DOES NOT EXIST");
+         } */
+
         if (mcase.getBed() == null) {
             mcase.setBed(bed);
             mcase.setType(type);
@@ -153,12 +171,27 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         return mcase;
     }
 
-    public List<Appointment> getPatientAppointments(String NRIC_PIN) {
-        Patient patient = em.find(Patient.class, NRIC_PIN);
+    public List<Appointment> getPatientAppointments(String passport_NRIC) {
+        Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :passport_NRIC");
+        q.setParameter("passport_NRIC", passport_NRIC);
+        patient = (Patient) q.getSingleResult();
         List appointmentList = (List) patient.getAppointments();
         appointmentList.size();
         return appointmentList;
 
+    }
+
+    public List<mCase> getPatientCases(String name, String passport_NRIC) {
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+            q.setParameter("name", name);
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
+            List mCaseList = (List) patient.getmCases();
+            return mCaseList;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     /* public void UpdatePatientInfo() throws Exception {
@@ -167,15 +200,26 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         return em.find(Employee.class, id);
     }
 
-    public Patient getPatient(String NRIC_PIN) {
-        return em.find(Patient.class, NRIC_PIN);
+    public Patient getPatient(String passport_NRIC) {
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :passport_NRIC");
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
+            return patient;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
-    public void update(String NRIC_PIN, String newName, String newAddress, String newBirthday, String newNumber, String newWeight) throws ExistException, ParseException, Exception {
+    public void update(Long id, String newPassport_NRIC, String newName, String newAddress, String newBirthday, String newNumber, String newWeight) throws ExistException, ParseException, Exception {
         Date bDate = HandleDates.getDateFromString(newBirthday);
-        Patient patient = em.find(Patient.class, NRIC_PIN);
+        //Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :passport_NRIC");
+        //q.setParameter("passport_NRIC", newPassport_NRIC);
+        //patient = (Patient) q.getSingleResult();
+        patient = em.find(Patient.class, id);
         patient.setName(newName);
+        patient.setPassport_NRIC(newPassport_NRIC);
         patient.setAddress(newAddress);
         patient.setBirthday(bDate);
         patient.setcNumber(newNumber);

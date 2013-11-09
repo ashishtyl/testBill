@@ -4,15 +4,15 @@
  */
 package com.is3102.controller;
 
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import com.is3102.EntityClass.DrugCatalog;
+import com.is3102.service.OrderEntryRemote;
 import java.util.List;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-import com.is3102.service.OrderEntryRemote;
-import java.util.ArrayList;
+import javax.faces.bean.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -118,7 +118,7 @@ public class OrderEntryManagedBean implements Serializable {
         } catch (Exception ex) {
             //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
             //FacesContext.getCurrentInstance().addMessage(null, msg);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "ex.getMessage()", null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
         }
     }

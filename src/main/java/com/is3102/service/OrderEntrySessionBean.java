@@ -5,6 +5,7 @@
 package com.is3102.service;
 
 import com.is3102.EntityClass.DrugCatalog;
+import com.is3102.EntityClass.LabRadProcedure;
 import com.is3102.EntityClass.Medication;
 import com.is3102.EntityClass.POEOrder;
 import com.is3102.EntityClass.mCase;
@@ -136,5 +137,14 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         List<DrugCatalog> drugCatalog = qdc.getResultList();
         System.out.println(drugCatalog.size());
         return drugCatalog;
+    }
+
+    public List<Medication> viewMedication(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        return mcase.getMedication();
+    }
+    public List<LabRadProcedure> viewLabRadProcedures(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        return mcase.getLabRadProcedure();
     }
 }

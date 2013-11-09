@@ -8,13 +8,12 @@ import com.is3102.EntityClass.Appointment;
 import com.is3102.EntityClass.Patient;
 import com.is3102.EntityClass.mCase;
 import com.is3102.util.HandleDates;
-
-import java.util.Collection;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -29,52 +28,66 @@ public class PatientIdandCheckingBean implements PatientIdandCheckingRemote {
     public PatientIdandCheckingBean() {
     }
 
-    public boolean checkRecurrence(String NRIC_PIN) {
-
-        patient = em.find(Patient.class, NRIC_PIN);
-        if (patient == null) {
-            return false;
-        } else {
+    public boolean checkRecurrence(String name, String passport_NRIC) {
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+            q.setParameter("name", name);
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
             return true;
+        } catch (NoResultException ex) {
+            return false;
         }
     }
 
-    public boolean checkAppointment(String NRIC_PIN, Date appDate) {
-
+    public boolean checkAppointment(String name, String passport_NRIC, Date appDate) {
         String aDate;
         String dateApp = HandleDates.convertDateToString(appDate);
-        patient = em.find(Patient.class, NRIC_PIN);
-        if (patient.getAppointments().isEmpty()) {
-            return false;
-        } else {
-            Collection<Appointment> appointment = patient.getAppointments(); //get all appointments for a patient
-            for (Appointment appt : appointment) {
-                aDate = HandleDates.convertDateToString(appt.getAppDate());
-                if (aDate.equals(dateApp)) {
-                    System.out.println("Yes");
-                    return true;
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+            q.setParameter("name", name);
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
+            if (patient.getAppointments().isEmpty()) {
+                return false;
+            } else {
+                List<Appointment> appointment = patient.getAppointments(); //get all appointments for a patient
+                for (Appointment appt : appointment) {
+                    aDate = HandleDates.convertDateToString(appt.getAppDate());
+                    if (aDate.equals(dateApp)) {
+                        return true;
+                    }
                 }
+                return false;
             }
+        } catch (NoResultException ex) {
             return false;
         }
     }
 
-    public Patient getPatientInfo(String NRIC_PIN) {
-
-        Patient p = em.find(Patient.class, NRIC_PIN);
-        return p;
+    public Patient getPatientInfo(String name, String passport_NRIC) {
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+            q.setParameter("name", name);
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
+            return patient;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
-    public List<Appointment> getPatientAppointments(String NRIC_PIN, String appDate) {
+    public List<Appointment> getPatientAppointments(String name, String passport_NRIC, String appDate) {
         String aDate;
-        System.out.println(appDate);
-        Patient patient = em.find(Patient.class, NRIC_PIN);
+        Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+        q.setParameter("name", name);
+        q.setParameter("passport_NRIC", passport_NRIC);
+        patient = (Patient) q.getSingleResult();
         List<Appointment> appointmentList = (List) patient.getAppointments();
         List apps = new ArrayList();
         for (Appointment app : appointmentList) {
             aDate = HandleDates.convertDateToString(app.getAppDate());
             if (aDate.equals(appDate)) {
-                System.out.println(aDate);
                 apps.add(app);
             }
         }
@@ -85,9 +98,16 @@ public class PatientIdandCheckingBean implements PatientIdandCheckingRemote {
         return em.find(Patient.class, NRIC_PIN);
     }
 
-    public List<mCase> getPatientCases(String NRIC_PIN) {
-        Patient patient = em.find(Patient.class, NRIC_PIN);
-        List mCaseList = (List) patient.getmCases();
-        return mCaseList;
+    public List<mCase> getPatientCases(String name, String passport_NRIC) {
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+            q.setParameter("name", name);
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
+            List mCaseList = (List) patient.getmCases();
+            return mCaseList;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }

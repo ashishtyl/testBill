@@ -5,14 +5,14 @@
 package com.is3102.EntityClass;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -23,12 +23,10 @@ import javax.persistence.Temporal;
 @Entity(name = "Patient")
 public class Patient implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    //private Long id;
     @Id
-    private String NRIC_PIN;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long patientId;
+    private String passport_NRIC;
     private String name;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date birthday;
@@ -39,6 +37,82 @@ public class Patient implements Serializable {
     private String height;
     private String weight;
     private String gender;
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
+    private List<Appointment> appointment = new ArrayList<Appointment>();
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
+    private List<mCase> mcase = new ArrayList<mCase>();
+
+    public Patient() {
+    }
+
+    public void create(String passport_NRIC, String name, Date birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodGroup) {
+        this.setPassport_NRIC(passport_NRIC);
+        this.setName(name);
+        this.setBirthday(birthday);
+        this.setAddress(address);
+        this.setcNumber(cNumber);
+        this.setNationality(nationality);
+        this.setGender(gender);
+        this.setBloodGroup(bloodGroup);
+        this.setHeight(height);
+        this.setWeight(weight);
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public String getPassport_NRIC() {
+        return passport_NRIC;
+    }
+
+    public void setPassport_NRIC(String passport_NRIC) {
+        this.passport_NRIC = passport_NRIC;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getcNumber() {
+        return cNumber;
+    }
+
+    public void setcNumber(String cNumber) {
+        this.cNumber = cNumber;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointment;
+    }
+
+    public void setAppointments(List<Appointment> appointment) {
+        this.appointment = appointment;
+    }
 
     public String getBloodGroup() {
         return bloodGroup;
@@ -79,87 +153,12 @@ public class Patient implements Serializable {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
-    private Collection<Appointment> appointment = new ArrayList<Appointment>();
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
-    private Collection<mCase> mcase = new ArrayList<mCase>();
 
-    public Patient() {
-    }
-
-    public void create(String NRIC_PIN, String name, Date birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodGroup) {
-        this.setNRIC_PIN(NRIC_PIN);
-        this.setName(name);
-        this.setBirthday(birthday);
-        this.setAddress(address);
-        this.setcNumber(cNumber);
-        this.setNationality(nationality);
-        this.setGender(gender);
-        this.setBloodGroup(bloodGroup);
-        this.setHeight(height);
-        this.setWeight(weight);
-    }
-
-    /* public Long getId() {
-     return id;
-     }
-
-     public void setId(Long id) {
-     this.id = id;
-     } */
-    public String getNRIC_PIN() {
-        return NRIC_PIN;
-    }
-
-    public void setNRIC_PIN(String NRIC_PIN) {
-        this.NRIC_PIN = NRIC_PIN;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getcNumber() {
-        return cNumber;
-    }
-
-    public void setcNumber(String cNumber) {
-        this.cNumber = cNumber;
-    }
-
-    public Collection<Appointment> getAppointments() {
-        return appointment;
-    }
-
-    public void setAppointments(Collection<Appointment> appointment) {
-        this.appointment = appointment;
-    }
-
-    public Collection<mCase> getmCases() {
+    public List<mCase> getmCases() {
         return mcase;
     }
 
-    public void setmCases(Collection<mCase> mcase) {
+    public void setmCases(List<mCase> mcase) {
         this.mcase = mcase;
     }
 }
