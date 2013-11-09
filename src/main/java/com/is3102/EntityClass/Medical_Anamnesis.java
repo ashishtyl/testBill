@@ -26,6 +26,7 @@ public class Medical_Anamnesis implements Serializable {
     private String familyHistory;
     private String allergies;
     private String symptoms;
+    private boolean isPregnant;
 
     public Medical_Anamnesis() {
     }
@@ -95,5 +96,19 @@ public class Medical_Anamnesis implements Serializable {
 
     public void setSymptoms(String symptoms) {
         this.symptoms = symptoms;
+    }
+
+    /**
+     * @return the isPregnant
+     */
+    public boolean isIsPregnant() {
+        return isPregnant;
+    }
+
+    /**
+     * @param isPregnant the isPregnant to set
+     */
+    public void setIsPregnant(boolean isPregnant) {
+        this.isPregnant = isPregnant;
     }
 }

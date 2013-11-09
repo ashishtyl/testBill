@@ -36,6 +36,13 @@ public class LabRadProcedure implements Serializable {
 
     public LabRadProcedure() {
     }
+    
+    public void create(String name, int quantity, String details, double totalPrice) {
+        this.setName(name);
+        this.setQuantity(quantity);
+        this.setDetails(details);
+        this.setTotalPrice(totalPrice);
+    }
 
     public Long getProcId() {
         return procId;

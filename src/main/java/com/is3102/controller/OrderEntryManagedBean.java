@@ -7,6 +7,7 @@ package com.is3102.controller;
 import java.io.Serializable;
 import com.is3102.EntityClass.DrugCatalog;
 import com.is3102.service.OrderEntryRemote;
+import com.is3102.EntityClass.ServiceCatalog;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -29,6 +30,8 @@ public class OrderEntryManagedBean implements Serializable {
     List<DrugCatalog> drugsCatalog = new ArrayList<DrugCatalog>();
     //private DrugCatalog selectedDrug;
     //private DrugCatalog[] selectedDrugs;
+    List<ServiceCatalog> serviceCatalog = new ArrayList<ServiceCatalog>();
+    
     private String CIN;
     private String name;
     private long dosage;
@@ -37,6 +40,12 @@ public class OrderEntryManagedBean implements Serializable {
     private double price;
     private String category;
 
+    private String lrpCIN;
+    private String lrpName;
+    private int lrpQuantity;
+    private String lrpDetails;
+    private double totalPrice;
+    
     //private SelectItem[] drugTypeOptions;
     //private String[] drugTypes = new String[100];
     //private int count = 0;
@@ -109,6 +118,13 @@ public class OrderEntryManagedBean implements Serializable {
          drugTypes[count++] = dc.getType();
          }*/
     }
+    
+        public void doDisplayServiceCatalog(ActionEvent actionEvent) {
+        serviceCatalog = oem.displayServiceCatalog();
+        /*for (DrugCatalog dc : drugsCatalog) {
+         drugTypes[count++] = dc.getType();
+         }*/
+    }
 
     public void doPrescribeMedication(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -118,7 +134,20 @@ public class OrderEntryManagedBean implements Serializable {
         } catch (Exception ex) {
             //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
             //FacesContext.getCurrentInstance().addMessage(null, msg);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "ex.getMessage()", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
+        }
+    }
+    
+        public void doOrderLabRadProcedure(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            String sevName = oem.orderLabRadProcedure(lrpCIN, lrpName, lrpQuantity, lrpDetails);
+            context.addMessage(null, new FacesMessage("Procedure " + sevName + " successfully ordered!"));
+        } catch (Exception ex) {
+            //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
+            //FacesContext.getCurrentInstance().addMessage(null, msg);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
         }
     }
