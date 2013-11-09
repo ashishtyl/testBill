@@ -1,7 +1,7 @@
 package com.is3102.entity;
 import com.is3102.EntityClass.Appointment;
+import com.is3102.EntityClass.POEOrder;
 import com.is3102.EntityClass.Schedule;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,8 +53,12 @@ public class        Employee extends BaseEntity implements Serializable{
 
     private int activate;
 
-    @OneToMany(cascade={CascadeType.ALL}, mappedBy="employee")
-    private Collection<Appointment> appointment = new ArrayList<Appointment>();
+    @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
+    //@OneToMany(cascade={CascadeType.ALL}, mappedBy="employee")
+    private List<Appointment> appointment = new ArrayList<Appointment>();
+    
+    @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
+    private List<POEOrder> order = new ArrayList<POEOrder>();
 
     @OneToMany(mappedBy = "employee", cascade=CascadeType.ALL)
     private List<Event> events;
@@ -194,11 +198,11 @@ public class        Employee extends BaseEntity implements Serializable{
         this.reset = reset;
     }
 
-    public Collection<Appointment> getAppointments() {
+    public List<Appointment> getAppointments() {
         return appointment;
     }
 
-    public void setAppointments(Collection<Appointment> appointment) {
+    public void setAppointments(List<Appointment> appointment) {
         this.appointment = appointment;
     }
 
@@ -206,7 +210,7 @@ public class        Employee extends BaseEntity implements Serializable{
         return appointment;
     }
 
-    public void setAppointment(Collection<Appointment> appointment) {
+    public void setAppointment(List<Appointment> appointment) {
         this.appointment = appointment;
     }
 
@@ -253,4 +257,12 @@ public class        Employee extends BaseEntity implements Serializable{
     public void setActivate(boolean act) {
         this.activate = act ? 1 : 0;
     }
+
+    public List<POEOrder> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<POEOrder> order) {
+        this.order = order;
+    }    
 }

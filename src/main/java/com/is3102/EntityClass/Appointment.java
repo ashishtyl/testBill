@@ -30,8 +30,6 @@ public class Appointment implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date appDate;
 
-    private String place;
-
     @ManyToOne
     private Patient patient;
 
@@ -43,9 +41,8 @@ public class Appointment implements Serializable {
 
     public Appointment(){}
 
-    public void create(Date appDate, String place){
+    public void create(Date appDate){
         this.setAppDate(appDate);
-        this.setPlace(place);
     }
 
     public Long getAppId() {
@@ -61,14 +58,6 @@ public class Appointment implements Serializable {
 
     public void setAppDate(Date appDate) {
         this.appDate = appDate;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
     }
 
     public Patient getPatient() {

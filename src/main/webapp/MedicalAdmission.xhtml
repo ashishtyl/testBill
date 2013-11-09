@@ -6,24 +6,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 >
     <ui:define name="content">
-        <h:form id="form0">
-            <p:panel>
-                <p:commandButton value="List Case" actionListener="#{medicalAdmissionBeanManaged.getCaseList}" update=":form0:dataTableCase" />
-
-                <p:dataTable id="dataTableCase" var="mCase" value="#{medicalAdmissionBeanManaged.caseList}">
-                    <p:column headerText="CaseId">
-                        <h:outputText value="#{mCase.CIN}"/>
-                    </p:column>
-                    <p:column headerText="Admitted Date">
-                        <h:outputText value="#{mCase.dateAdmitted}"/>
-                    </p:column>
-                    <p:column headerText="Discharge Date">
-                        <h:outputText value="#{mCase.dateDischarged}"/>
-                    </p:column>
-                </p:dataTable>
-            </p:panel>
-        </h:form>
-        
         <h:form id="form1">
             <p:growl id="growl" showDetail="true" sticky="true" />
             <p:panel>

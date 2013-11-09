@@ -11,7 +11,6 @@ import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.ExistException;
 import com.is3102.entity.Employee;
 import com.is3102.util.HandleDates;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +37,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     public AdministrativeAdmissionBean() {
     }
 
-    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
+    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
         Date bDate = HandleDates.getDateFromString(birthday);
         System.out.println(bloodgroup);
         patient = em.find(Patient.class, NRIC_PIN);
@@ -47,13 +46,13 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
             throw new ExistException("PATIENT ALREADY EXISTS");
         }
         patient = new Patient();
-        patient.create(NRIC_PIN, name, bDate, address, cNumber, height, weight, gender, bloodgroup);
+        patient.create(NRIC_PIN, name, bDate, address, cNumber, nationality, height, weight, gender, bloodgroup);
         em.persist(patient);
         return patient.getNRIC_PIN();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public String makeAppointment(String NRIC_PIN, String appDate, String place, int id) throws ExistException, ParseException {
+    public String makeAppointment(String NRIC_PIN, String appDate, int id) throws ExistException, ParseException {
         Date aDate = HandleDates.getDateFromString(appDate);
         //Doctor doctor = new Doctor();
         Employee doctor = em.find(Employee.class, id);
@@ -69,7 +68,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
                 appointment = new Appointment();
                 mCase mcase = new mCase();
                 System.out.println("Test");
-                appointment.create(aDate, place);
+                appointment.create(aDate);
                 doctor.getAppointments().add(appointment);
                 System.out.println("Appointment ID: " + appointment.getAppId());
                 appointment.setEmployee(doctor);
@@ -86,7 +85,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public long createCase(String bedNo, String appId) throws ExistException {
+    public long createCase(String bedNo, String appId, String type) throws ExistException {
         mCase mcase;
         Appointment appointment = em.find(Appointment.class, new Long(appId));
         if (appointment == null) {
@@ -94,7 +93,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         }
         mcase = appointment.getmCase();
         Date dateAdmitted = new Date();
-        mcase.create(dateAdmitted);
+        mcase.create(dateAdmitted, type);
 
         Bed bed = em.find(Bed.class, new Long(bedNo));
         if (bed == null) { // Bed does not exist
@@ -103,6 +102,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         }
         if (mcase.getBed() == null) {
             mcase.setBed(bed);
+            mcase.setType(type);
             appointment.setmCase(mcase);
             mcase.setPatient(appointment.getPatient());
             //em.persist(appointment);
@@ -128,7 +128,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
                 Boolean available = true;
 
                 for (mCase mc : mcases) {
-                    if (mc.getdateDischarged() == null) {
+                    if (mc.getDateDischarged() == null) {
                         if (mc.getBed() != null) {
                             if (mc.getBed().getBedNo().equals(bed.getBedNo())) {
                                 available = false;

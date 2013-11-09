@@ -34,17 +34,26 @@ public class Patient implements Serializable {
     private Date birthday;
     private String address;
     private String cNumber;
-    private String bloodgroup;
+    private String nationality;
+    private String bloodGroup;
     private String height;
     private String weight;
     private String gender;
 
     public String getBloodGroup() {
-        return bloodgroup;
+        return bloodGroup;
     }
 
-    public void setBloodGroup(String bloodgroup) {
-        this.bloodgroup = bloodgroup;
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public String getHeight() {
@@ -78,14 +87,15 @@ public class Patient implements Serializable {
     public Patient() {
     }
 
-    public void create(String NRIC_PIN, String name, Date birthday, String address, String cNumber, String height, String weight, String gender, String bloodgroup) {
+    public void create(String NRIC_PIN, String name, Date birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodGroup) {
         this.setNRIC_PIN(NRIC_PIN);
         this.setName(name);
         this.setBirthday(birthday);
         this.setAddress(address);
         this.setcNumber(cNumber);
+        this.setNationality(nationality);
         this.setGender(gender);
-        this.setBloodGroup(bloodgroup);
+        this.setBloodGroup(bloodGroup);
         this.setHeight(height);
         this.setWeight(weight);
     }

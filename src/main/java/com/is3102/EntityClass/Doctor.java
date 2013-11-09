@@ -28,7 +28,7 @@ public class Doctor implements Serializable {
     private List<Schedule> schedules;
 
     @OneToMany(cascade={CascadeType.ALL})
-    private List<Medical_Procedure> procedures = new ArrayList<Medical_Procedure>();
+    private List<MedicalProcedure> procedures = new ArrayList<MedicalProcedure>();
 
 
     public void create (String name, String username, String dob){

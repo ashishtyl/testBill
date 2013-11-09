@@ -1,0 +1,58 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:panel>
+                <p:commandButton value="Display Drug Catalog"
+                                 actionListener="#{orderEntryManagedBean.doDisplayDrugsCatalog}"
+                                 update=":form1:dataTabledrugCatalog"/>
+                <p:dataTable id="dataTabledrugCatalog" var="drugsCatalog" value="#{orderEntryManagedBean.drugsCatalog}">
+                    <p:column headerText="Drug Name">
+                        <h:outputText value="#{drugsCatalog.name}"/>
+                    </p:column>
+                    <p:column headerText="Drug Type"> 
+                        <h:outputText value="#{drugsCatalog.type}"/>
+                    </p:column>
+                    <p:column headerText="Method of Administration">
+                        <h:outputText value="#{drugsCatalog.method}"/>
+                    </p:column>
+                    <p:column headerText="Recommended Dosage (in mg)">
+                        <h:outputText value="#{drugsCatalog.recommendedDosage}"/>
+                    </p:column>
+                    <p:column headerText="Side Effects">
+                        <h:outputText value="#{drugsCatalog.sideEffect}"/>
+                    </p:column>
+                    <p:column headerText="Unit Price">
+                        <h:outputText value="#{drugsCatalog.price}"/>
+                    </p:column>
+                    <p:column headerText="Category">
+                        <h:outputText value="#{drugsCatalog.category}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        <h:form id="form2">
+            <p:growl id="growl" showDetail="true"/>
+            <p:panel>
+                <h1> Prescribe Medication </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Case Identification Number: " />
+                    <p:inputText value="#{orderEntryManagedBean.CIN}" required="true"/>
+                    <h:outputText value="Drug Name: " />
+                    <p:inputText value="#{orderEntryManagedBean.name}" required="true"/>
+                    <h:outputText value="Drug Dosage: " />
+                    <p:inputText value="#{orderEntryManagedBean.dosage}" required="true"/>
+                    <h:outputText value="Quantity: " />
+                    <p:inputText value="#{orderEntryManagedBean.quantity}" required="true"/>
+                    <h:outputText value="Prescription Details: " />
+                    <p:inputTextarea rows="6" cols="33" value="#{orderEntryManagedBean.details}" required="true"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{orderEntryManagedBean.doPrescribeMedication}" update=":form2:growl"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
