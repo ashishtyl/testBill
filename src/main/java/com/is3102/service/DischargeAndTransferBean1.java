@@ -5,19 +5,17 @@
 package com.is3102.service;
 
 import com.is3102.EntityClass.DischargeSummary;
-import com.is3102.EntityClass.Medical_Anamnesis;
 import com.is3102.EntityClass.Transfer;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.CaseException;
 import com.is3102.Exception.ExistException;
 import javax.ejb.Stateful;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.ejb.Stateless;
 
 /**
  *
@@ -83,6 +81,7 @@ public class DischargeAndTransferBean1 implements DischargeAndTransferBean1Remot
            em.remove(dischargeSummary);
     }
     //list testing
+   @Override
     public List<DischargeSummary> ListDischargeSummary() {
         dischargeList = new ArrayList<DischargeSummary>();
         try {
@@ -134,6 +133,7 @@ public class DischargeAndTransferBean1 implements DischargeAndTransferBean1Remot
     }
 
     //list testing
+   @Override
     public List<Transfer> ListTransfer() {
         transferList = new ArrayList<Transfer>();
         try {
