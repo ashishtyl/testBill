@@ -68,11 +68,14 @@ public class DecisionMakingandPlaningManaged implements Serializable {
             Long pId = Long.valueOf(procedureId);
             dmp.GetConsent(pId, patient_comment);
             context.addMessage(null, new FacesMessage("Consent for " + procedureId + " successfully added!"));
+       
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Procedure could not be added!", null));
+        
         }
+        
     }
 
     public void doRetrieveCarePlaning() {

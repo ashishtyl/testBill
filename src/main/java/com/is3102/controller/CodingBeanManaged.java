@@ -75,7 +75,7 @@ public class CodingBeanManaged {
         System.out.println("test 1");
         try {
             Long CIN = Long.valueOf(caseId);
-            cbr.updateDiagnosis(CIN,(diseaseId+" "+diseaseName), diagnosisDescription);
+            cbr.updateDiagnosis(CIN, (diseaseId + " " + diseaseName), diagnosisDescription);
             context.addMessage(null, new FacesMessage("Diagnosis added(Updated) successfully"));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -120,9 +120,16 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoListAllICD10Codes() {
+    public void DoListAllICD10Codes(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            this.setAllicdCodes(cbr.listAllCodes());
 
-        this.setAllicdCodes(cbr.listAllCodes());
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot display codes!", null));
+
+        }
     }
 
     public void DoListAllICD10Procedures() {
@@ -132,16 +139,16 @@ public class CodingBeanManaged {
     public void DoRemoveDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            
+
             Long dId = Long.valueOf(diagnosisId);
             cbr.removeDiagnosis(dId);
             context.addMessage(null, new FacesMessage("Diagnosis removed successfully"));
-            
+
         } catch (Exception ex) {
-          
+
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove Diagnosis!", null));
-        
+
         }
     }
 
