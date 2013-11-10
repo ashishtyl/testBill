@@ -66,6 +66,14 @@ public class Patient implements Serializable {
         return patientId;
     }
 
+    public List<OutpatientAppointment> getAppointment2() {
+        return appointment2;
+    }
+
+    public void setAppointment2(List<OutpatientAppointment> appointment2) {
+        this.appointment2 = appointment2;
+    }
+
     public void setPatientId(Long patientId) {
         this.patientId = patientId;
     }

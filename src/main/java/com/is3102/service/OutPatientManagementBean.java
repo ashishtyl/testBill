@@ -58,7 +58,7 @@ public class OutPatientManagementBean implements OutPatientManagementRemote{
         patient.create(NRIC_PIN, name, bDate, address, cNumber, nationality, height, weight, gender, bloodgroup);
         em.persist(patient);
         rememberPIN=NRIC_PIN;
-        return patient.getNRIC_PIN();
+        return patient.getPassport_NRIC();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
