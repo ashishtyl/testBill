@@ -6,7 +6,6 @@ package com.is3102.EntityClass;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -236,6 +235,7 @@ public class mCase implements Serializable {
      public void addnProcedure(Nursing_Procedure nprocedure) {
         this.getnProcedures().add(nprocedure);
     }
+}
       
     
-}
+

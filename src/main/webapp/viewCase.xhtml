@@ -8,7 +8,7 @@
         <h:form id="form">
             <p:growl id="messages" showDetail="true"/>
             <h1> Patient Case </h1>
-            <h:outputText value="Case Identification Number: " />
+            <h:outputText value="Case Identification Number: * " />
             <p:inputText value="#{caseManagedBean.CIN}" required="true" label="Case Identification Number"/>
             <p:commandButton value="Check for Existing Record" actionListener="#{caseManagedBean.doUpdateCase}" update=":form:messages, :form:dataTableCase"/>
             <p:dataTable id="dataTableCase" var="mcase" value="#{caseManagedBean.mcase}" editable="true">
