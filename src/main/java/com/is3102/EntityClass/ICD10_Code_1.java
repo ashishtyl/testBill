@@ -5,28 +5,30 @@
 package com.is3102.EntityClass;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Ashish
  */
 @Entity
-@Table(name = "icd10code")
-public class ICD10_Code implements Serializable {
-
-    @Id
-    private String code;
+public class ICD10_Code_1 implements Serializable {
+       
+   
     private String Chapter;
     private String Block;
     private String Disease;
+    @Id
+    private String code;
     private String name;
     private String display;
+   
+    public ICD10_Code_1(){}
     
-    public ICD10_Code() {
-    }
-
-    public void create(String code, String Chapter, String Block, String Disease, String name) {
+    public void create(String code, String Chapter, String block, String Disease, String name ){
         this.setCode(code);
         this.setChapter(Chapter);
         this.setBlock(Block);
@@ -35,7 +37,6 @@ public class ICD10_Code implements Serializable {
         this.setDisplay(code+" "+Disease+" "+name);
         
     }
-    
     public String getDisplay() {
         return display;
     }
@@ -43,8 +44,16 @@ public class ICD10_Code implements Serializable {
     public void setDisplay(String display) {
         this.display = display;
     }
+   
 
-     /**
+    
+    @Override
+    public String toString() {
+        return "EntityClass.ICD10_Code[ id=" + getCode() + " ]";
+    }
+  
+
+    /**
      * @return the code
      */
     public String getCode() {
@@ -113,4 +122,5 @@ public class ICD10_Code implements Serializable {
     public void setDisease(String Disease) {
         this.Disease = Disease;
     }
+    
 }

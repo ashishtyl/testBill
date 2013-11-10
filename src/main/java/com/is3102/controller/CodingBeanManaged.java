@@ -10,6 +10,7 @@ package com.is3102.controller;
  */
 import com.is3102.EntityClass.Diagnosis;
 import com.is3102.EntityClass.ICD10_Code;
+import com.is3102.EntityClass.ICD10_PCS;
 import com.is3102.service.CodingBeanRemote;
 
 import java.util.Collection;
@@ -23,7 +24,7 @@ import javax.faces.event.ActionEvent;
 
 @ManagedBean
 public class CodingBeanManaged {
-    
+
     @EJB
     private CodingBeanRemote cbr;
     //list of codes returned for a disease name searched.
@@ -31,88 +32,105 @@ public class CodingBeanManaged {
     //caseId to search a particular case.
     private Long caseId;
     //ICD10 code entitiy for creating a new case. 
-    private ICD10_Code icd10Code; 
+    private ICD10_Code icd10Code;
     //diagnosis description entered by doctor when adding a new diagnosis for a case. 
     private String diagnosisDescription;
-   private Long diagnosisId;
+    private Long diagnosisId;
     //disease description entered by doctor used to search ICD10 code
     // also used to set disease description when adding new disease
     private String diseaseDescription;
     //collectin of all Diagnosis objects for a particular case. 
     private Collection<Diagnosis> allDiagnosis;
     //Disease code to add a new disease to the ICD10 Codes master list
-    private String diseaseId; 
+    private String diseaseId;
     //Chapter attribute to add a new disease to the ICD10 Codes master list
-    private String ICDChapter; 
+    private String ICDChapter;
     //Block attribute to add a new disease to the ICD10 Codes master list
-    private String ICDblock; 
+    private String ICDblock;
     //Disease name attribute to add a new disease to the ICD10 Codes master list
-    private String diseaseName; 
+    private String diseaseName;
     //Set of all ICD10 Codes stored in the system. 
-   // private Set<ICD10_Code> allicdCodes;
+    // private Set<ICD10_Code> allicdCodes;
     private List<ICD10_Code> allicdCodes;
+    private String procedureId;
+    private String price;
+    private String procedureName;
+    private List<ICD10_PCS> allProcedures;
 
-
-
-   /* public void DoGetMatchingCodes(){
-        List<ICD10_Code> result = cbr.getMatchingCodes(diseaseDescription);
-        this.seticdCodes(result);
-    }  */
-    
-    public void DoUpdateDiagnosis (ActionEvent actionEvent){
+    /* public void DoGetMatchingCodes(){
+     List<ICD10_Code> result = cbr.getMatchingCodes(diseaseDescription);
+     this.seticdCodes(result);
+     }  */
+    public void DoUpdateDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         System.out.println("test 1");
-        try{
+        try {
             cbr.updateDiagnosis(caseId, icd10Code, diagnosisDescription);
             context.addMessage(null, new FacesMessage("Diagnosis added(Updated) successfully"));
-        }catch(Exception ex){
+        } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot update diagnosis!", null));
         }
     }
-    
-    public void DoListAllDiagnosis(ActionEvent actionEvent){
+
+    public void DoListAllDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
-        try{
+        try {
             this.setAllDiagnosis(cbr.listAllDiagnosis(caseId));
-                              
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
 
         }
     }
-    
-    public void DoAddCode (ActionEvent actionEvent){
+
+    public void DoAddCode(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
-        try{
+        try {
             cbr.addCode(diseaseId, ICDChapter, ICDblock, diseaseName, diseaseDescription);
             context.addMessage(null, new FacesMessage("Code added successfully"));
-           }catch(Exception ex){
+        } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot add code!", null));
 
         }
-    }        
-
-    public void DoListAllICD10Codes(){
-        //Set<ICD10_Code> allCodes = cbr.listAllCodes();
-        List<ICD10_Code> allCodes = cbr.listAllCodes();
-        this.setAllicdCodes(allCodes);
     }
-    
-    public void DoRemoveDiagnosis(ActionEvent actionEvent){
+
+    public void DoAddProcedure(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            Long cost = (Long.valueOf(price));
+            cbr.addProcedure(procedureId, procedureName, cost);
+            context.addMessage(null, new FacesMessage("Procedure added successfully"));
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot add procedure!", null));
+
+        }
+    }
+
+    public void DoListAllICD10Codes() {
+
+        this.setAllicdCodes(cbr.listAllCodes());
+    }
+
+    public void DoListAllICD10Procedures() {
+        this.setAllProcedures(cbr.listAllProceures());
+    }
+
+    public void DoRemoveDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             cbr.removeDiagnosis(diagnosisId);
             context.addMessage(null, new FacesMessage("Diagnosis removed successfully"));
-        }catch(Exception ex){
+        } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove Diagnosis!", null));
         }
     }
 
-   // public Set<ICD10_Code> getAllicdCodes() {
-   public List<ICD10_Code> getAllicdCodes() {
+    // public Set<ICD10_Code> getAllicdCodes() {
+    public List<ICD10_Code> getAllicdCodes() {
         return allicdCodes;
     }
 
@@ -230,5 +248,35 @@ public class CodingBeanManaged {
 
     }
 
+    public void setAllProcedures(List<ICD10_PCS> allProcedures) {
+        this.allProcedures = allProcedures;
+    }
 
+    public String getProcedureId() {
+        return procedureId;
+    }
+
+    public void setProcedureId(String procedureId) {
+        this.procedureId = procedureId;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getProcedureName() {
+        return procedureName;
+    }
+
+    public void setProcedureName(String procedureName) {
+        this.procedureName = procedureName;
+    }
+
+    public List<ICD10_PCS> getAllProcedures() {
+        return allProcedures;
+    }
 }

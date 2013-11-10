@@ -14,12 +14,101 @@ import javax.persistence.Id;
  *
  * @author Ben
  */
-@Entity(name="Nursing_Anamnesis")
+@Entity(name = "Nursing_Anamnesis")
 public class Nursing_Anamnesis implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    String currentdiagnosis;
+    String orientation;
+    String communication_ability;
+    String contactsInfo;
+    String nutrition;
+    String mobility;
+    String personalHygiene;
+    String vitalSigns;
+
+    public Nursing_Anamnesis(){}
+    
+    public void create (String currentdiagnosis, String orientation, String communication_ability, String contactsInfo,
+    String nutrition, String mobility, String personalHygiene, String vitalSigns){
+        this.setCurrentdiagnosis(currentdiagnosis);
+        this.setMobility(mobility);
+        this.setNutrition(nutrition);
+        this.setOrientation(orientation);
+        this.setCommunication_ability(communication_ability);
+        this.setcontactsInfo(contactsInfo);
+        this.setPersonalHygiene(personalHygiene);
+        this.setVitalSigns(vitalSigns);
+
+    }
+
+    
+    public String getCurrentdiagnosis() {
+        return currentdiagnosis;
+    }
+
+    public void setCurrentdiagnosis(String currentdiagnosis) {
+        this.currentdiagnosis = currentdiagnosis;
+    }
+
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(String orientation) {
+        this.orientation = orientation;
+    }
+
+    public String getCommunication_ability() {
+        return communication_ability;
+    }
+
+    public void setCommunication_ability(String communication_ability) {
+        this.communication_ability = communication_ability;
+    }
+
+    public String getcontactsInfo() {
+        return contactsInfo;
+    }
+
+    public void setcontactsInfo(String contactsInfo) {
+        this.contactsInfo = contactsInfo;
+    }
+
+    public String getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(String nutrition) {
+        this.nutrition = nutrition;
+    }
+
+    public String getMobility() {
+        return mobility;
+    }
+
+    public void setMobility(String mobility) {
+        this.mobility = mobility;
+    }
+
+    public String getPersonalHygiene() {
+        return personalHygiene;
+    }
+
+    public void setPersonalHygiene(String personalHygiene) {
+        this.personalHygiene = personalHygiene;
+    }
+
+    public String getVitalSigns() {
+        return vitalSigns;
+    }
+
+    public void setVitalSigns(String vitalSigns) {
+        this.vitalSigns = vitalSigns;
+    }
 
     public Long getId() {
         return id;
@@ -53,6 +142,4 @@ public class Nursing_Anamnesis implements Serializable {
     public String toString() {
         return "EntityClass.Nursing_Anamnesis[ id=" + id + " ]";
     }
-    
 }
-

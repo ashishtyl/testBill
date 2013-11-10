@@ -42,7 +42,7 @@ public class mCase implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL})
     private List<POEOrder> orders = new ArrayList<POEOrder>();
     @OneToMany(cascade = {CascadeType.ALL})
-    private List<MedicalProcedure> mProcedures = new ArrayList<MedicalProcedure>();
+    private List<Medical_Procedure> mProcedures = new ArrayList<Medical_Procedure>();
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Nursing_Procedure> nProcedures = new ArrayList<Nursing_Procedure>();
     @OneToOne(cascade = {CascadeType.ALL})
@@ -60,7 +60,11 @@ public class mCase implements Serializable {
     @ManyToOne
     private Patient patient;
     @OneToMany(cascade = {CascadeType.PERSIST})
-    private Collection<Diagnosis> diagnosis = new ArrayList<Diagnosis>();
+    private List<Diagnosis> diagnosis = new ArrayList<Diagnosis>();
+    @OneToOne
+    private NursingDischarge nursingDischarge;
+
+    
 
     public mCase() {
     }
@@ -102,11 +106,11 @@ public class mCase implements Serializable {
         this.type = type;
     }
 
-    public List<MedicalProcedure> getmProcedures() {
+    public List<Medical_Procedure> getmProcedures() {
         return mProcedures;
     }
 
-    public void setmProcedures(List<MedicalProcedure> mProcedures) {
+    public void setmProcedures(List<Medical_Procedure> mProcedures) {
         this.mProcedures = mProcedures;
     }
 
@@ -174,7 +178,7 @@ public class mCase implements Serializable {
         this.transfer = transfer;
     }
 
-    public void addmedicaProcedure(MedicalProcedure procedure) {
+    public void addmedicalProcedure(Medical_Procedure procedure) {
         this.mProcedures.add(procedure);
 
     }
@@ -203,11 +207,20 @@ public class mCase implements Serializable {
         this.nursingAnamnesis = nursingAnamnesis;
     }
 
-    public Collection<Diagnosis> getDiagnosis() {
+    public List<Diagnosis> getDiagnosis() {
         return diagnosis;
     }
 
-    public void setDiagnosis(Collection<Diagnosis> diagnosis) {
+    public void setDiagnosis(List<Diagnosis> diagnosis) {
         this.diagnosis = diagnosis;
     }
+    
+    public NursingDischarge getNursingDischarge() {
+        return nursingDischarge;
+    }
+
+    public void setNursingDischarge(NursingDischarge nursingDischarge) {
+        this.nursingDischarge = nursingDischarge;
+    }
+    
 }
