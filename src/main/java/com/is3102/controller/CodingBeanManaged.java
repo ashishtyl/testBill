@@ -120,14 +120,10 @@ public class CodingBeanManaged {
         }
     }
 
-
     public void DoListAllICD10Codes(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             this.setAllicdCodes(cbr.listAllCodes());
-
-    public void doListAllICD10Codes() {
-
 
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));

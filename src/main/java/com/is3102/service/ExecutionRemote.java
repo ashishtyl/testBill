@@ -15,6 +15,7 @@ import javax.ejb.Remote;
  * @author Ashish
  */
 import javax.ejb.Local;
+
 @Local
 public interface ExecutionRemote {
 
@@ -22,8 +23,6 @@ public interface ExecutionRemote {
 
     public void AddExecutionRecordNursing(Long procedure_id, Long doctor_id, String exeuction_comment) throws ExistException;
 
-    public List<ExecutionLog> CreateEvaluationReport(Long procedure_id) throws ExistException;
-
-    
-    
+    public List<ExecutionLog> CreateEvaluationReport(Long procedure_id) throws ExistException;  
+ 
 }
