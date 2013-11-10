@@ -95,7 +95,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
             double unitPrice = service.getPrice();
             double totalPrice = quantity * unitPrice;
-            if (!checkProcedureSafety(CIN, name)) {
+            if (checkProcedureSafety(CIN, name)) {
 
                 POEOrder order = new POEOrder();
                 Date dateOrdered = new Date();
@@ -157,8 +157,10 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         q.setParameter("name", name);
         ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
         Boolean safe = service.isSafeForPregnant();
+        System.out.println("Procedure safe? "+safe.toString());
         mCase mcase = em.find(mCase.class, new Long(CIN));
         Boolean pregnant = mcase.getMedicalAnamnesis().isIsPregnant();
+        System.out.println(pregnant.toString());
         if (safe) {
             return true;
         } else if (!safe) {
@@ -194,7 +196,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
     }
 
     public List<ServiceCatalog> displayServiceCatalog() {
-        Query qdc = em.createQuery("SELECT dc FROM ServiceCatalos dc");
+        Query qdc = em.createQuery("SELECT dc FROM ServiceCatalog dc");
         List<ServiceCatalog> serviceCatalog = qdc.getResultList();
         System.out.println(serviceCatalog.size());
         return serviceCatalog;

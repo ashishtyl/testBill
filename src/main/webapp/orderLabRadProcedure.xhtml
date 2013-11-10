@@ -11,13 +11,13 @@
                                  actionListener="#{orderEntryManagedBean.doDisplayServiceCatalog}"
                                  update=":form1:dataTableserviceCatalog"/>
                 <p:dataTable id="dataTableserviceCatalog" var="serviceCatalog" value="#{orderEntryManagedBean.serviceCatalog}">
-                    <p:column headerText="Drug Name">
+                    <p:column headerText="Procedure Name">
                         <h:outputText value="#{serviceCatalog.name}"/>
                     </p:column>
-                    <p:column headerText="Drug Type"> 
+                    <p:column headerText="Procedure Details"> 
                         <h:outputText value="#{serviceCatalog.details}"/>
                     </p:column>
-                    <p:column headerText="Method of Administration">
+                    <p:column headerText="Price">
                         <h:outputText value="#{serviceCatalog.price}"/>
                     </p:column>
                  </p:dataTable>
