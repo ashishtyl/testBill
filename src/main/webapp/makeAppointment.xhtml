@@ -10,11 +10,11 @@
             <p:panel>
                 <h1> Make Appointment </h1>
                 <h:panelGrid columns = "2">
-                    <h:outputText value="Patient Passport Number/NRIC: " />
+                    <h:outputText value="Patient Passport Number/NRIC: *" />
                     <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN2}" required="true" label="Patient PIN"/>
-                    <h:outputText value="Appointment Date (YYYY-mm-dd): " />
-                    <p:calendar value="#{administrativeAdmissionManaged.appDate}" pattern="yyyy-MM-dd"/>
-                    <h:outputText value="Doctor ID: " />
+                    <h:outputText value="Appointment Date (YYYY-mm-dd): *" />
+                    <p:calendar value="#{administrativeAdmissionManaged.appDate}" required="true" pattern="yyyy-MM-dd HH:mm" label="Appointment Date"/>
+                    <h:outputText value="Doctor ID: *" />
                     <p:inputText value="#{administrativeAdmissionManaged.docID}" required="true" label="Doctor ID"/>
                 </h:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{administrativeAdmissionManaged.doMakeAppointment}" update=":form2:growl"/>

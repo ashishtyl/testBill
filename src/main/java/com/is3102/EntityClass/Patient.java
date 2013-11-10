@@ -42,6 +42,10 @@ public class Patient implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private List<mCase> mcase = new ArrayList<mCase>();
 
+     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
+    private List<OutpatientAppointment> appointment2 = new ArrayList<OutpatientAppointment>();
+
+
     public Patient() {
     }
 
@@ -60,6 +64,14 @@ public class Patient implements Serializable {
 
     public Long getPatientId() {
         return patientId;
+    }
+
+    public List<OutpatientAppointment> getAppointment2() {
+        return appointment2;
+    }
+
+    public void setAppointment2(List<OutpatientAppointment> appointment2) {
+        this.appointment2 = appointment2;
     }
 
     public void setPatientId(Long patientId) {
@@ -157,6 +169,7 @@ public class Patient implements Serializable {
     public List<mCase> getmCases() {
         return mcase;
     }
+
 
     public void setmCases(List<mCase> mcase) {
         this.mcase = mcase;

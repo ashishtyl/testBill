@@ -40,15 +40,15 @@
             <p:panel>
                 <h1> Prescribe Medication </h1>
                 <h:panelGrid columns = "2">
-                    <h:outputText value="Case Identification Number: " />
+                    <h:outputText value="Case Identification Number: *" />
                     <p:inputText value="#{orderEntryManagedBean.CIN}" required="true" label="CIN"/>
-                    <h:outputText value="Drug Name: " />
+                    <h:outputText value="Drug Name: *" />
                     <p:inputText value="#{orderEntryManagedBean.name}" required="true" label="Drug Name"/>
-                    <h:outputText value="Drug Dosage: " />
+                    <h:outputText value="Drug Dosage: *" />
                     <p:inputText value="#{orderEntryManagedBean.dosage}" required="true" label="Drug Dosage"/>
-                    <h:outputText value="Quantity: " />
+                    <h:outputText value="Quantity: *" />
                     <p:inputText value="#{orderEntryManagedBean.quantity}" required="true" label="Quantity"/>
-                    <h:outputText value="Prescription Details: " />
+                    <h:outputText value="Prescription Details: *" />
                     <p:inputTextarea rows="6" cols="33" value="#{orderEntryManagedBean.details}" required="true" label="Details"/>
                 </h:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{orderEntryManagedBean.doPrescribeMedication}" update=":form2:growl"/>
