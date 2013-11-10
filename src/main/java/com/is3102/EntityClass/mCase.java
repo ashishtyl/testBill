@@ -235,7 +235,6 @@ public class mCase implements Serializable {
      public void addnProcedure(Nursing_Procedure nprocedure) {
         this.getnProcedures().add(nprocedure);
     }
-}
       
     
-
+}
