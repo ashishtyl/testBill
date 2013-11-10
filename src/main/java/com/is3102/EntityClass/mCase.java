@@ -232,4 +232,10 @@ public class mCase implements Serializable {
     public void setNursingDischarge(NursingDischarge nursingDischarge) {
         this.nursingDischarge = nursingDischarge;
     }
+    
+     public void addnProcedure(Nursing_Procedure nprocedure) {
+        this.getnProcedures().add(nprocedure);
+    }
+      
+    
 }
