@@ -16,24 +16,24 @@ import javax.ejb.Remote;
 /**
  *
  * @author Ashish
- */
-@Remote
-public interface CodingBeanRemote {
+ */import javax.ejb.Local;
+@Local
+public interface CodingBeanRemote1 {
 
-    // public List<ICD10_Code> getMatchingCodes(String description);
+    public List<ICD10_Code> getMatchingCodes(String description);
+
     public void updateDiagnosis(Long caseId, ICD10_Code icd10Code, String description) throws ExistException;
+
+    public List<Diagnosis> listAllDiagnosis(long caseId) throws ExistException;
 
     public void addCode(String id, String Chapter, String block, String Disease, String name) throws ExistException;
 
-    //public Set<ICD10_Code> listAllCodes();
     public List<ICD10_Code> listAllCodes();
 
-    public void removeDiagnosis(Long diagnosisId) throws ExistException;
-
-    public List<Diagnosis> listAllDiagnosis(Long caseId) throws ExistException;
+    public void removeDiagnosis(long diagnosisId)throws ExistException;
 
     public List<ICD10_PCS> listAllProceures();
 
     public void addProcedure(String id, String name, Long price) throws ExistException;
-
+    
 }
