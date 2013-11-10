@@ -24,59 +24,59 @@ import javax.persistence.Query;
  * @author Ashish
  */
 @Stateless
-public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote{
+public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote {
 
-  @PersistenceContext()
+    @PersistenceContext()
     EntityManager em;
 
-    public void AddPlanedProcedure(Long CIN, String procedure_code, String procedure_name, String finding, String comments ) throws ExistException{
-       System.out.println("In DMP Bean AddPlannedProcedure"); 
+    public void AddPlanedProcedure(Long CIN, String procedure_code, String procedure_name, String finding, String comments) throws ExistException {
+        System.out.println("In DMP Bean AddPlannedProcedure");
         mCase mcase = em.find(mCase.class, CIN);
-        if(mcase==null){
+        if (mcase == null) {
             throw new ExistException("No such case exists");
         }
         System.out.println("Mcase found");
         Medical_Procedure procedure = new Medical_Procedure();
         System.out.println("creating procedure");
-        String desc=procedure_code + " " + procedure_name;
+        String desc = procedure_code + " " + procedure_name;
         System.out.print("searching for ICD10_PCS code");
         ICD10_PCS code = getCode(desc);
         System.out.print("ICD10_PCS code object created");
-        procedure.create(code, procedure_name, finding, comments);        
+        procedure.create(code, procedure_name, finding, comments);
         System.out.println("created procedure ");
-        
+
         em.persist(procedure);
-        
-        mcase.addmedicaProcedure(proceudre);
-         System.out.println("added procedure");
+
+        mcase.addmedicalProcedure(procedure);
+        System.out.println("added procedure");
         procedure.setMcase(mcase);
-         System.out.println("set mcase");
-         
-        System.out.println("Medical Procedure " + procedure.getId() + 
-                "added to case " + mcase.getCIN());
-        
-        em.persist(mcase);       
+        System.out.println("set mcase");
+
+        System.out.println("Medical Procedure " + procedure.getId()
+                + "added to case " + mcase.getCIN());
+
+        em.persist(mcase);
         em.flush();
     }
-    
+
     public void GetConsent(Long procedureId, String patient_comment) throws ExistException {
         Medical_Procedure procedure = em.find(Medical_Procedure.class, procedureId);
-        if(procedure==null){
+        if (procedure == null) {
             throw new ExistException("No such procedure exists!");
         }
-        
+
         Consent consent = new Consent();
         consent.create(patient_comment);
-        procedure.setConsent(consent);        
-        
+        procedure.setConsent(consent);
+
     }
-    
-    public List<Medical_Procedure> RetrieveCarePlaning (Long CIN) throws ExistException{
+
+    public List<Medical_Procedure> RetrieveCarePlaning(Long CIN) throws ExistException {
         System.out.println("In DNP EJB");
         List<Medical_Procedure> procedures;
-        
+
         mCase mcase = em.find(mCase.class, CIN);
-        if(mcase==null){
+        if (mcase == null) {
             throw new ExistException("No such case exists!");
         }
         System.out.println("mCase found");
@@ -89,13 +89,13 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote{
     public void RetrieveMedicalKnowledge() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    private ICD10_PCS getCode(String description){
-       System.out.println("In getCode() description:" + description);
-       
-       Query q = em.createQuery("select i from ICD10_PCS i where i.display=:param");
-       q.setParameter("param",description );
-        ICD10_PCS code = (ICD10_PCS)q.getSingleResult();
-        return code; 
+
+    private ICD10_PCS getCode(String description) {
+        System.out.println("In getCode() description:" + description);
+
+        Query q = em.createQuery("select i from ICD10_PCS i where i.display=:param");
+        q.setParameter("param", description);
+        ICD10_PCS code = (ICD10_PCS) q.getSingleResult();
+        return code;
     }
-    
 }
