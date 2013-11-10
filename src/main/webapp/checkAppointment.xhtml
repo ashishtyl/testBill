@@ -14,7 +14,7 @@
                     <h:outputText value="Patient Passport Number/NRIC: *"/>
                     <p:inputText value="#{patientIdandCheckingManaged.NRIC_PIN2}" required="true" label="Passport Number/NRIC"/>
                     <h:outputText value="Appointment Date (YYYY-mm-dd): *"/>
-                    <p:calendar value="#{patientIdandCheckingManaged.appDate}" pattern="yyyy-MM-dd" required="true" label="Appointment Date"/>
+                    <p:calendar value="#{patientIdandCheckingManaged.appDate}" pattern="yyyy-MM-dd HH:mm" required="true" label="Appointment Date"/>
                     <p:commandButton value="Check for Existing Appointment"
                                      actionListener="#{patientIdandCheckingManaged.DoCheckAppointment}"
                                      update=":form9:growl, :form9:dataTableAppointments"/>

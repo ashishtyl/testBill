@@ -56,6 +56,15 @@ public class CodingBeanManaged {
     private String price;
     private String procedureName;
     private List<ICD10_PCS> allProcedures;
+    private String display;
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
 
     /* public void DoGetMatchingCodes(){
      List<ICD10_Code> result = cbr.getMatchingCodes(diseaseDescription);
@@ -65,7 +74,7 @@ public class CodingBeanManaged {
         FacesContext context = FacesContext.getCurrentInstance();
         System.out.println("test 1");
         try {
-            cbr.updateDiagnosis(caseId, icd10Code, diagnosisDescription);
+            cbr.updateDiagnosis(caseId, display, diagnosisDescription);
             context.addMessage(null, new FacesMessage("Diagnosis added(Updated) successfully"));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));

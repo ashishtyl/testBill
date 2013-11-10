@@ -39,7 +39,7 @@ public class CodingBean implements CodingBeanRemote {
     }
     //also works as add Diagnosis
 
-    public void updateDiagnosis(Long caseId, ICD10_Code icd10Code, String description) throws ExistException {
+    public void updateDiagnosis(Long caseId, String display, String description) throws ExistException {
         mCase mcase = em.find(mCase.class, caseId);
         if (mcase == null) {
             System.out.println("Case is null");
@@ -47,7 +47,8 @@ public class CodingBean implements CodingBeanRemote {
             throw new ExistException("No such case exists!");
         }
         Diagnosis diagnosis = new Diagnosis();
-        diagnosis.create(icd10Code, description);
+        ICD10_Code code = getCode(display);
+        diagnosis.create(code, description);
         System.out.println("diagnosis created");
         mcase.getDiagnosis().add(diagnosis);
         em.persist(mcase);
@@ -113,6 +114,15 @@ public class CodingBean implements CodingBeanRemote {
         code.create(id, name, price);
         em.persist(code);
         System.out.println("ICD 10 Code " + code.getCode() + " " + code.getName() + " added succefully");
+    }
+    
+     private ICD10_Code getCode(String display) {
+        System.out.println("In getCode() description:" + display);
+
+        Query q = em.createQuery("select i from ICD10_Code i where i.display=:param");
+        q.setParameter("param", display);
+        ICD10_Code code = (ICD10_Code) q.getSingleResult();
+        return code;
     }
     
 }

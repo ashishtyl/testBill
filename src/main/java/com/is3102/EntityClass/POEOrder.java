@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Ben
+ * @author Swarit
  */
 @Entity
 public class POEOrder implements Serializable {

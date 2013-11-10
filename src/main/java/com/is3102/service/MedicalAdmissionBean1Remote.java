@@ -4,8 +4,8 @@
  */
 package com.is3102.service;
 
-import com.is3102.EntityClass.Diagnosis;
 import com.is3102.EntityClass.Medical_Anamnesis;
+import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.CaseException;
 import com.is3102.Exception.ExistException;
 import javax.ejb.Remote;
@@ -24,6 +24,7 @@ public interface MedicalAdmissionBean1Remote {
     public Medical_Anamnesis getAnamnesis(Long anamnesisId)throws ExistException;
     public void removeAnamnesis(Long anamnesisId)throws ExistException;
     public List<Medical_Anamnesis> ListMedical_Anamnesis();
+     public List<mCase> ListmCase();
    /* public void codeDiagnosis(String diseaseCode, String description);
     public void removeDiagnosis(Long diagnosisId);
     public Diagnosis getDiagnosis(Long diagnosisId);*/

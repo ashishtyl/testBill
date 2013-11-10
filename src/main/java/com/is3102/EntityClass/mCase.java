@@ -6,7 +6,6 @@ package com.is3102.EntityClass;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -49,8 +48,12 @@ public class mCase implements Serializable {
     private Transfer transfer;
     @OneToOne(mappedBy = "mcase")
     private Appointment appointment;
+    @OneToOne(mappedBy = "mcase")
+    private OutpatientAppointment appointment2;
     @OneToOne(cascade = {CascadeType.ALL})
     private DischargeSummary dischargeSummary;
+
+   
     @OneToOne(cascade = {CascadeType.ALL})
     private Medical_Anamnesis medicalAnamnesis;
     @OneToOne(cascade = {CascadeType.ALL})
@@ -214,8 +217,14 @@ public class mCase implements Serializable {
     public void setDiagnosis(List<Diagnosis> diagnosis) {
         this.diagnosis = diagnosis;
     }
-    
-    public NursingDischarge getNursingDischarge() {
+     public OutpatientAppointment getAppointment2() {
+        return appointment2;
+    }
+
+    public void setAppointment2(OutpatientAppointment appointment2) {
+        this.appointment2 = appointment2;
+    }
+     public NursingDischarge getNursingDischarge() {
         return nursingDischarge;
     }
 

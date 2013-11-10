@@ -44,6 +44,7 @@ public class CaseManagedBean implements Serializable {
     String type;
     List<Medication> medication = new ArrayList <Medication>();
     List<LabRadProcedure> procedures = new ArrayList <LabRadProcedure>();
+    
 
     public String getCIN() {
         return CIN;
