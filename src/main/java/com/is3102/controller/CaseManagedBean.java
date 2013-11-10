@@ -165,12 +165,17 @@ public class CaseManagedBean implements Serializable {
     public void doUpdateAnamnesis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         anamnesis = mam.listAnamnesis(CIN);
-        if(anamnesis==null)
+        if (anamnesis == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Anamnesis could not be found!", null));
+        }
     }
 
-    public void doUpdateProcedures(ActionEvent actionEvent) {
+    public void doUpdateProcedure(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
         mprocedures = dmm.listProcedures(CIN);
+        if (mprocedures == null) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Procedures do not exist!", null));
+        }
     }
 
     public void doViewMedication(ActionEvent actionEvent) {
@@ -228,6 +233,27 @@ public class CaseManagedBean implements Serializable {
 
     public void onCancelAnamnesis(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Anamnesis Not Edited!");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onEditProcedure(RowEditEvent event) {
+        try {
+            String newComments = (String) ((Medical_Procedure) event.getObject()).getComments();
+            //String newConsent = (String) ((Medical_Procedure) event.getObject()).getConsent();
+            //String newFinding = (String) ((Medical_Procedure) event.getObject()).getFinding();
+            //String newDate = (String) ((Medical_Procedure) event.getObject()).getDate();
+            //String newProcedureCode = (String) ((Medical_Procedure) event.getObject()).getProcedureCode();
+            //dmm.updateProcedure(anamnesis.getAnamnesisId(), newDiseaseHistory, newSocialHistory, newFamilyHistory, newMedicalHistory, newAllergies, newSymptoms);
+            FacesMessage msg = new FacesMessage("Procedure Successfully Edited!");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Procedure could not be Edited!", null));
+        }
+    }
+
+    public void onCancelProcedure(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Procedure Not Edited!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

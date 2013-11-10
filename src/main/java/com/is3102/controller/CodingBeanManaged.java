@@ -70,7 +70,7 @@ public class CodingBeanManaged {
      List<ICD10_Code> result = cbr.getMatchingCodes(diseaseDescription);
      this.seticdCodes(result);
      }  */
-    public void DoUpdateDiagnosis(ActionEvent actionEvent) {
+    public void doUpdateDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         System.out.println("test 1");
         try {
@@ -120,7 +120,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoListAllICD10Codes() {
+    public void doListAllICD10Codes() {
 
         this.setAllicdCodes(cbr.listAllCodes());
     }

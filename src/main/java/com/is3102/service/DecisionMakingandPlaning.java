@@ -109,4 +109,16 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
             return null;
         }
     }
+    
+    public void updateProcedure(Long procedureId, String newDiseaseHistory, String newSocialHistory, String newFamilyHistory, String newMedicalHistory, String newAllergies, String newSymptoms) {
+        Medical_Procedure procedure = em.find(Medical_Procedure.class, procedureId);
+        procedure.setComments(newSymptoms);
+        procedure.setDiseaseHistory(newDiseaseHistory);
+        anamnesis.setSocialHistory(newSocialHistory);
+        anamnesis.setFamilyHistory(newFamilyHistory);
+        anamnesis.setMedicalHistory(newMedicalHistory);
+        anamnesis.setAllergies(newAllergies);
+        anamnesis.setSymptoms(newSymptoms);
+        em.merge(anamnesis);
+    }
 }

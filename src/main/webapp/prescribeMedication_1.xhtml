@@ -49,7 +49,7 @@
                     <h:outputText value="Quantity: *" />
                     <p:inputText value="#{orderEntryManagedBean.quantity}" required="true" label="Quantity"/>
                     <h:outputText value="Prescription Details: *" />
-                    <p:inputTextarea rows="6" cols="33" value="#{orderEntryManagedBean.details}" required="true" label="Details"/>
+                    <h:inputTextarea cols="30" rows="10" value="#{orderEntryManagedBean.details}" required="true" label="Details"/>
                 </h:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{orderEntryManagedBean.doPrescribeMedication}" update=":form2:growl"/>
             </p:panel>

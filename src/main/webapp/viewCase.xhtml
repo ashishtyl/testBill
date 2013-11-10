@@ -52,14 +52,9 @@
 
         <h:form>
             <h3></h3>
-            <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="Add Medical Anamnesis" />
+            <p:commandButton  action="addAnamnesis?faces-redirect=true" value="Add Medical Anamnesis" />
             <h1></h1>
         </h:form>
-
-        <!--<h:form>
-            <h3></h3>
-            <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="View Medical Anamnesis" />
-        </h:form>-->
 
         <h:form id="form1">
             <p:growl id="messages" showDetail="true"/>
@@ -68,7 +63,7 @@
 
                 <p:ajax event="rowEdit" listener="#{caseManagedBean.onEditAnamnesis}" update=":form1:messages" />
                 <p:ajax event="rowEditCancel" listener="#{caseManagedBean.onCancelAnamnesis}" update=":form1:messages" />
-                
+
                 <p:column headerText="Disease History" style="width:10%">
                     <p:cellEditor>
                         <f:facet name="output">
@@ -143,9 +138,66 @@
 
         <h:form>
             <h3></h3>
-            <p:commandButton  action="Medical?faces-redirect=true" value="Add Medical Procedure" />
+            <p:commandButton  action="addMedicalProcedure?faces-redirect=true" value="Add Medical Procedure" />
         </h:form>
 
+        <h:form id="form2">
+            <p:growl id="messages" showDetail="true"/>
+            <h1></h1>
+            <p:commandButton value="View Medical Procedures" actionListener="#{caseManagedBean.doUpdateProcedure}" update=":form2:messages, :form2:dataTableProcedures"/>
+            <p:dataTable id="dataTableProcedures" var="mprocedures" value="#{caseManagedBean.mprocedures}" editable="true">
+                
+                <p:ajax event="rowEdit" listener="#{caseManagedBean.onEditProcedure}" update=":form2:messages" />
+                <p:ajax event="rowEditCancel" listener="#{caseManagedBean.onCancelProcedure}" update=":form2:messages" />
+
+                <p:column headerText="Procedure Code" style="width:10%">
+                    <!--<p:cellEditor>-->
+                    <f:facet name="output">
+                        <h:outputText value="#{mprocedures.procedureCode}" />
+                    </f:facet>
+                    <!--<f:facet name="input">
+                        <inputText value="#{mprocedures.procedureCode}" style="width:100%"/>
+                    </f:facet>-->
+                    <!--</p:cellEditor>-->
+                </p:column>
+
+                <p:column headerText="Date of Planning" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{mprocedures.date}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{mprocedures.date}" style="width:100%" pattern="yyyy-MM-dd"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Doctor's Comments" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{mprocedures.comments}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{mprocedures.comments}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:6%">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="addDiagnosis?faces-redirect=true" value="Add Medical Diagnosis" />
+        </h:form>
+
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="addDiagnosis?faces-redirect=true" value="View Medical Diagnoses" />
+        </h:form>
 
         <h:form>
             <h3></h3>

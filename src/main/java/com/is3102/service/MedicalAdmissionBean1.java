@@ -112,12 +112,10 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
     }
 
     public Medical_Anamnesis listAnamnesis(String CIN) {
-        System.out.println(CIN);
         mCase mcase = em.find(mCase.class, new Long(CIN));
         if (mcase != null) {
             Medical_Anamnesis mAnamnesis = mcase.getMedicalAnamnesis();
             if (mAnamnesis != null) {
-                System.out.println(mAnamnesis.getAllergies());
                 return mAnamnesis;
             } else {
                 return null;
@@ -130,17 +128,11 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
     public void updateAnamnesis(Long anamnesisId, String newDiseaseHistory, String newSocialHistory, String newFamilyHistory, String newMedicalHistory, String newAllergies, String newSymptoms) {
         Medical_Anamnesis anamnesis = em.find(Medical_Anamnesis.class, anamnesisId);
         anamnesis.setDiseaseHistory(newDiseaseHistory);
-
         anamnesis.setSocialHistory(newSocialHistory);
-
         anamnesis.setFamilyHistory(newFamilyHistory);
-
         anamnesis.setMedicalHistory(newMedicalHistory);
-
         anamnesis.setAllergies(newAllergies);
-
         anamnesis.setSymptoms(newSymptoms);
-
         em.merge(anamnesis);
     }
 }
