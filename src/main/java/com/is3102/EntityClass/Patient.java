@@ -81,6 +81,8 @@ public class Patient implements Serializable {
     }
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private Collection<Appointment> appointment = new ArrayList<Appointment>();
+      @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
+    private Collection<OutpatientAppointment> appointment2 = new ArrayList<OutpatientAppointment>();
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private Collection<mCase> mcase = new ArrayList<mCase>();
 
@@ -155,6 +157,14 @@ public class Patient implements Serializable {
         this.appointment = appointment;
     }
 
+    public Collection<OutpatientAppointment> getAppointment2() {
+        return appointment2;
+    }
+
+    public void setAppointment2(Collection<OutpatientAppointment> appointment2) {
+        this.appointment2 = appointment2;
+    }
+ 
     public Collection<mCase> getmCases() {
         return mcase;
     }

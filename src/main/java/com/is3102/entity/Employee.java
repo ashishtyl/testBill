@@ -1,5 +1,6 @@
 package com.is3102.entity;
 import com.is3102.EntityClass.Appointment;
+import com.is3102.EntityClass.OutpatientAppointment;
 import com.is3102.EntityClass.POEOrder;
 import com.is3102.EntityClass.Schedule;
 import java.io.Serializable;
@@ -56,6 +57,12 @@ public class        Employee extends BaseEntity implements Serializable{
     @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
     //@OneToMany(cascade={CascadeType.ALL}, mappedBy="employee")
     private List<Appointment> appointment = new ArrayList<Appointment>();
+    
+      // @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
+    //@OneToMany(cascade={CascadeType.ALL}, mappedBy="employee")
+   // private List<OutpatientAppointment> appointment2 = new ArrayList<OutpatientAppointment>();
+
+
     
     @OneToMany(cascade={CascadeType.PERSIST}, mappedBy="employee")
     private List<POEOrder> order = new ArrayList<POEOrder>();
@@ -209,6 +216,8 @@ public class        Employee extends BaseEntity implements Serializable{
     public Collection<Appointment> getAppointment() {
         return appointment;
     }
+    
+  
 
     public void setAppointment(List<Appointment> appointment) {
         this.appointment = appointment;

@@ -49,8 +49,12 @@ public class mCase implements Serializable {
     private Transfer transfer;
     @OneToOne(mappedBy = "mcase")
     private Appointment appointment;
+    @OneToOne(mappedBy = "mcase")
+    private OutpatientAppointment appointment2;
     @OneToOne(cascade = {CascadeType.ALL})
     private DischargeSummary dischargeSummary;
+
+   
     @OneToOne(cascade = {CascadeType.ALL})
     private Medical_Anamnesis medicalAnamnesis;
     @OneToOne(cascade = {CascadeType.ALL})
@@ -209,5 +213,12 @@ public class mCase implements Serializable {
 
     public void setDiagnosis(Collection<Diagnosis> diagnosis) {
         this.diagnosis = diagnosis;
+    }
+     public OutpatientAppointment getAppointment2() {
+        return appointment2;
+    }
+
+    public void setAppointment2(OutpatientAppointment appointment2) {
+        this.appointment2 = appointment2;
     }
 }
