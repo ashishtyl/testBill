@@ -41,7 +41,7 @@
           <h:form id="form3">
             <p:panel>
                 <p:commandButton value="Display Procedure Codes"
-                                 actionListener="#{codingBeanManaged.}"
+                                 actionListener="#{codingBeanManaged}"
                                  update=":form1:dataTableDiagnosisCodes"/>
                 <p:dataTable id="dataTableDiagnosisCodes" var="icdCodes" value="#{codingBeanManaged.allicdCodes}">
                     <p:column headerText="Disease Codes">
