@@ -353,8 +353,8 @@ public class OutPatientManagementController implements Serializable  {
             String newBirthday = format.format(((Patient) event.getObject()).getBirthday());
             String newNumber = (String) ((Patient) event.getObject()).getcNumber();
             String newWeight = (String) ((Patient) event.getObject()).getWeight();
-            opm.update(patient.getNRIC_PIN(), newName, newAddress, newBirthday, newNumber, newWeight);
-            FacesMessage msg = new FacesMessage("Patient Record Edited", ((Patient) event.getObject()).getNRIC_PIN());
+            opm.update(patient.getPassport_NRIC(), newName, newAddress, newBirthday, newNumber, newWeight);
+            FacesMessage msg = new FacesMessage("Patient Record Edited", ((Patient) event.getObject()).getPassport_NRIC());
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -363,7 +363,7 @@ public class OutPatientManagementController implements Serializable  {
     }
 
     public void onCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Patient Record Not Edited", ((Patient) event.getObject()).getNRIC_PIN());
+        FacesMessage msg = new FacesMessage("Patient Record Not Edited", ((Patient) event.getObject()).getPassport_NRIC());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
