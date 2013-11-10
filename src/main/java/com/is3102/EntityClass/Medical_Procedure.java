@@ -13,9 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -25,8 +22,9 @@ import javax.persistence.Temporal;
  *
  * @author Ben
  */
-@Entity(name="Medical_Procedure")
+@Entity(name = "Medical_Procedure")
 public class Medical_Procedure implements Serializable {
+
     private static long serialVersionUID = 1L;
 
     /**
@@ -54,7 +52,7 @@ public class Medical_Procedure implements Serializable {
     private  mCase mcase;
     @OneToOne(cascade = {CascadeType.PERSIST})
     private Finding finding;
-    @OneToMany(cascade={CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();
     private String comments;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -70,17 +68,15 @@ public class Medical_Procedure implements Serializable {
     public void create(ICD10_PCS procedureCode, String description, String findingDescription, String comments){
         Date date = new Date();
         this.setDate(date);
-        
         Finding finding = new Finding();
         finding.setDescription(description);
-        
         this.setFinding(finding);
         this.setProcedureCode(procedureCode);
         this.setComments(comments);
         this.setPateintConsent("NULL");
         
     }
-        
+
     public ICD10_PCS getProcedureCode() {
         return procedureCode;
     }
@@ -88,8 +84,7 @@ public class Medical_Procedure implements Serializable {
     public void setProcedureCode(ICD10_PCS procedureCode) {
         this.procedureCode = procedureCode;
     }
-            
-    
+
     public Long getId() {
         return getMpId();
     }
@@ -111,7 +106,7 @@ public class Medical_Procedure implements Serializable {
         if (!(object instanceof Medical_Procedure)) {
             return false;
         }
-  
+
         Medical_Procedure other = (Medical_Procedure) object;
         if ((this.getMpId() == null && other.getMpId() != null) || (this.getMpId() != null && !this.mpId.equals(other.mpId))) {
             return false;
@@ -181,12 +176,11 @@ public class Medical_Procedure implements Serializable {
     public void setExecutionlogs(List<ExecutionLog> Executionlogs) {
         this.Executionlogs = Executionlogs;
     }
-    
-    public void addExecutionLog(ExecutionLog log){
+
+    public void addExecutionLog(ExecutionLog log) {
         this.Executionlogs.add(log);
     }
 
- 
     public String getComments() {
         return comments;
     }

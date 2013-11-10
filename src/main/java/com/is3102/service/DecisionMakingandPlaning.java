@@ -96,4 +96,27 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         ICD10_PCS code = (ICD10_PCS) q.getSingleResult();
         return code;
     }
+    
+    public List<Medical_Procedure> listProcedures(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        if (mcase != null) {
+            List<Medical_Procedure> procedures = mcase.getmProcedures();
+            System.out.println(procedures.size());
+            return procedures;
+        } else {
+            return null;
+        }
+    }
+    
+    public void updateProcedure(Long procedureId, String newDiseaseHistory, String newSocialHistory, String newFamilyHistory, String newMedicalHistory, String newAllergies, String newSymptoms) {
+        Medical_Procedure procedure = em.find(Medical_Procedure.class, procedureId);
+        procedure.setComments(newSymptoms);
+        procedure.setDiseaseHistory(newDiseaseHistory);
+        anamnesis.setSocialHistory(newSocialHistory);
+        anamnesis.setFamilyHistory(newFamilyHistory);
+        anamnesis.setMedicalHistory(newMedicalHistory);
+        anamnesis.setAllergies(newAllergies);
+        anamnesis.setSymptoms(newSymptoms);
+        em.merge(anamnesis);
+    }
 }

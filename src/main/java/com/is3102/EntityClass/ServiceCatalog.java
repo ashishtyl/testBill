@@ -28,7 +28,7 @@ public class ServiceCatalog implements Serializable {
     public ServiceCatalog() {
     }
 
-    public void create(String name, String details) {
+    public void create(String name, Long price, String details) {
         this.setName(name);
         this.setPrice(price);
         this.setDetails(details);

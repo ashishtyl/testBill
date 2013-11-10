@@ -24,21 +24,26 @@
                 <h:panelGrid columns="2"> 
                     <h:outputLabel value="Case Id" />
                     <p:inputText id="CIN" value="#{codingBeanManaged.caseId}" required="true" />
-                    
+
                     <h:outputLabel  value="Disease Code " />
                     <p:inputText id="Code" value="#{codingBeanManaged.diseaseId}" required="true" />
-                    
+
                     <h:outputLabel value="Disease Name " />
                     <p:inputText id="Name" value="#{codingBeanManaged.diseaseName}" required="true" />    
-                    
+
                     <h:outputLabel value="Diagnosis Description " />
                     <h:inputTextarea cols="30" rows="10" value="#{codingBeanManaged.diagnosisDescription}"/>
-                    
-                    <p:commandButton value="Add Patient Diagnosis"
-                                     actionListener="#{codingBeanManaged.DoUpdateDiagnosis(actionEvent)}"/>
 
+                    <p:commandButton value="Add Patient Diagnosis"
+                                     actionListener="#{codingBeanManaged.doUpdateDiagnosis(actionEvent)}"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
+        </h:form>
+        
     </ui:define>
 </ui:composition>

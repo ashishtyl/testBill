@@ -181,19 +181,6 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
 
     }
 
-    public List<mCase> getPatientCases(String name, String passport_NRIC) {
-        try {
-            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
-            q.setParameter("name", name);
-            q.setParameter("passport_NRIC", passport_NRIC);
-            patient = (Patient) q.getSingleResult();
-            List mCaseList = (List) patient.getmCases();
-            return mCaseList;
-        } catch (NoResultException ex) {
-            return null;
-        }
-    }
-
     /* public void UpdatePatientInfo() throws Exception {
      } */
     public Employee getEmployee(int id) {
@@ -226,16 +213,78 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         patient.setWeight(newWeight);
         em.merge(patient);
     }
-    
+
     @Override
     public void updateCase(Long id, String newDateDischarge, String newType) throws ExistException, ParseException, Exception {
-        Date dDate = HandleDates.getDateFromString(newDateDischarge);
-        //Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :passport_NRIC");
-        //q.setParameter("passport_NRIC", newPassport_NRIC);
-        //patient = (Patient) q.getSingleResult();
-        mCase mcase = em.find(mCase.class, id);
-        mcase.setDateDischarged(dDate);
-        mcase.setType(newType);
-        em.merge(mcase);
+        try {
+            System.out.println(id);
+            Date dDate;
+            if (newDateDischarge != null) {
+                dDate = HandleDates.getDateFromString(newDateDischarge);
+            } else {
+                dDate = null;
+            }
+            mCase mcase = em.find(mCase.class, id);
+            mcase.setDateDischarged(dDate);
+            mcase.setType(newType);
+            em.merge(mcase);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public List<mCase> getPatientCases(String name, String passport_NRIC) {
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+            q.setParameter("name", name);
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
+            List mCaseList = (List) patient.getmCases();
+            return mCaseList;
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    public mCase retrievePatientCase(String name, String passport_NRIC, String dateAdmitted) {
+        String aDate;
+        System.out.println(dateAdmitted);
+        try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+            q.setParameter("name", name);
+            q.setParameter("passport_NRIC", passport_NRIC);
+            patient = (Patient) q.getSingleResult();
+            List<mCase> mCaseList = (List) patient.getmCases();
+            for (mCase mcase : mCaseList) {
+                aDate = HandleDates.convertDateToString(mcase.getDateAdmitted());
+                System.out.println(aDate);
+                if (aDate.equals(dateAdmitted)) {
+                    return mcase;
+                } else {
+                    continue;
+                }
+            }
+            return null;
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    public Patient getPatient(String name, String passport_NRIC) {
+        try {
+            Query q = null;
+            if (passport_NRIC.length() == 0) {
+                q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name");
+                q.setParameter("name", name);
+            } else {
+                q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+                q.setParameter("name", name);
+                q.setParameter("passport_NRIC", passport_NRIC);
+            }
+            patient = (Patient) q.getSingleResult();
+            return patient;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }
