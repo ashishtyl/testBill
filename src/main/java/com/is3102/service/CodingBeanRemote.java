@@ -21,7 +21,7 @@ import javax.ejb.Remote;
 public interface CodingBeanRemote {
 
     // public List<ICD10_Code> getMatchingCodes(String description);
-    public void updateDiagnosis(Long caseId, ICD10_Code icd10Code, String description) throws ExistException;
+    public void updateDiagnosis(Long caseId, String display, String description) throws ExistException;
 
     public void addCode(String id, String Chapter, String block, String Disease, String name) throws ExistException;
 
