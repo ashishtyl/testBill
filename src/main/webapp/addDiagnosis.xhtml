@@ -1,0 +1,43 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:panel>
+                <p:commandButton value="Display Diagnosis Codes"
+                                 actionListener="#{codingBeanManaged.doListAllICD10Codes}"
+                                 update=":form1:dataTableDiagnosisCodes"/>
+                <p:dataTable id="dataTableDiagnosisCodes" var="icdCodes" value="#{codingBeanManaged.allicdCodes}">
+                    <p:column headerText="Disease Codes">
+                        <h:outputText value="#{icdCodes.display}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        <h:form id="form2">
+            <p:panel id="panel">
+                <h1> Add Patient Diagnosis </h1>
+
+                <h:panelGrid columns="2"> 
+                    <h:outputLabel value="Case Id" />
+                    <p:inputText id="CIN" value="#{codingBeanManaged.caseId}" required="true" />
+                    
+                    <h:outputLabel  value="Disease Code " />
+                    <p:inputText id="Code" value="#{codingBeanManaged.diseaseId}" required="true" />
+                    
+                    <h:outputLabel value="Disease Name " />
+                    <p:inputText id="Name" value="#{codingBeanManaged.diseaseName}" required="true" />    
+                    
+                    <h:outputLabel value="Diagnosis Description " />
+                    <h:inputTextarea cols="30" rows="10" value="#{codingBeanManaged.diagnosisDescription}"/>
+                    
+                    <p:commandButton value="Add Patient Diagnosis"
+                                     actionListener="#{codingBeanManaged.DoUpdateDiagnosis(actionEvent)}"/>
+
+                </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

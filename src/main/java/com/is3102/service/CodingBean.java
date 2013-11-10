@@ -85,7 +85,6 @@ public class CodingBean implements CodingBeanRemote {
         for (Object o : q.getResultList()) {
             ICD10_Code code = (ICD10_Code) o;
             codeset.add(code);
-
         }
 
         return codeset;
@@ -98,10 +97,10 @@ public class CodingBean implements CodingBeanRemote {
         for (Object o : q.getResultList()) {
             ICD10_PCS code = (ICD10_PCS) o;
             codeset.add(code);
-
         }
-
+        
         return codeset;
+        
     }
 
     public void addProcedure(String id, String name, Long price) throws ExistException {
@@ -114,6 +113,7 @@ public class CodingBean implements CodingBeanRemote {
         code.create(id, name, price);
         em.persist(code);
         System.out.println("ICD 10 Code " + code.getCode() + " " + code.getName() + " added succefully");
+        
     }
     
      private ICD10_Code getCode(String display) {
@@ -123,6 +123,7 @@ public class CodingBean implements CodingBeanRemote {
         q.setParameter("param", display);
         ICD10_Code code = (ICD10_Code) q.getSingleResult();
         return code;
+        
     }
     
 }

@@ -30,12 +30,12 @@ public class CodingBeanManaged {
     //list of codes returned for a disease name searched.
     private List<ICD10_Code> icdCodes;
     //caseId to search a particular case.
-    private Long caseId;
+    private String caseId;
     //ICD10 code entitiy for creating a new case. 
     private ICD10_Code icd10Code;
     //diagnosis description entered by doctor when adding a new diagnosis for a case. 
     private String diagnosisDescription;
-    private Long diagnosisId;
+    private String diagnosisId;
     //disease description entered by doctor used to search ICD10 code
     // also used to set disease description when adding new disease
     private String diseaseDescription;
@@ -74,7 +74,8 @@ public class CodingBeanManaged {
         FacesContext context = FacesContext.getCurrentInstance();
         System.out.println("test 1");
         try {
-            cbr.updateDiagnosis(caseId, display, diagnosisDescription);
+            Long CIN = Long.valueOf(caseId);
+            cbr.updateDiagnosis(CIN,(diseaseId+" "+diseaseName), diagnosisDescription);
             context.addMessage(null, new FacesMessage("Diagnosis added(Updated) successfully"));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -85,7 +86,8 @@ public class CodingBeanManaged {
     public void DoListAllDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            this.setAllDiagnosis(cbr.listAllDiagnosis(caseId));
+            Long CIN = Long.valueOf(caseId);
+            this.setAllDiagnosis(cbr.listAllDiagnosis(CIN));
 
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -130,11 +132,16 @@ public class CodingBeanManaged {
     public void DoRemoveDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            cbr.removeDiagnosis(diagnosisId);
+            
+            Long dId = Long.valueOf(diagnosisId);
+            cbr.removeDiagnosis(dId);
             context.addMessage(null, new FacesMessage("Diagnosis removed successfully"));
+            
         } catch (Exception ex) {
+          
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove Diagnosis!", null));
+        
         }
     }
 
@@ -156,11 +163,11 @@ public class CodingBeanManaged {
         this.icdCodes = icdCodes;
     }
 
-    public Long getCaseId() {
+    public String getCaseId() {
         return caseId;
     }
 
-    public void setCaseId(long caseId) {
+    public void setCaseId(String caseId) {
         this.caseId = caseId;
     }
 
@@ -244,15 +251,11 @@ public class CodingBeanManaged {
         this.cbr = cbr;
     }
 
-    public void setCaseId(Long caseId) {
-        this.caseId = caseId;
-    }
-
-    public void setDiagnosisId(Long diagnosisId) {
+    public void setDiagnosisId(String diagnosisId) {
         this.diagnosisId = diagnosisId;
     }
 
-    public Long getDiagnosisId() {
+    public String getDiagnosisId() {
         return diagnosisId;
 
     }
