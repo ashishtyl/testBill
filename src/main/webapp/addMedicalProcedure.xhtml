@@ -40,7 +40,7 @@
                     <p:inputText value="#{decisionMakingandPlaningManaged.procedure_name}" label="Procedure Name"/>
 
                     <h:outputText value="Findings: "/>
-                    <p:inputText value="#{decisionMakingandPlaningManaged.finding}" label="Findings"/>
+                    <h:inputTextarea cols="30" rows="10" value="#{decisionMakingandPlaningManaged.finding}" label="Findings"/>
 
                     <h:outputText value="Comments: "/>
                     <h:inputTextarea cols="30" rows="10" value="#{decisionMakingandPlaningManaged.comments}" label="Comments"/>
@@ -55,5 +55,6 @@
             <h3></h3>
             <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
         </h:form>
+        
     </ui:define>
 </ui:composition>
