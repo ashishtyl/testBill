@@ -1,0 +1,21 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="prescribeMedication_1?faces-redirect=true" value="Prescribe Medication" />
+        </h:form>
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="orderLabRadProcedure?faces-redirect=true" value="Order Procedure" />
+        </h:form>
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,122 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <h1> Patient Case </h1>
+            <h:outputText value="Case Identification Number: " />
+            <p:inputText value="#{caseManagedBean.CIN}" required="true" label="Case Identification Number"/>
+            <p:commandButton value="Check for Existing Record" actionListener="#{caseManagedBean.doUpdateCase}" update=":form:messages, :form:dataTableCase"/>
+            <p:dataTable id="dataTableCase" var="mcase" value="#{caseManagedBean.mcase}" editable="true">
+
+                <!--<f:facet name="header">
+                    Case
+                </f:facet>-->
+
+                <p:ajax event="rowEdit" listener="#{caseManagedBean.onEdit}" update=":form:messages" />
+                <p:ajax event="rowEditCancel" listener="#{caseManagedBean.onCancel}" update=":form:messages" />
+
+                <p:column headerText="Date of Discharge" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{mcase.dateDischarged}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:calendar value="#{mcase.dateDischarged}" style="width:100%" pattern="yyyy-MM-dd"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Birthday" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{mcase.type}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{mcase.type}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:6%">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="Add Medical Anamnesis" />
+        </h:form>
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="View Medical Anamnesis" />
+        </h:form>
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="Add Medical Procedure" />
+        </h:form>
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="View Medical Procedures" />
+            <h3></h3>
+        </h:form>
+
+        <h:form id="form1">
+            <p:panel>
+                <p:commandButton value="View Medication Prescribed"
+                                 actionListener="#{caseManagedBean.doViewMedication}"
+                                 update=":form1:dataTableMedication"/>
+                <p:dataTable id="dataTableMedication" var="medication" value="#{caseManagedBean.medication}">
+                    <p:column headerText="Name">
+                        <h:outputText value="#{medication.name}"/>
+                    </p:column>
+                    <p:column headerText="Quantity"> 
+                        <h:outputText value="#{medication.quantity}"/>
+                    </p:column>
+                    <p:column headerText="Prescribed Dosage (in mg)">
+                        <h:outputText value="#{medication.dosage}"/>
+                    </p:column>
+                    <p:column headerText="Details">
+                        <h:outputText value="#{medication.details}"/>
+                    </p:column>
+                    <p:column headerText="Total Price">
+                        <h:outputText value="#{medication.totalPrice}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+
+        <h:form id="form2">
+            <p:panel>
+                <p:commandButton value="View Procedures Ordered"
+                                 actionListener="#{caseManagedBean.doViewMedication}"
+                                 update=":form2:dataTableProcedures"/>
+                <p:dataTable id="dataTableProcedures" var="procedures" value="#{caseManagedBean.procedures}">
+                    <p:column headerText="Name">
+                        <h:outputText value="#{procedures.name}"/>
+                    </p:column>
+                    <p:column headerText="Quantity"> 
+                        <h:outputText value="#{medication.quantity}"/>
+                    </p:column>
+                    <p:column headerText="Details">
+                        <h:outputText value="#{medication.details}"/>
+                    </p:column>
+                    <p:column headerText="Total Price">
+                        <h:outputText value="#{medication.totalPrice}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="providerOrderEntry?faces-redirect=true" value="Go to Order Entry System" />
+        </h:form>
+
+    </ui:define>
+</ui:composition>

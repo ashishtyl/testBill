@@ -13,6 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -22,44 +25,68 @@ import javax.persistence.Temporal;
  *
  * @author Ben
  */
-@Entity(name = "mProcedures")
-public class MedicalProcedure implements Serializable {
+@Entity(name="Medical_Procedure")
+public class Medical_Procedure implements Serializable {
+    private static long serialVersionUID = 1L;
 
+    /**
+     * @return the serialVersionUID
+     */
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    /**
+     * @param aSerialVersionUID the serialVersionUID to set
+     */
+    public static void setSerialVersionUID(long aSerialVersionUID) {
+        serialVersionUID = aSerialVersionUID;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long mpId;
-    @OneToOne(cascade = {CascadeType.PERSIST})
-    private Consent consent;
+
+    @OneToOne(cascade={CascadeType.PERSIST})
+    private Consent consent;  
     /*@ManyToOne(cascade={CascadeType.PERSIST})
-     private List<Diagnosis> diagnosis = new ArrayList<Diagnosis>(); */
+    private List<Diagnosis> diagnosis = new ArrayList<Diagnosis>(); */
     //shifted to mCase entity - ashish 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    private mCase mcase;
+    @ManyToOne(cascade={CascadeType.PERSIST})
+    private  mCase mcase;
     @OneToOne(cascade = {CascadeType.PERSIST})
     private Finding finding;
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade={CascadeType.ALL})
     private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();
-    private String name;
-    private String code;
     private String comments;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
-    //@OneToOne(cascade = {CascadeType.PERSIST})
-    //private Report report;
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    private ICD10_PCS procedureCode;     
 
-    public MedicalProcedure() {
-    }
-
-    public void create(String code, String name, Finding finding, String comments) {
+    public Medical_Procedure () {}
+    
+    public void create(ICD10_PCS procedureCode, String description, String findingDescription, String comments){
         Date date = new Date();
         this.setDate(date);
-        this.setCode(code);
-        this.setName(name);
+        
+        Finding finding = new Finding();
+        finding.setDescription(description);
+        
         this.setFinding(finding);
+        this.setProcedureCode(procedureCode);
         this.setComments(comments);
-
+        
+    }
+        
+    public ICD10_PCS getProcedureCode() {
+        return procedureCode;
     }
 
+    public void setProcedureCode(ICD10_PCS procedureCode) {
+        this.procedureCode = procedureCode;
+    }
+            
+    
     public Long getId() {
         return getMpId();
     }
@@ -78,11 +105,11 @@ public class MedicalProcedure implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MedicalProcedure)) {
+        if (!(object instanceof Medical_Procedure)) {
             return false;
         }
-
-        MedicalProcedure other = (MedicalProcedure) object;
+  
+        Medical_Procedure other = (Medical_Procedure) object;
         if ((this.getMpId() == null && other.getMpId() != null) || (this.getMpId() != null && !this.mpId.equals(other.mpId))) {
             return false;
         }
@@ -122,10 +149,16 @@ public class MedicalProcedure implements Serializable {
         this.consent = consent;
     }
 
+    /**
+     * @return the mcase
+     */
     public mCase getMcase() {
         return mcase;
     }
 
+    /**
+     * @param mcase the mcase to set
+     */
     public void setMcase(mCase mcase) {
         this.mcase = mcase;
     }
@@ -157,28 +190,12 @@ public class MedicalProcedure implements Serializable {
     public void setExecutionlogs(List<ExecutionLog> Executionlogs) {
         this.Executionlogs = Executionlogs;
     }
-
-    public void addExecutionLog(ExecutionLog log) {
+    
+    public void addExecutionLog(ExecutionLog log){
         this.Executionlogs.add(log);
     }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the comments
-     */
+ 
     public String getComments() {
         return comments;
     }
@@ -203,18 +220,6 @@ public class MedicalProcedure implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    /**
-     * @return the code
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * @param code the code to set
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+   
+    
 }

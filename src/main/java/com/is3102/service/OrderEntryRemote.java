@@ -5,6 +5,8 @@
 package com.is3102.service;
 
 import com.is3102.EntityClass.DrugCatalog;
+import com.is3102.EntityClass.LabRadProcedure;
+import com.is3102.EntityClass.Medication;
 import com.is3102.EntityClass.ServiceCatalog;
 import com.is3102.Exception.DrugException;
 import com.is3102.Exception.ExistException;
@@ -25,4 +27,6 @@ public interface OrderEntryRemote {
     public List<ServiceCatalog> displayServiceCatalog();
     public boolean checkProcedureSafety(String CIN, String name);
     public String orderLabRadProcedure(String CIN, String name, int quantity, String details) throws ExistException, ProcedureException;
+    public List<Medication> listMedication(String CIN);
+    public List<LabRadProcedure> listLabRadProcedures(String CIN);
 }

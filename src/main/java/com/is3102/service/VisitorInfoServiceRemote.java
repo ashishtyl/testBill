@@ -18,7 +18,7 @@ import javax.ejb.Remote;
 @Remote
 public interface VisitorInfoServiceRemote {
 
-    public Bed retrievePatientInfo(String NRIC_PIN, String dateAdmitted) throws ExistException;
+    public Bed retrievePatientInfo(Long patientId, String dateAdmitted);
     
     public int getTodaysAdmissions();
 
@@ -26,5 +26,5 @@ public interface VisitorInfoServiceRemote {
 
     public int getStayDuration();
     
-    public Patient getPatient(String NRIC_PIN);
+    public Patient getPatient(String name, String passport_NRIC);
 }

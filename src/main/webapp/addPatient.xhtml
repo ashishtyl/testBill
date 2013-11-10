@@ -12,9 +12,9 @@
                 <h:panelGrid columns = "2" style="margin-bottom:10px" cellpadding="5">  
                     <h:outputText value="Patient Name: " />
                     <p:inputText value="#{administrativeAdmissionManaged.name}" required="true" label="Patient Name"/>
-                    <h:outputText value="Patient PIN: " />
+                    <h:outputText value="Passport Number/NRIC: " />
                     <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN1}" required="true" label="Patient PIN"/>
-                    <h:outputText value="Patient Birthday (YYYY-MM-dd): " />
+                    <h:outputText value="Birthday (YYYY-MM-dd): " />
                     <p:calendar value="#{administrativeAdmissionManaged.birthday}" pattern="yyyy-MM-dd"/>
 
                     <h:outputText value="Nationality" />  
@@ -272,13 +272,13 @@
                         <f:selectItem itemLabel="Not specified" itemValue="Not specified" />
                     </p:selectOneMenu>
 
-                    <h:outputText value="Patient Address: " />
+                    <h:outputText value="Address: " />
                     <p:inputText value="#{administrativeAdmissionManaged.address}" required="true" label="Patient Address"/>
-                    <h:outputText value="Patient Contact: " />
+                    <h:outputText value="Contact Number: " />
                     <p:inputText value="#{administrativeAdmissionManaged.contact}" required="true" label="Patient Contact Number"/>
-                    <h:outputText value="Patient Height: (in cms)" />
+                    <h:outputText value="Height: (in cms)" />
                     <p:inputText value="#{administrativeAdmissionManaged.height}" required="true" label="Patient Height"/>
-                    <h:outputText value="Patient Weight: (in kgs) " />
+                    <h:outputText value="Weight: (in kgs) " />
                     <p:inputText value="#{administrativeAdmissionManaged.weight}" required="true" label="Patient Weight"/>
 
                     <h:outputText value="Gender: " />  

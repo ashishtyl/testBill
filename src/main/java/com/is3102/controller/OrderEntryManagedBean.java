@@ -4,16 +4,16 @@
  */
 package com.is3102.controller;
 
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import com.is3102.EntityClass.DrugCatalog;
+import com.is3102.service.OrderEntryRemote;
 import com.is3102.EntityClass.ServiceCatalog;
 import java.util.List;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-import com.is3102.service.OrderEntryRemote;
-import java.util.ArrayList;
+import javax.faces.bean.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -39,7 +39,6 @@ public class OrderEntryManagedBean implements Serializable {
     private String details;
     private double price;
     private String category;
-
     private String lrpCIN;
     private String lrpName;
     private int lrpQuantity;

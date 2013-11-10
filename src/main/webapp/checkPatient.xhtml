@@ -1,0 +1,41 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form8">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h1> Check for Past Records </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Patient Name: *" />
+                    <p:inputText value="#{patientIdandCheckingManaged.name1}" required="true" label="Name"/>
+                    <h:outputText value="Patient Passport Number/NRIC: *" />
+                    <p:inputText value="#{patientIdandCheckingManaged.NRIC_PIN1}" required="true" label="Passport Number/NRIC"/>
+                    <p:commandButton value="Check for Existing Record" actionListener="#{patientIdandCheckingManaged.DoCheckRecurrence}" update=":form8:growl, :form8:dataTablePatientRecord"/>
+                </h:panelGrid>
+
+                <p:separator id="separator"/>
+                <p:dataTable id="dataTablePatientRecord" var="patient" value="#{patientIdandCheckingManaged.patient}">
+                    <p:column headerText="Patient Name">
+                        <h:outputText value="#{patient.name}" />
+                    </p:column>
+                    <p:column headerText="Patient PIN">
+                        <h:outputText value="#{patient.passport_NRIC}" />
+                    </p:column>
+                    <p:column headerText="Patient Birthday">
+                        <h:outputText value="#{patient.birthday}" />
+                    </p:column>
+                    <p:column headerText="Patient Address">
+                        <h:outputText value="#{patient.address}" />
+                    </p:column>
+                    <p:column headerText="Patient Contact Number">
+                        <h:outputText value="#{patient.cNumber}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

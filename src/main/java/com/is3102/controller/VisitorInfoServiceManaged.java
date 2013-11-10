@@ -1,10 +1,12 @@
 package com.is3102.controller;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
+import javax.faces.bean.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+
+
 import java.io.Serializable;
 import com.is3102.EntityClass.Bed;
 import com.is3102.EntityClass.Patient;
@@ -27,13 +29,13 @@ public class VisitorInfoServiceManaged implements Serializable {
     @EJB
     public VisitorInfoServiceRemote vm;
     //public AdministrativeAdmissionManaged adminadm;
+    String name;
     String NRIC_PIN;
     Date dateAdmitted;
     int countToday;
     int countMonth;
     int countAvg;
     Bed bed;
-
     Logger logger = new Logger();
 
     public Bed getBed() {
@@ -50,6 +52,14 @@ public class VisitorInfoServiceManaged implements Serializable {
 
     public int getCountAvg() {
         return countAvg;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getNRIC_PIN() {
@@ -72,13 +82,13 @@ public class VisitorInfoServiceManaged implements Serializable {
         logger.log("In doretrieve Patient Info");
         FacesContext context = FacesContext.getCurrentInstance();
         //try {
-        Patient patient = vm.getPatient(NRIC_PIN);
+        Patient patient = vm.getPatient(name, NRIC_PIN);
         if (patient != null) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            bed = vm.retrievePatientInfo(NRIC_PIN, format.format(dateAdmitted));
+            bed = vm.retrievePatientInfo(patient.getPatientId(), format.format(dateAdmitted));
         } else {
             bed = null;
-            //context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be found!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be found!", null));
 
         }
     }

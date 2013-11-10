@@ -10,11 +10,15 @@
             <p:panel>
                 <h1> Create Case </h1>
                 <h:panelGrid columns = "2">
-                    <h:outputText value="Patient PIN: "/>
+                    <h:outputText value="Patient Passport Number/NRIC: "/>
                     <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN3}" required="true"
-                                 label="Patient PIN"/>
+                                 label="Passport Number/NRIC"/>
                     <h:outputText value="Bed Number: "/>
                     <p:inputText value="#{administrativeAdmissionManaged.bedNo}" required="true" label="Bed Number"/>
+                    <h:outputText value="Room Number: "/>
+                    <p:inputText value="#{administrativeAdmissionManaged.roomNo}" required="true" label="Bed Number"/>
+                    <h:outputText value="Floor: "/>
+                    <p:inputText value="#{administrativeAdmissionManaged.floor}" required="true" label="Bed Number"/>
                     <h:outputText value="Appointment ID: "/>
                     <p:inputText value="#{administrativeAdmissionManaged.appID}" required="true"
                                  label="Appointment ID"/>
@@ -32,7 +36,7 @@
         </h:form>
         <h:form id="form4">
             <p:panel>
-                <h:outputText value="Patient PIN: "/>
+                <h:outputText value="Passport Number/NRIC: "/>
                 <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN4}" required="true" label="Patient PIN"/>
                 <p:commandButton value="Get Appointments"
                                  actionListener="#{administrativeAdmissionManaged.showAppointments}"

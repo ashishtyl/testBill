@@ -7,7 +7,6 @@ package com.is3102.service;
 import com.is3102.EntityClass.Bed;
 import com.is3102.EntityClass.Patient;
 import com.is3102.EntityClass.mCase;
-
 import javax.ejb.Stateless;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,8 +17,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import com.is3102.util.HandleDates;
+import javax.persistence.NoResultException;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -35,11 +34,11 @@ public class VisitorInfoServiceBean implements VisitorInfoServiceRemote {
     private Patient patient;
     private mCase mcase;
 
-    public Bed retrievePatientInfo(String NRIC_PIN, String dateAdmitted) {
-            //throws ExistException {
+    public Bed retrievePatientInfo(Long patientId, String dateAdmitted) {
+        //throws ExistException {
 
         String aDate;
-        patient = em.find(Patient.class, NRIC_PIN);
+        patient = em.find(Patient.class, patientId);
         //if(patient!=null) {
         List<mCase> mcases = (List<mCase>) patient.getmCases();
         for (mCase mcase : mcases) {
@@ -125,8 +124,22 @@ public class VisitorInfoServiceBean implements VisitorInfoServiceRemote {
         //}
     }
 
-    public Patient getPatient(String NRIC_PIN) {
-        return em.find(Patient.class, NRIC_PIN);
+    public Patient getPatient(String name, String passport_NRIC) {
+        try {
+            Query q = null;
+            if (passport_NRIC.length() == 0) {
+                q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name");
+                q.setParameter("name", name);
+            } else {
+                q = em.createQuery("SELECT p FROM Patient p WHERE p.name = :name AND p.passport_NRIC = :passport_NRIC");
+                q.setParameter("name", name);
+                q.setParameter("passport_NRIC", passport_NRIC);
+            }
+            patient = (Patient) q.getSingleResult();
+            return patient;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     public List<mCase> getmCases() {

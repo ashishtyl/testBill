@@ -51,6 +51,8 @@ public class AdministrativeAdmissionManaged implements Serializable {
     Date appDate;
     int docID;
     String bedNo;
+    String roomNo;
+    String floor;
     String type;
     String appID;
     long CIN;
@@ -262,6 +264,22 @@ public class AdministrativeAdmissionManaged implements Serializable {
         this.bedNo = bedNo;
     }
 
+    public String getRoomNo() {
+        return roomNo;
+    }
+
+    public void setRoomNo(String roomNo) {
+        this.roomNo = roomNo;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
     public String getAppID() {
         return appID;
     }
@@ -306,7 +324,7 @@ public class AdministrativeAdmissionManaged implements Serializable {
             beds = am.getAvailBeds();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date dateCreated = new Date();
-            CIN = am.createCase(bedNo, appID, type);
+            CIN = am.createCase(bedNo, roomNo, floor, appID, type);
             context.addMessage(null, new FacesMessage("Case " + CIN + " for " + NRIC_PIN3 + " on date " + format.format(dateCreated) + " successfully created!"));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -335,13 +353,14 @@ public class AdministrativeAdmissionManaged implements Serializable {
     public void onEdit(RowEditEvent event) {
         try {
             String newName = (String) ((Patient) event.getObject()).getName();
+            String newPassport_NRIC = (String) ((Patient) event.getObject()).getPassport_NRIC();
             String newAddress = (String) ((Patient) event.getObject()).getAddress();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String newBirthday = format.format(((Patient) event.getObject()).getBirthday());
             String newNumber = (String) ((Patient) event.getObject()).getcNumber();
             String newWeight = (String) ((Patient) event.getObject()).getWeight();
-            am.update(patient.getNRIC_PIN(), newName, newAddress, newBirthday, newNumber, newWeight);
-            FacesMessage msg = new FacesMessage("Patient Record Edited", ((Patient) event.getObject()).getNRIC_PIN());
+            am.updatePatient(patient.getPatientId(), newPassport_NRIC, newName, newAddress, newBirthday, newNumber, newWeight);
+            FacesMessage msg = new FacesMessage("Patient Record Successfully Edited!", ((Patient) event.getObject()).getPassport_NRIC());
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -350,7 +369,7 @@ public class AdministrativeAdmissionManaged implements Serializable {
     }
 
     public void onCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Patient Record Not Edited", ((Patient) event.getObject()).getNRIC_PIN());
+        FacesMessage msg = new FacesMessage("Patient Record Not Edited!", ((Patient) event.getObject()).getPassport_NRIC());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }
