@@ -46,11 +46,10 @@ public class Medical_Procedure implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long mpId;
 
-    @OneToOne(cascade={CascadeType.PERSIST})
-    private Consent consent;  
-    /*@ManyToOne(cascade={CascadeType.PERSIST})
-    private List<Diagnosis> diagnosis = new ArrayList<Diagnosis>(); */
-    //shifted to mCase entity - ashish 
+    /*@OneToOne(cascade={CascadeType.PERSIST})
+    private Consent consent;*/  
+ 
+    
     @ManyToOne(cascade={CascadeType.PERSIST})
     private  mCase mcase;
     @OneToOne(cascade = {CascadeType.PERSIST})
@@ -62,7 +61,10 @@ public class Medical_Procedure implements Serializable {
     private Date date;
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private ICD10_PCS procedureCode;     
+    private String pateintConsent;
 
+    
+    
     public Medical_Procedure () {}
     
     public void create(ICD10_PCS procedureCode, String description, String findingDescription, String comments){
@@ -75,6 +77,7 @@ public class Medical_Procedure implements Serializable {
         this.setFinding(finding);
         this.setProcedureCode(procedureCode);
         this.setComments(comments);
+        this.setPateintConsent("NULL");
         
     }
         
@@ -135,19 +138,7 @@ public class Medical_Procedure implements Serializable {
         this.mpId = mpId;
     }
 
-    /**
-     * @return the consent
-     */
-    public Consent getConsent() {
-        return consent;
-    }
-
-    /**
-     * @param consent the consent to set
-     */
-    public void setConsent(Consent consent) {
-        this.consent = consent;
-    }
+   
 
     /**
      * @return the mcase
@@ -220,6 +211,12 @@ public class Medical_Procedure implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-   
+    public void setPateintConsent(String pateintConsent) {
+        this.pateintConsent = pateintConsent;
+    }
+
+    public String getPateintConsent() {
+        return pateintConsent;
+    }
     
 }

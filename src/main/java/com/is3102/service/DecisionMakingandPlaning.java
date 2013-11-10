@@ -65,9 +65,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
             throw new ExistException("No such procedure exists!");
         }
 
-        Consent consent = new Consent();
-        consent.create(patient_comment);
-        procedure.setConsent(consent);
+       procedure.setPateintConsent(patient_comment);
 
     }
 
