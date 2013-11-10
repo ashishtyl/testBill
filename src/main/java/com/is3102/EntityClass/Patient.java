@@ -41,8 +41,10 @@ public class Patient implements Serializable {
     private List<Appointment> appointment = new ArrayList<Appointment>();
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private List<mCase> mcase = new ArrayList<mCase>();
+
      @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private List<OutpatientAppointment> appointment2 = new ArrayList<OutpatientAppointment>();
+
 
     public Patient() {
     }
@@ -155,7 +157,11 @@ public class Patient implements Serializable {
     public void setGender(String gender) {
         this.gender = gender;
     }
-  
+
+    public List<mCase> getmCases() {
+        return mcase;
+    }
+
 
     public void setmCases(List<mCase> mcase) {
         this.mcase = mcase;
