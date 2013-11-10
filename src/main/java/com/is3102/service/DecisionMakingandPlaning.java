@@ -98,4 +98,15 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         ICD10_PCS code = (ICD10_PCS) q.getSingleResult();
         return code;
     }
+    
+    public List<Medical_Procedure> listProcedures(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        if (mcase != null) {
+            List<Medical_Procedure> procedures = mcase.getmProcedures();
+            System.out.println(procedures.size());
+            return procedures;
+        } else {
+            return null;
+        }
+    }
 }

@@ -7,7 +7,6 @@
     <ui:define name="content">
         <h:form id="form10">
             <p:growl id="messages" showDetail="true"/>
-
             <h:outputText value="Patient PIN: " />
             <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN5}" required="true" label="Patient PIN"/>
             <p:commandButton value="Check for Existing Record" actionListener="#{administrativeAdmissionManaged.doUpdatePatient}" update=":form10:dataTablePatientRecord"/>

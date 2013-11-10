@@ -38,6 +38,7 @@ public class Medical_Anamnesis implements Serializable {
         this.setFamilyHistory(familyHistory);
         this.setAllergies(allergies);
         this.setSymptoms(symptoms);
+        this.setIsPregnant(isPregnant);
     }
 
     public Long getAnamnesisId() {

@@ -8,17 +8,19 @@
         <h:form id="form">
             <p:growl id="messages" showDetail="true"/>
             <h1> Patient Case </h1>
-            <h:outputText value="Case Identification Number: * " />
-            <p:inputText value="#{caseManagedBean.CIN}" required="true" label="Case Identification Number"/>
+            <h:panelGrid columns = "2">
+                <h:outputText value="Patient Name: * " />
+                <p:inputText value="#{caseManagedBean.name}" required="true" label="Name"/>
+                <h:outputText value="Patient Passport Number/NRIC: * " />
+                <p:inputText value="#{caseManagedBean.NRIC_PIN}" required="true" label="Patient Passport Number/NRIC"/>
+                <h:outputText value="Date of Admission (YYYY-mm-dd): * " />
+                <p:calendar value="#{caseManagedBean.dateAdmitted}" required="true" pattern="yyyy-MM-dd" label="Date"/>
+            </h:panelGrid>
             <p:commandButton value="Check for Existing Record" actionListener="#{caseManagedBean.doUpdateCase}" update=":form:messages, :form:dataTableCase"/>
             <p:dataTable id="dataTableCase" var="mcase" value="#{caseManagedBean.mcase}" editable="true">
 
-                <!--<f:facet name="header">
-                    Case
-                </f:facet>-->
-
-                <p:ajax event="rowEdit" listener="#{caseManagedBean.onEdit}" update=":form:messages" />
-                <p:ajax event="rowEditCancel" listener="#{caseManagedBean.onCancel}" update=":form:messages" />
+                <p:ajax event="rowEdit" listener="#{caseManagedBean.onEditCase}" update=":form:messages" />
+                <p:ajax event="rowEditCancel" listener="#{caseManagedBean.onCancelCase}" update=":form:messages" />
 
                 <p:column headerText="Date of Discharge" style="width:10%">
                     <p:cellEditor>
@@ -31,7 +33,7 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="Birthday" style="width:10%">
+                <p:column headerText="Patient Type" style="width:10%">
                     <p:cellEditor>
                         <f:facet name="output">
                             <h:outputText value="#{mcase.type}" />
@@ -51,26 +53,111 @@
         <h:form>
             <h3></h3>
             <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="Add Medical Anamnesis" />
+            <h1></h1>
         </h:form>
-        <h:form>
+
+        <!--<h:form>
             <h3></h3>
             <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="View Medical Anamnesis" />
+        </h:form>-->
+
+        <h:form id="form1">
+            <p:growl id="messages" showDetail="true"/>
+            <p:commandButton value="View Medical Anamnesis" actionListener="#{caseManagedBean.doUpdateAnamnesis}" update=":form1:messages, :form1:dataTableAnamnesis"/>
+            <p:dataTable id="dataTableAnamnesis" var="anamnesis" value="#{caseManagedBean.anamnesis}" editable="true">
+
+                <p:ajax event="rowEdit" listener="#{caseManagedBean.onEditAnamnesis}" update=":form1:messages" />
+                <p:ajax event="rowEditCancel" listener="#{caseManagedBean.onCancelAnamnesis}" update=":form1:messages" />
+                
+                <p:column headerText="Disease History" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{anamnesis.diseaseHistory}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{anamnesis.diseaseHistory}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Social History" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{anamnesis.socialHistory}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{anamnesis.socialHistory}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Medical History" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{anamnesis.medicalHistory}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{anamnesis.medicalHistory}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Family History" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{anamnesis.familyHistory}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{anamnesis.familyHistory}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Allergies" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{anamnesis.allergies}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{anamnesis.allergies}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Symptoms" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{anamnesis.symptoms}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{anamnesis.symptoms}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:6%">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
         </h:form>
+
         <h:form>
             <h3></h3>
-            <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="Add Medical Procedure" />
+            <p:commandButton  action="Medical?faces-redirect=true" value="Add Medical Procedure" />
         </h:form>
+
+
         <h:form>
             <h3></h3>
-            <p:commandButton  action="MedicalAdmission?faces-redirect=true" value="View Medical Procedures" />
+            <p:commandButton  action="providerOrderEntry?faces-redirect=true" value="Go to Order Entry System" />
             <h3></h3>
         </h:form>
 
-        <h:form id="form1">
+        <h:form id="form3">
             <p:panel>
                 <p:commandButton value="View Medication Prescribed"
                                  actionListener="#{caseManagedBean.doViewMedication}"
-                                 update=":form1:dataTableMedication"/>
+                                 update=":form3:dataTableMedication"/>
                 <p:dataTable id="dataTableMedication" var="medication" value="#{caseManagedBean.medication}">
                     <p:column headerText="Name">
                         <h:outputText value="#{medication.name}"/>
@@ -91,11 +178,11 @@
             </p:panel>
         </h:form>
 
-        <h:form id="form2">
+        <h:form id="form4">
             <p:panel>
                 <p:commandButton value="View Procedures Ordered"
                                  actionListener="#{caseManagedBean.doViewMedication}"
-                                 update=":form2:dataTableProcedures"/>
+                                 update=":form4:dataTableProcedures"/>
                 <p:dataTable id="dataTableProcedures" var="procedures" value="#{caseManagedBean.procedures}">
                     <p:column headerText="Name">
                         <h:outputText value="#{procedures.name}"/>
@@ -111,11 +198,6 @@
                     </p:column>
                 </p:dataTable>
             </p:panel>
-        </h:form>
-
-        <h:form>
-            <h3></h3>
-            <p:commandButton  action="providerOrderEntry?faces-redirect=true" value="Go to Order Entry System" />
         </h:form>
 
     </ui:define>

@@ -25,6 +25,8 @@ public interface MedicalAdmissionBean1Remote {
     public void removeAnamnesis(Long anamnesisId)throws ExistException;
     public List<Medical_Anamnesis> ListMedical_Anamnesis();
      public List<mCase> ListmCase();
+     public Medical_Anamnesis listAnamnesis(String CIN);
+     public void updateAnamnesis(Long anamnesisId, String newDiseaseHistory, String newSocialHistory, String newFamilyHistory, String newMedicalHistory, String newAllergies, String newSymptoms);
    /* public void codeDiagnosis(String diseaseCode, String description);
     public void removeDiagnosis(Long diagnosisId);
     public Diagnosis getDiagnosis(Long diagnosisId);*/

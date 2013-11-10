@@ -26,4 +26,6 @@ public interface DecisionMakingandPlaningRemote {
 
     public void RetrieveMedicalKnowledge();
     
+    public List<Medical_Procedure> listProcedures(String CIN);
+    
 }
