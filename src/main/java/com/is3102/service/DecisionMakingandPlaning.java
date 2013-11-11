@@ -4,17 +4,13 @@
  */
 package com.is3102.service;
 
-import com.is3102.EntityClass.Consent;
-import com.is3102.EntityClass.Diagnosis;
-import com.is3102.EntityClass.Finding;
 import com.is3102.EntityClass.ICD10_PCS;
 import com.is3102.EntityClass.Medical_Procedure;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.ExistException;
-import com.is3102.service.DecisionMakingandPlaningRemote;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -44,17 +40,13 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         System.out.print("ICD10_PCS code object created");
         procedure.create(code, procedure_name, finding, comments);
         System.out.println("created procedure ");
-
-        em.persist(procedure);
-
         mcase.addmedicalProcedure(procedure);
         System.out.println("added procedure");
         procedure.setMcase(mcase);
         System.out.println("set mcase");
-
-        System.out.println("Medical Procedure " + procedure.getId()
+        System.out.println("Medical Procedure " + procedure.getMpId()
                 + "added to case " + mcase.getCIN());
-
+        em.persist(procedure);
         em.persist(mcase);
         em.flush();
     }
@@ -64,9 +56,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         if (procedure == null) {
             throw new ExistException("No such procedure exists!");
         }
-
-       procedure.setPateintConsent(patient_comment);
-
+        procedure.setPatientConsent(patient_comment);
     }
 
     public List<Medical_Procedure> RetrieveCarePlaning(Long CIN) throws ExistException {
@@ -96,7 +86,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         ICD10_PCS code = (ICD10_PCS) q.getSingleResult();
         return code;
     }
-    
+
     public List<Medical_Procedure> listProcedures(String CIN) {
         mCase mcase = em.find(mCase.class, new Long(CIN));
         if (mcase != null) {
@@ -107,16 +97,14 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
             return null;
         }
     }
-    
-    public void updateProcedure(Long procedureId, String newDiseaseHistory, String newSocialHistory, String newFamilyHistory, String newMedicalHistory, String newAllergies, String newSymptoms) {
+
+    public void updateProcedure(Long procedureId, String newComments, String newFindings, String newConsent) {
         Medical_Procedure procedure = em.find(Medical_Procedure.class, procedureId);
-        procedure.setComments(newSymptoms);
-        procedure.setDiseaseHistory(newDiseaseHistory);
-        anamnesis.setSocialHistory(newSocialHistory);
-        anamnesis.setFamilyHistory(newFamilyHistory);
-        anamnesis.setMedicalHistory(newMedicalHistory);
-        anamnesis.setAllergies(newAllergies);
-        anamnesis.setSymptoms(newSymptoms);
-        em.merge(anamnesis);
+        Date pDate = new Date();
+        procedure.setDate(pDate);
+        procedure.setComments(newComments);
+        procedure.getFinding().setDescription(newFindings);
+        procedure.setPatientConsent(newConsent);
+        em.merge(procedure);
     }
 }

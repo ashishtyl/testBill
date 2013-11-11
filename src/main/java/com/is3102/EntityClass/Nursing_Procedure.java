@@ -24,6 +24,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Nursing_Procedure implements Serializable {
+
     private static long serialVersionUID = 1L;
 
     /**
@@ -42,31 +43,29 @@ public class Nursing_Procedure implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long npId;
-
-    @OneToOne(cascade={CascadeType.PERSIST})
-    private Consent consent;  
-    @ManyToOne(cascade={CascadeType.PERSIST})
-    private  mCase mcase;
-    @OneToMany(cascade={CascadeType.ALL})
-    private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();
-    
+    private String patientConsent;
     private String name;
     private String code;
     private String comments;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    private mCase mcase;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();
 
-    
-    public Nursing_Procedure(){}
-    
-    public void create(String name, String code, String comments){
+    public Nursing_Procedure() {
+    }
+
+    public void create(String name, String code, String comments) {
         this.setCode(code);
         this.setName(name);
         this.setComments(comments);
         Date tmp = new Date();
         this.setDate(tmp);
+        this.setPatientConsent("NULL");
     }
-   
+
     /**
      * @return the npId
      */
@@ -84,15 +83,12 @@ public class Nursing_Procedure implements Serializable {
     /**
      * @return the consent
      */
-    public Consent getConsent() {
-        return consent;
+    public String getPatientConsent() {
+        return patientConsent;
     }
 
-    /**
-     * @param consent the consent to set
-     */
-    public void setConsent(Consent consent) {
-        this.consent = consent;
+    public void setPatientConsent(String patientConsent) {
+        this.patientConsent = patientConsent;
     }
 
     /**
@@ -122,8 +118,8 @@ public class Nursing_Procedure implements Serializable {
     public void setExecutionlogs(List<ExecutionLog> Executionlogs) {
         this.Executionlogs = Executionlogs;
     }
-    
-    public void addExecutionLog(ExecutionLog log){
+
+    public void addExecutionLog(ExecutionLog log) {
         this.getExecutionlogs().add(log);
     }
 
@@ -182,5 +178,4 @@ public class Nursing_Procedure implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-    
 }

@@ -43,11 +43,11 @@ public class ExecutionBean implements ExecutionRemote {
         }
         System.out.println("In ExcB: procedure found");
        
-        if(procedure.getPateintConsent().compareTo("NULL")==1){
-            System.out.println("In ExcB: consent not recieved");
-            throw new ConsentException("Patient Consent not recieved!");
+        if(procedure.getPatientConsent().equalsIgnoreCase("NULL")){
+            System.out.println("In ExcB: consent not received");
+            throw new ConsentException("Patient Consent not received!");
         }
-       System.out.println("Consent check passed");
+       System.out.println("Consent check passed!");
         
         ExecutionLog eLog = new ExecutionLog();
         eLog.create(doctor, exeuction_comment);

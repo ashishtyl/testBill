@@ -239,11 +239,9 @@ public class CaseManagedBean implements Serializable {
     public void onEditProcedure(RowEditEvent event) {
         try {
             String newComments = (String) ((Medical_Procedure) event.getObject()).getComments();
-            //String newConsent = (String) ((Medical_Procedure) event.getObject()).getConsent();
-            //String newFinding = (String) ((Medical_Procedure) event.getObject()).getFinding();
-            //String newDate = (String) ((Medical_Procedure) event.getObject()).getDate();
-            //String newProcedureCode = (String) ((Medical_Procedure) event.getObject()).getProcedureCode();
-            //dmm.updateProcedure(anamnesis.getAnamnesisId(), newDiseaseHistory, newSocialHistory, newFamilyHistory, newMedicalHistory, newAllergies, newSymptoms);
+            String newConsent = (String) ((Medical_Procedure) event.getObject()).getPatientConsent();
+            String newFindings = (String) ((Medical_Procedure) event.getObject()).getFinding().getDescription();
+            dmm.updateProcedure((Long) ((Medical_Procedure) event.getObject()).getMpId(), newComments, newFindings, newConsent);
             FacesMessage msg = new FacesMessage("Procedure Successfully Edited!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception ex) {
