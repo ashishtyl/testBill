@@ -40,5 +40,11 @@ public interface CodingBeanRemote {
     public List<Diagnosis> listDiagnoses(String CIN);
     
     public void updateDiagnosis(Long diagnosisId, String newDescription);
+    
+    public void addMedicalProcedure(String id, String name, Long price) throws ExistException;
+    
+    public void addNursingProcedure(String category, String id, String name, Long price) throws ExistException;
+    
+    public List<ICNP_Code> listAllNursingProcedures();
 
 }
