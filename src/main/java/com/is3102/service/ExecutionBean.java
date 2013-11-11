@@ -4,16 +4,16 @@
  */
 package com.is3102.service;
 
-import com.is3102.EntityClass.Doctor;
 import com.is3102.EntityClass.ExecutionLog;
 import com.is3102.EntityClass.Medical_Procedure;
 import com.is3102.EntityClass.Nursing_Procedure;
+import com.is3102.EntityClass.Vitals;
+import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.ConsentException;
 import com.is3102.Exception.ExistException;
 import com.is3102.entity.Employee;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -98,5 +98,24 @@ public class ExecutionBean implements ExecutionRemote {
             List<ExecutionLog> logs = procedure.getExecutionlogs();
             return logs;
         }
+    }
+
+    public void recordVitals(Long caseId, String bp, String tmp, String HR, String spO2, String glucose, String rRate) throws ExistException {
+        
+        System.out.println("In ExcB: record Vitals");
+        Vitals vitals = new Vitals();
+        
+        mCase mcase = em.find(mCase.class, caseId);
+        if (mcase == null) {
+            System.out.println("mcase not found");
+            throw new ExistException("Case not found!");
+        }
+
+        System.out.println("mCase found");
+        vitals.create(mcase, bp, tmp, HR, spO2, glucose, rRate);
+        System.out.println("vitals created");
+        em.persist(vitals);
+        System.out.println(" vitals persisted");
+
     }
 }
