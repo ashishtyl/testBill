@@ -31,7 +31,7 @@ public class DrugCatalog implements Serializable {
     public DrugCatalog() {
     }
 
-    public void create(String name, String type) {
+    public void create(String name, String type, String method, Long recommendedDosage, String sideEffect, Long price, String category) {
         this.setName(name);
         this.setType(type);
         this.setMethod(method);

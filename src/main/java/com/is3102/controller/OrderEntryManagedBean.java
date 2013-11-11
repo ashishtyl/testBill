@@ -8,8 +8,10 @@ import java.io.Serializable;
 import com.is3102.EntityClass.DrugCatalog;
 import com.is3102.service.OrderEntryRemote;
 import com.is3102.EntityClass.ServiceCatalog;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -30,7 +32,7 @@ public class OrderEntryManagedBean implements Serializable {
     List<DrugCatalog> drugsCatalog = new ArrayList<DrugCatalog>();
     //private DrugCatalog selectedDrug;
     //private DrugCatalog[] selectedDrugs;
-    List<ServiceCatalog> serviceCatalog = new ArrayList<ServiceCatalog>();
+    private List<ServiceCatalog> serviceCatalog = new ArrayList<ServiceCatalog>();
     
     private String CIN;
     private String name;
@@ -44,6 +46,7 @@ public class OrderEntryManagedBean implements Serializable {
     private int lrpQuantity;
     private String lrpDetails;
     private double totalPrice;
+    private Date appDate;
     
     //private SelectItem[] drugTypeOptions;
     //private String[] drugTypes = new String[100];
@@ -119,7 +122,7 @@ public class OrderEntryManagedBean implements Serializable {
     }
     
         public void doDisplayServiceCatalog(ActionEvent actionEvent) {
-        serviceCatalog = oem.displayServiceCatalog();
+        setServiceCatalog(oem.displayServiceCatalog());
         /*for (DrugCatalog dc : drugsCatalog) {
          drugTypes[count++] = dc.getType();
          }*/
@@ -141,7 +144,8 @@ public class OrderEntryManagedBean implements Serializable {
         public void doOrderLabRadProcedure(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            String sevName = oem.orderLabRadProcedure(lrpCIN, lrpName, lrpQuantity, lrpDetails);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String sevName = oem.orderLabRadProcedure(getLrpCIN(), getLrpName(), getLrpQuantity(), getLrpDetails(), format.format(getAppDate()));
             context.addMessage(null, new FacesMessage("Procedure " + sevName + " successfully ordered!"));
         } catch (Exception ex) {
             //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
@@ -164,4 +168,102 @@ public class OrderEntryManagedBean implements Serializable {
     /*public SelectItem[] getDrugTypeOptions() {
      return drugTypeOptions;
      }*/
+
+    /**
+     * @return the serviceCatalog
+     */
+    public List<ServiceCatalog> getServiceCatalog() {
+        return serviceCatalog;
+    }
+
+    /**
+     * @param serviceCatalog the serviceCatalog to set
+     */
+    public void setServiceCatalog(List<ServiceCatalog> serviceCatalog) {
+        this.serviceCatalog = serviceCatalog;
+    }
+
+    /**
+     * @return the lrpCIN
+     */
+    public String getLrpCIN() {
+        return lrpCIN;
+    }
+
+    /**
+     * @param lrpCIN the lrpCIN to set
+     */
+    public void setLrpCIN(String lrpCIN) {
+        this.lrpCIN = lrpCIN;
+    }
+
+    /**
+     * @return the lrpName
+     */
+    public String getLrpName() {
+        return lrpName;
+    }
+
+    /**
+     * @param lrpName the lrpName to set
+     */
+    public void setLrpName(String lrpName) {
+        this.lrpName = lrpName;
+    }
+
+    /**
+     * @return the lrpQuantity
+     */
+    public int getLrpQuantity() {
+        return lrpQuantity;
+    }
+
+    /**
+     * @param lrpQuantity the lrpQuantity to set
+     */
+    public void setLrpQuantity(int lrpQuantity) {
+        this.lrpQuantity = lrpQuantity;
+    }
+
+    /**
+     * @return the lrpDetails
+     */
+    public String getLrpDetails() {
+        return lrpDetails;
+    }
+
+    /**
+     * @param lrpDetails the lrpDetails to set
+     */
+    public void setLrpDetails(String lrpDetails) {
+        this.lrpDetails = lrpDetails;
+    }
+
+    /**
+     * @return the totalPrice
+     */
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    /**
+     * @param totalPrice the totalPrice to set
+     */
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    /**
+     * @return the appDate
+     */
+    public Date getAppDate() {
+        return appDate;
+    }
+
+    /**
+     * @param appDate the appDate to set
+     */
+    public void setAppDate(Date appDate) {
+        this.appDate = appDate;
+    }
 }

@@ -20,26 +20,25 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Diagnosis implements Serializable {
-    private static final long serialVersionUID = 1L;
-   
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long diagnosisId;
-   
     private String description;
-   @OneToOne(cascade={CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.PERSIST})
     private ICD10_Code code;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
-    
-    public Diagnosis(){}
-    
-    public void create (ICD10_Code code, String description){
+
+    public Diagnosis() {
+    }
+
+    public void create(ICD10_Code code, String description) {
         Date date = new Date();
         this.setDate(date);
         this.setDescription(description);
         this.setCode(code);
-        
+
     }
 
     public Date getDate() {
@@ -49,11 +48,11 @@ public class Diagnosis implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-    
+
     public Long getId() {
         return diagnosisId;
     }
-    
+
     public void setId(Long id) {
         this.diagnosisId = id;
     }
@@ -72,12 +71,11 @@ public class Diagnosis implements Serializable {
         this.description = description;
     }
 
-    public ICD10_Code getCode(){
+    public ICD10_Code getCode() {
         return code;
     }
-    
-    public void setCode(ICD10_Code code){
-        this.code=code;
+
+    public void setCode(ICD10_Code code) {
+        this.code = code;
     }
-    
 }

@@ -5,8 +5,6 @@ import javax.faces.event.ActionEvent;
 import javax.faces.bean.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
-
 import java.io.Serializable;
 import com.is3102.EntityClass.Bed;
 import com.is3102.EntityClass.Patient;
@@ -31,11 +29,13 @@ public class VisitorInfoServiceManaged implements Serializable {
     //public AdministrativeAdmissionManaged adminadm;
     String name;
     String NRIC_PIN;
+    String NRIC_PIN1;
     Date dateAdmitted;
     int countToday;
     int countMonth;
     int countAvg;
     Bed bed;
+    Patient patient1; 
     Logger logger = new Logger();
 
     public Bed getBed() {
@@ -70,12 +70,24 @@ public class VisitorInfoServiceManaged implements Serializable {
         this.NRIC_PIN = NRIC_PIN;
     }
 
+    public String getNRIC_PIN1() {
+        return NRIC_PIN1;
+    }
+
+    public void setNRIC_PIN1(String NRIC_PIN1) {
+        this.NRIC_PIN1 = NRIC_PIN1;
+    }
+
     public Date getDateAdmitted() {
         return dateAdmitted;
     }
 
     public void setDateAdmitted(Date dateAdmitted) {
         this.dateAdmitted = dateAdmitted;
+    }
+
+    public Patient getPatient1() {
+        return patient1;
     }
 
     public void doretrievePatientInfo(ActionEvent actionEvent) throws ExistException {
@@ -89,7 +101,19 @@ public class VisitorInfoServiceManaged implements Serializable {
         } else {
             bed = null;
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be found!", null));
-
+        }
+    }
+    
+    public void doretrievePInfo(ActionEvent actionEvent) throws ExistException {
+        logger.log("In doretrieve Patient Info");
+        FacesContext context = FacesContext.getCurrentInstance();
+        //try {
+        patient1 = vm.getPatient(name, NRIC_PIN1);
+        if (patient1 != null) {
+            //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            //bed = vm.retrievePatientInfo(patient.getPatientId(), format.format(dateAdmitted));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be found!", null));
         }
     }
 

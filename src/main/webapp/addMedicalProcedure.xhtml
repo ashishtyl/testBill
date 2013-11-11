@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-             <h:form id="form1">
+        <h:form id="form1">
             <p:panel>
                 <p:commandButton value="Display Procedure Codes"
                                  actionListener="#{codingBeanManaged.doListAllICD10Procedures}"
@@ -19,10 +19,10 @@
                     </p:column>
 
                 </p:dataTable>
-           
+
             </p:panel>
         </h:form>
-   
+
         <h:form id="form2">
             <p:growl id="growl" showDetail="true" sticky="true" />
 
@@ -40,37 +40,21 @@
                     <p:inputText value="#{decisionMakingandPlaningManaged.procedure_name}" label="Procedure Name"/>
 
                     <h:outputText value="Findings: "/>
-                    <p:inputText value="#{decisionMakingandPlaningManaged.finding}" label="Findings"/>
+                    <h:inputTextarea cols="30" rows="10" value="#{decisionMakingandPlaningManaged.finding}" label="Findings"/>
 
                     <h:outputText value="Comments: "/>
-                    <p:inputText value="#{decisionMakingandPlaningManaged.comments}" label="Comments"/>
+                    <h:inputTextarea cols="30" rows="10" value="#{decisionMakingandPlaningManaged.comments}" label="Comments"/>
 
                 </h:panelGrid>    
 
                 <p:commandButton value="Submit" actionListener="#{decisionMakingandPlaningManaged.doAddPlannedProcedure}" update=":form2:growl" />
-       </panel>
-        </h:form>
-        
-        <h:form id="form3">
-            
-            <panel>
-                <h1>List Procedures of Case</h1> 
-                <h:outputText value="Case ID: " />
-                <p:inputText value="#{decisionMakingandPlaningManaged.CIN}" label="Case ID" />
-                <p:commandButton value="Submit" actionListener="#{decisionMakingandPlaningManaged.doRetrieveCarePlaning}" update=":form3:datatableProcedureList"/>
-
-                <p:dataTable id="datatableProcedureList" var="procedures" value="#{decisionMakingandPlaningManaged.medicalProcedures}">
-                    <p:column>
-                        <h:outputText value="#{procedures.Date}" />                               
-                    </p:column>
-                    <p:column>
-                        <h:outputText value="#{procedures.code}"/>
-                    </p:column>
-                    <p:column>
-                        <h:outputText value="#{procedures.comments}"/>
-                    </p:column>    
-                </p:dataTable>
             </panel>
         </h:form>
+
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
+        </h:form>
+        
     </ui:define>
 </ui:composition>

@@ -1,0 +1,109 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:panel>
+                <h1> Display Disease Codes </h1>
+                <p:commandButton value="Display Diagnosis Codes"
+                                 actionListener="#{codingBeanManaged.doListAllICD10Codes}"
+                                 update=":form1:dataTableDiagnosisCodes"/>
+                <p:dataTable id="dataTableDiagnosisCodes" var="icdCodes" value="#{codingBeanManaged.allicdCodes}">
+                    <p:column headerText="Disease Codes">
+                        <h:outputText value="#{icdCodes.display}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        <h:form id="form2">
+            <p:growl id="growl" showDetail="true"/>
+            <p:panel>
+                <h1> Add Disease Code </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Code: " />
+                    <p:inputText value="#{codingBeanManaged.diseaseId}" required="true"/>
+                    <h:outputText value="Chapter: " />
+                    <p:inputText value="#{codingBeanManaged.ICDChapter}" required="true"/>
+                    <h:outputText value="Block: " />
+                    <p:inputText value="#{codingBeanManaged.ICDblock}" required="true"/>
+                    <h:outputText value="Disease Name: " />
+                    <p:inputText value="#{codingBeanManaged.diseaseName}" required="true"/>
+                    <h:outputText value="Description: " />
+                    <p:inputText value="#{codingBeanManaged.diseaseDescription}" required="true"/>
+
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{codingBeanManaged.doAddCode}" update=":form2:growl"/>
+            </p:panel>
+        </h:form>
+        <h:form id="form3">
+            <p:panel>
+                <p:commandButton value="Display Medical Procedure Codes"
+                                 actionListener="#{codingBeanManaged.doListAllICD10Procedures}"
+                                 update=":form3:dataTableProcedureCodes"/>
+                <p:dataTable id="dataTableProcedureCodes" var="procedureCodes" value="#{codingBeanManaged.allProcedures}">
+                    <p:column headerText="Procedure Codes">
+                        <h:outputText value="#{procedureCodes.code}"/>
+                    </p:column>
+                    <p:column headerText="Procedure Name">
+                        <h:outputText value="#{procedureCodes.name}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panel>d
+        </h:form>
+        <h:form id="form4">
+            <p:growl id="growl" showDetail="true"/>
+            <p:panel>
+                <h1> Add Medical Procedure Code </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Code: " />
+                    <p:inputText value="#{codingBeanManaged.procedureId}" required="true"/>
+                    <h:outputText value="Name: " />
+                    <p:inputText value="#{codingBeanManaged.procedureName}" required="true"/>
+                    <h:outputText value="Price: " />
+                    <p:inputText value="#{codingBeanManaged.price}" required="true"/>
+
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{codingBeanManaged.doAddProcedure}" update=":form4:growl"/>
+            </p:panel>
+        </h:form>
+        <h:form id="form5">
+            <p:panel>
+                <p:commandButton value="Display Nursing Procedure Codes"
+                                 actionListener="#{codingBeanManaged.doListAllICD10Procedures}"
+                                 update=":form3:dataTableProcedureCodes"/>
+                <p:dataTable id="dataTableProcedureCodes" var="procedureCodes" value="#{codingBeanManaged.allProcedures}">
+                    <p:column headerText="Procedure Codes">
+                        <h:outputText value="#{procedureCodes.code}"/>
+                    </p:column>
+                    <p:column headerText="Procedure Name">
+                        <h:outputText value="#{procedureCodes.name}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panel>
+        </h:form>
+        <h:form id="form6">
+            <p:growl id="growl" showDetail="true"/>
+            <p:panel>
+                <h1> Add Nursing Procedure Code </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Code: " />
+                    <p:inputText value="#{codingBeanManaged.procedureId}" required="true"/>
+                    <h:outputText value="Name: " />
+                    <p:inputText value="#{codingBeanManaged.procedureName}" required="true"/>
+                    <h:outputText value="Price: " />
+                    <p:inputText value="#{codingBeanManaged.price}" required="true"/>
+
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{codingBeanManaged.doAddProcedure}" update=":form6:growl"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

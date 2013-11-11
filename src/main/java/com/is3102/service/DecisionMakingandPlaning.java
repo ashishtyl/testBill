@@ -4,17 +4,13 @@
  */
 package com.is3102.service;
 
-import com.is3102.EntityClass.Consent;
-import com.is3102.EntityClass.Diagnosis;
-import com.is3102.EntityClass.Finding;
 import com.is3102.EntityClass.ICD10_PCS;
 import com.is3102.EntityClass.Medical_Procedure;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.ExistException;
-import com.is3102.service.DecisionMakingandPlaningRemote;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -29,7 +25,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
     @PersistenceContext()
     EntityManager em;
 
-    public void AddPlanedProcedure(Long CIN, String procedure_code, String procedure_name, String finding, String comments) throws ExistException {
+    public void AddPlanedProcedure(Long CIN, String procedure_code, String procedure_name,  String comments) throws ExistException {
         System.out.println("In DMP Bean AddPlannedProcedure");
         mCase mcase = em.find(mCase.class, CIN);
         if (mcase == null) {
@@ -42,20 +38,16 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         System.out.print("searching for ICD10_PCS code");
         ICD10_PCS code = getCode(desc);
         System.out.print("ICD10_PCS code object created");
-        procedure.create(code, procedure_name, finding, comments);
+        procedure.create(code, comments);
         System.out.println("created procedure ");
-
-        em.persist(procedure);
-
-        mcase.addmedicalProcedure(procedure);
+        mcase.getmProcedures().add(procedure);
+        //mcase.addmedicalProcedure(procedure);
         System.out.println("added procedure");
         procedure.setMcase(mcase);
         System.out.println("set mcase");
-
-        System.out.println("Medical Procedure " + procedure.getId()
-                + "added to case " + mcase.getCIN());
-
+        em.persist(procedure);
         em.persist(mcase);
+        System.out.println("Medical Procedure " + procedure.getMpId() + "added to case " + mcase.getCIN());
         em.flush();
     }
 
@@ -64,11 +56,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         if (procedure == null) {
             throw new ExistException("No such procedure exists!");
         }
-
-        Consent consent = new Consent();
-        consent.create(patient_comment);
-        procedure.setConsent(consent);
-
+        procedure.setPatientConsent(patient_comment);
     }
 
     public List<Medical_Procedure> RetrieveCarePlaning(Long CIN) throws ExistException {
@@ -97,5 +85,26 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         q.setParameter("param", description);
         ICD10_PCS code = (ICD10_PCS) q.getSingleResult();
         return code;
+    }
+
+    public List<Medical_Procedure> listProcedures(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        System.out.println(CIN);
+        if (mcase != null) {
+            List<Medical_Procedure> procedures = mcase.getmProcedures();
+            System.out.println(procedures.size());
+            return procedures;
+        } else {
+            return null;
+        }
+    }
+
+    public void updateProcedure(Long procedureId, String newComments, String newConsent) {
+        Medical_Procedure procedure = em.find(Medical_Procedure.class, procedureId);
+        Date pDate = new Date();
+        procedure.setDate(pDate);
+        procedure.setComments(newComments);
+        procedure.setPatientConsent(newConsent);
+        em.merge(procedure);
     }
 }

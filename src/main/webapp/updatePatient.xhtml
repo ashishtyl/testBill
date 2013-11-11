@@ -7,10 +7,10 @@
     <ui:define name="content">
         <h:form id="form10">
             <p:growl id="messages" showDetail="true"/>
-
             <h:outputText value="Patient PIN: " />
             <p:inputText value="#{administrativeAdmissionManaged.NRIC_PIN5}" required="true" label="Patient PIN"/>
             <p:commandButton value="Check for Existing Record" actionListener="#{administrativeAdmissionManaged.doUpdatePatient}" update=":form10:dataTablePatientRecord"/>
+            
 
             <p:dataTable id="dataTablePatientRecord" var="patient" value="#{administrativeAdmissionManaged.patient}" editable="true">
 
@@ -32,7 +32,7 @@
                     </p:cellEditor>
                 </p:column>
                 
-                <p:column headerText="ID" style="width:10%">
+                <p:column headerText="Passport Number/NRIC" style="width:10%">
                     <p:cellEditor>
                         <f:facet name="output">
                             <h:outputText value="#{patient.passport_NRIC}" />
@@ -90,9 +90,19 @@
                 <p:column style="width:6%">
                     <p:rowEditor />
                 </p:column>
-
             </p:dataTable>
-
         </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="patientProfile?faces-redirect=true" value="View Patient Profile" />
+            <h3></h3>
+        </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
+        </h:form>
+        
     </ui:define>
 </ui:composition>

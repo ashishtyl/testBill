@@ -4,38 +4,32 @@
  */
 package com.is3102.EntityClass;
 
-import com.is3102.entity.Employee;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
+import javax.persistence.OneToMany;
 
 /**
  *
- * @author Ashish
+ * @author Bryan Arnold
  */
-@Entity(name="ExecutionLog")
-public class ExecutionLog implements Serializable {
+@Entity
+public class Device implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date date;
-    @OneToOne
-    private Employee employee;
-    private String execution_comment;
+    private String deviceType;
     
-    public ExecutionLog(){}
+    @OneToMany(cascade={CascadeType.ALL})
+    private List<AppointmentProcedure> procedures = new ArrayList<AppointmentProcedure>();
     
-    public void create(Employee employee, String comment){
-        this.setExecution_comment(comment);
-        this.setEmployee(employee);
-    }
+    
     
     public Long getId() {
         return id;
@@ -55,10 +49,10 @@ public class ExecutionLog implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ExecutionLog)) {
+        if (!(object instanceof Device)) {
             return false;
         }
-        ExecutionLog other = (ExecutionLog) object;
+        Device other = (Device) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -67,35 +61,39 @@ public class ExecutionLog implements Serializable {
 
     @Override
     public String toString() {
-        return "EntityClass.ExecutionLog[ id=" + id + " ]";
+        return "com.is3102.EntityClass.Device[ id=" + id + " ]";
     }
 
     /**
-     * @return the execution_comment
+     * @return the deviceType
      */
-    public String getExecution_comment() {
-        return execution_comment;
+    public String getDeviceType() {
+        return deviceType;
     }
 
     /**
-     * @param execution_comment the execution_comment to set
+     * @param deviceType the deviceType to set
      */
-    public void setExecution_comment(String execution_comment) {
-        this.execution_comment = execution_comment;
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
     }
 
     /**
-     * @return the doctor
+     * @return the procedures
      */
-    public Employee getEmployee() {
-        return employee;
+    public List<AppointmentProcedure> getProcedures() {
+        return procedures;
     }
 
     /**
-     * @param doctor the doctor to set
+     * @param procedures the procedures to set
      */
-    public void setEmployee(Employee employee) {
-        this.employee=employee;
+    public void setProcedures(List<AppointmentProcedure> procedures) {
+        this.procedures = procedures;
+    }
+    
+    public void addProcedure(AppointmentProcedure procedure){
+        this.procedures.add(procedure);
     }
     
 }
