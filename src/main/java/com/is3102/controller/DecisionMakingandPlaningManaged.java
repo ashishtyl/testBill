@@ -51,7 +51,7 @@ public class DecisionMakingandPlaningManaged implements Serializable {
         try {
             Long cin = Long.valueOf(getCIN());
             System.out.println("Enter try");
-            dmp.AddPlanedProcedure(cin, procedure_code, procedure_name, finding, comments);
+            dmp.AddPlanedProcedure(cin, procedure_code, procedure_name, comments);
             System.out.println("Leave try");
             context.addMessage(null, new FacesMessage("Procedure " + procedure_code + " for " + getCIN() + " successfully added!"));
         } catch (Exception ex) {
@@ -68,11 +68,14 @@ public class DecisionMakingandPlaningManaged implements Serializable {
             Long pId = Long.valueOf(procedureId);
             dmp.GetConsent(pId, patient_comment);
             context.addMessage(null, new FacesMessage("Consent for " + procedureId + " successfully added!"));
+       
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Procedure could not be added!", null));
+        
         }
+        
     }
 
     public void doRetrieveCarePlaning() {

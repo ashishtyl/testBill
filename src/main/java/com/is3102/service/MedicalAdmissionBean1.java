@@ -6,6 +6,7 @@ package com.is3102.service;
 
 import com.is3102.EntityClass.Diagnosis;
 import com.is3102.EntityClass.Medical_Anamnesis;
+import com.is3102.EntityClass.Medical_Procedure;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.CaseException;
 import com.is3102.Exception.ExistException;
@@ -45,9 +46,9 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
     }
 
     @Override
-    public void addAnamnesis(Long caseId,  String diseaseHistory,
-                             String socialHistory, String medicalHistory,
-                             String familyHistory, String allergies, String symptoms) throws ExistException, CaseException {
+    public void addAnamnesis(Long caseId, String diseaseHistory,
+            String socialHistory, String medicalHistory,
+            String familyHistory, String allergies, String symptoms) throws ExistException, CaseException {
         mcase = getCaseInfo(caseId);
         anamnesis = new Medical_Anamnesis();
         //System.out.println("Test1");
@@ -56,11 +57,11 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
                 familyHistory, allergies, symptoms);
         mcase.setMedicalAnamnesis(anamnesis);
         em.persist(mcase);
-    
+
     }
 
     @Override
-    public Medical_Anamnesis getAnamnesis(Long anamnesisId) throws ExistException{
+    public Medical_Anamnesis getAnamnesis(Long anamnesisId) throws ExistException {
         anamnesis = em.find(Medical_Anamnesis.class, anamnesisId);
         if (anamnesis == null) {
             throw new ExistException("Anamnesis does not exsit");
@@ -86,17 +87,16 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
     //list testing
 
     @Override
-    public void removeAnamnesis(Long anamnesisId) throws ExistException{
+    public void removeAnamnesis(Long anamnesisId) throws ExistException {
         anamnesis = em.find(Medical_Anamnesis.class, anamnesisId);
         if (anamnesis == null) {
             throw new ExistException("Anamnesis does not exsit");
         }
         em.remove(anamnesis);
     }
-    
- 
+
     @Override
-      public List<mCase> ListmCase() {
+    public List<mCase> ListmCase() {
         caseList = new ArrayList<mCase>();
         try {
             Query qb = em.createQuery("SELECT m FROM mcase m");
@@ -110,27 +110,29 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
         }
         return caseList;
     }
-    //lack of query sentence to database?
-    //following methods have been codded in the coding bean
-    /*  @Override
-     public void codeDiagnosis(String diseaseCode,
-     String description){
-     diagnosis=new Diagnosis();
-     //diagnosis.create(diseaseCode,description);
-     em.persist(diagnosis);
-     //need to confirm bidirectional or unidirectional for Diaggosis
 
-     }
+    public Medical_Anamnesis listAnamnesis(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        if (mcase != null) {
+            Medical_Anamnesis mAnamnesis = mcase.getMedicalAnamnesis();
+            if (mAnamnesis != null) {
+                return mAnamnesis;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 
-     @Override
-     public void removeDiagnosis(Long diagnosisId) {
-     diagnosis=em.find(Diagnosis.class, diagnosisId);
-     em.remove(diagnosis);
-
-     }
-     @Override
-     public Diagnosis getDiagnosis(Long diagnosisId){
-     return em.find(Diagnosis.class, diagnosisId);
-
-     }*/
+    public void updateAnamnesis(Long anamnesisId, String newDiseaseHistory, String newSocialHistory, String newFamilyHistory, String newMedicalHistory, String newAllergies, String newSymptoms) {
+        Medical_Anamnesis anamnesis = em.find(Medical_Anamnesis.class, anamnesisId);
+        anamnesis.setDiseaseHistory(newDiseaseHistory);
+        anamnesis.setSocialHistory(newSocialHistory);
+        anamnesis.setFamilyHistory(newFamilyHistory);
+        anamnesis.setMedicalHistory(newMedicalHistory);
+        anamnesis.setAllergies(newAllergies);
+        anamnesis.setSymptoms(newSymptoms);
+        em.merge(anamnesis);
+    }
 }

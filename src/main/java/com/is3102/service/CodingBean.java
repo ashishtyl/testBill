@@ -7,6 +7,7 @@ package com.is3102.service;
 import com.is3102.EntityClass.Diagnosis;
 import com.is3102.EntityClass.ICD10_Code;
 import com.is3102.EntityClass.ICD10_PCS;
+import com.is3102.EntityClass.ICNP_Code;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.ExistException;
 
@@ -75,7 +76,7 @@ public class CodingBean implements CodingBeanRemote {
         code = new ICD10_Code();
         code.create(id, Chapter, block, Disease, name);
         em.persist(code);
-        System.out.println("ICD 10 Code " + code.getCode() + " " + code.getName());
+        System.out.println("ICD 10 Code " + code.getCode() + " " + code.getName() + "added sucessfully!");
     }
 
     public List<ICD10_Code> listAllCodes() {
@@ -85,44 +86,68 @@ public class CodingBean implements CodingBeanRemote {
         for (Object o : q.getResultList()) {
             ICD10_Code code = (ICD10_Code) o;
             codeset.add(code);
-
         }
 
         return codeset;
     }
 
-    public List<ICD10_PCS> listAllProceures() {
+    public List<ICD10_PCS> listAllMedicalProceures() {
         Query q = em.createQuery("SELECT c FROM ICD10_PCS c");
         List<ICD10_PCS> codeset = new ArrayList<ICD10_PCS>();
 
         for (Object o : q.getResultList()) {
             ICD10_PCS code = (ICD10_PCS) o;
             codeset.add(code);
-
         }
 
         return codeset;
+
     }
 
-    public void addProcedure(String id, String name, Long price) throws ExistException {
+    public void addMedicalProcedure(String id, String name, Long price) throws ExistException {
         ICD10_PCS code = em.find(ICD10_PCS.class, id);
         if (code != null) {
             throw new ExistException("Such a procedure code already exists!");
-        }
+        } else {
 
-        code = new ICD10_PCS();
-        code.create(id, name, price);
-        em.persist(code);
-        System.out.println("ICD 10 Code " + code.getCode() + " " + code.getName() + " added succefully");
+            code = new ICD10_PCS();
+            code.create(id, name, price);
+            em.persist(code);
+            System.out.println("ICD 10 Code " + code.getCode() + " " + code.getName() + " added succefully");
+        }
     }
-    
-     private ICD10_Code getCode(String display) {
+
+    private ICD10_Code getCode(String display) {
         System.out.println("In getCode() description:" + display);
 
         Query q = em.createQuery("select i from ICD10_Code i where i.display=:param");
         q.setParameter("param", display);
         ICD10_Code code = (ICD10_Code) q.getSingleResult();
         return code;
+
     }
-    
+
+    public void addNursingProcedure(String category, String id, String name, Long price) throws ExistException {
+        ICNP_Code code = em.find(ICNP_Code.class, id);
+        if (code != null) {
+            throw new ExistException("Such a procedure code already exists");
+        } else {
+            code = new ICNP_Code();
+            code.create(id, name, category, price);
+            em.persist(code);
+            System.out.println("ICNP Code " + code.getCode() + " " + code.getName() + " added succefully");
+
+        }
+    }
+
+    public List<ICNP_Code> listAllNursingProcedures() {
+        Query q = em.createQuery("SELECT c FROM ICNP_Code c");
+        List<ICNP_Code> codeset = new ArrayList<ICNP_Code>();
+
+        for (Object o : q.getResultList()) {
+            ICNP_Code code = (ICNP_Code) o;
+            codeset.add(code);
+        }
+        return codeset;
+    }
 }

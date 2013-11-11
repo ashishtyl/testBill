@@ -268,15 +268,23 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
 
     public List<Medication> listMedication(String CIN) {
         mCase mcase = em.find(mCase.class, new Long(CIN));
-        List<Medication> medication= mcase.getMedication();
-        System.out.println(medication.size());
-        return medication;
+        if (mcase != null) {
+            List<Medication> medication = mcase.getMedication();
+            System.out.println(medication.size());
+            return medication;
+        } else {
+            return null;
+        }
     }
 
     public List<LabRadProcedure> listLabRadProcedures(String CIN) {
         mCase mcase = em.find(mCase.class, new Long(CIN));
-        List<LabRadProcedure> labradProc= mcase.getLabRadProcedure();
-        System.out.println(labradProc.size());
-        return labradProc;
+        if (mcase != null) {
+            List<LabRadProcedure> labradProc = mcase.getLabRadProcedure();
+            System.out.println(labradProc.size());
+            return labradProc;
+        } else {
+            return null;
+        }
     }
 }

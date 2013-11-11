@@ -4,6 +4,7 @@
  */
 package com.is3102.EntityClass;
 
+import com.is3102.entity.Employee;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -26,14 +27,14 @@ public class ExecutionLog implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
     @OneToOne
-    private Doctor doctor;
+    private Employee employee;
     private String execution_comment;
     
     public ExecutionLog(){}
     
-    public void create(Doctor doctor, String comment){
+    public void create(Employee employee, String comment){
         this.setExecution_comment(comment);
-        this.setDoctor(doctor);
+        this.setEmployee(employee);
     }
     
     public Long getId() {
@@ -86,15 +87,15 @@ public class ExecutionLog implements Serializable {
     /**
      * @return the doctor
      */
-    public Doctor getDoctor() {
-        return doctor;
+    public Employee getEmployee() {
+        return employee;
     }
 
     /**
      * @param doctor the doctor to set
      */
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setEmployee(Employee employee) {
+        this.employee=employee;
     }
     
 }

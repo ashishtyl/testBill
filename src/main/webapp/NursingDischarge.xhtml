@@ -19,8 +19,8 @@
                     <p:inputText value="#{nursingDischargeandTransferManaged.diet}" required="true" label="Diet"/>
                     <h:outputText value="wound care: " />
                     <p:inputText value="#{nursingDischargeandTransferManaged.woundCare}"  required="true" label="Wound care"/>
-                    
-                    
+
+
                 </h:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{nursingDischargeandTransferManaged.DogenerateDischargeSummary}" update=":form1:growl"/>
             </p:panel>
@@ -36,23 +36,21 @@
                 <p:commandButton value="Submit" actionListener="#{nursingDischargeAndTransferManaged.DogetDischargeSummary}" update=":form2:dataTableDischargeInfo" />
 
                 <p:dataTable id="dataTableDischargeInfo" var="discharge" value="#{nursingDischargeAndTransferManaged.dischargeSummary}">
-                <p:column headerText="Discharge Id">
-                            <h:outputText value="#{discharge.id}"/>
-                        </p:column>
-                        <p:column headerText="Activity Level">
-                            <h:outputText value="#{discharge.activitylevel}"/>
-                        </p:column>
-                        <p:column headerText="Diet">
-                            <h:outputText value="#{discharge.diet}"/>
-                        </p:column>
-                 
-                        <p:column headerText="Wound care">
+                    <p:column headerText="Discharge Id">
+                        <h:outputText value="#{discharge.id}"/>
+                    </p:column>
+                    <p:column headerText="Activity Level">
+                        <h:outputText value="#{discharge.activitylevel}"/>
+                    </p:column>
+                    <p:column headerText="Diet">
+                        <h:outputText value="#{discharge.diet}"/>
+                    </p:column>
+
+                    <p:column headerText="Wound care">
                         <h:outputText value="#{discharge.woundcare}"/>
                     </p:column>
-                   
 
-                        
-                    </p:dataTable>
+                </p:dataTable>
 
             </p:panel>
         </h:form>

@@ -64,7 +64,7 @@ public class mCase implements Serializable {
     private Patient patient;
     @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Diagnosis> diagnosis = new ArrayList<Diagnosis>();
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private NursingDischarge nursingDischarge;
 
     

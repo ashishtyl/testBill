@@ -42,4 +42,6 @@ public interface AdministrativeAdmissionRemote {
     public void updateCase(Long id, String newDateDischarge, String newType) throws ExistException, ParseException, Exception;
     
     public List<mCase> getPatientCases(String name, String passport_NRIC);
+    
+    public mCase retrievePatientCase(String name, String Passport_NRIC, String dateAdmitted);
 }

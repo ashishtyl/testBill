@@ -32,7 +32,7 @@ public class ICD10_Code implements Serializable {
         this.setBlock(Block);
         this.setDisease(Disease);
         this.setName(name);
-        this.setDisplay(code+" "+Disease+" "+name);
+        this.setDisplay(code+" "+name);
         
     }
     
