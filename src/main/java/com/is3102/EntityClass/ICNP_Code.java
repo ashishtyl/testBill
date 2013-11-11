@@ -18,14 +18,60 @@ import javax.persistence.Id;
 public class ICNP_Code implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String code;
+    private String name;
+    private String category;
+    private Long price;
+    private String dislay;
 
-    public Long getId() {
-        return id;
+    public void ICNP_Code() {}
+
+    public void ICNP_Code(String code, String name, String category) {
+
+        this.setCategory(category);
+        this.setCode(code);
+        this.setName(name);
+        this.setDislay(code + " " + name);
+
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public String getDislay() {
+        return dislay;
+    }
+
+    public void setDislay(String dislay) {
+        this.dislay = dislay;
     }
 }

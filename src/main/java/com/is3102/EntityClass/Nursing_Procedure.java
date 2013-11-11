@@ -25,27 +25,10 @@ import javax.persistence.Temporal;
 @Entity
 public class Nursing_Procedure implements Serializable {
 
-    private static long serialVersionUID = 1L;
-
-    /**
-     * @return the serialVersionUID
-     */
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    /**
-     * @param aSerialVersionUID the serialVersionUID to set
-     */
-    public static void setSerialVersionUID(long aSerialVersionUID) {
-        serialVersionUID = aSerialVersionUID;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long npId;
-    private String patientConsent;
-    private String name;
-    private String code;
+    private ICNP_Code procedureCode;
     private String comments;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
@@ -57,64 +40,42 @@ public class Nursing_Procedure implements Serializable {
     public Nursing_Procedure() {
     }
 
-    public void create(String name, String code, String comments) {
+    /*public void create(String name, String code, String comments) {
         this.setCode(code);
         this.setName(name);
+    }
+
+    public void create(ICNP_Code code, String comments) {
+        this.setProcedureCode(code);
+         >>> >>> > branch 'master'
+        of https
+        ://github.com/Swarit3102/IS3102Final.git
         this.setComments(comments);
         Date tmp = new Date();
         this.setDate(tmp);
         this.setPatientConsent("NULL");
-    }
+    }*/
 
-    /**
-     * @return the npId
-     */
     public Long getNpId() {
         return npId;
     }
 
-    /**
-     * @param npId the npId to set
-     */
     public void setNpId(Long npId) {
         this.npId = npId;
     }
 
-    /**
-     * @return the consent
-     */
-    public String getPatientConsent() {
-        return patientConsent;
-    }
-
-    public void setPatientConsent(String patientConsent) {
-        this.patientConsent = patientConsent;
-    }
-
-    /**
-     * @return the mcase
-     */
     public mCase getMcase() {
         return mcase;
     }
 
-    /**
-     * @param mcase the mcase to set
-     */
     public void setMcase(mCase mcase) {
         this.mcase = mcase;
     }
 
-    /**
-     * @return the Executionlogs
-     */
     public List<ExecutionLog> getExecutionlogs() {
         return Executionlogs;
     }
 
-    /**
-     * @param Executionlogs the Executionlogs to set
-     */
     public void setExecutionlogs(List<ExecutionLog> Executionlogs) {
         this.Executionlogs = Executionlogs;
     }
@@ -123,59 +84,27 @@ public class Nursing_Procedure implements Serializable {
         this.getExecutionlogs().add(log);
     }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the code
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * @param code the code to set
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * @return the comments
-     */
     public String getComments() {
         return comments;
     }
 
-    /**
-     * @param comments the comments to set
-     */
     public void setComments(String comments) {
         this.comments = comments;
     }
 
-    /**
-     * @return the date
-     */
     public Date getDate() {
         return date;
     }
 
-    /**
-     * @param date the date to set
-     */
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public ICNP_Code getProcedureCode() {
+        return procedureCode;
+    }
+
+    public void setProcedureCode(ICNP_Code procedureCode) {
+        this.procedureCode = procedureCode;
     }
 }

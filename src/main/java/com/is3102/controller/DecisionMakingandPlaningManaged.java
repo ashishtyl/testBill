@@ -51,7 +51,7 @@ public class DecisionMakingandPlaningManaged implements Serializable {
         try {
             Long cin = Long.valueOf(getCIN());
             System.out.println("Enter try");
-            dmp.AddPlanedProcedure(cin, procedure_code, procedure_name, finding, comments);
+            dmp.AddPlanedProcedure(cin, procedure_code, procedure_name, comments);
             System.out.println("Leave try");
             context.addMessage(null, new FacesMessage("Procedure " + procedure_code + " for " + getCIN() + " successfully added!"));
         } catch (Exception ex) {
