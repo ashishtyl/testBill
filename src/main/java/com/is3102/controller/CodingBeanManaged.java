@@ -79,12 +79,12 @@ public class CodingBeanManaged {
      List<ICD10_Code> result = cbr.getMatchingCodes(diseaseDescription);
      this.seticdCodes(result);
      }  */
-    public void doUpdateDiagnosis(ActionEvent actionEvent) {
+    public void doAddDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         System.out.println("test 1");
         try {
             Long CIN = Long.valueOf(caseId);
-            cbr.updateDiagnosis(CIN, (diseaseId + " " + diseaseName), diagnosisDescription);
+            cbr.addDiagnosis(CIN, (diseaseId + " " + diseaseName), diagnosisDescription);
             context.addMessage(null, new FacesMessage("Diagnosis added(Updated) successfully"));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -104,7 +104,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoAddCode(ActionEvent actionEvent) {
+    public void doAddCode(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             cbr.addCode(diseaseId, ICDChapter, ICDblock, diseaseName, diseaseDescription);
@@ -116,7 +116,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoAddProcedure(ActionEvent actionEvent) {
+    public void doAddProcedure(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             Long cost = (Long.valueOf(price));
@@ -142,7 +142,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoListAllICD10Codes(ActionEvent actionEvent) {
+    public void doListAllICD10Codes(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             this.setAllicdCodes(cbr.listAllCodes());
@@ -154,7 +154,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoListAllICD10Procedures(ActionEvent actionEvent) {
+    public void doListAllICD10Procedures(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             this.setAllProcedures(cbr.listAllMedicalProceures());

@@ -148,7 +148,7 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
                 for (mCase mc : mcases) {
                     if (mc.getDateDischarged() == null) {
                         if (mc.getBed() != null) {
-                            if (mc.getBed().getBedNo().equals(bed.getBedNo())) {
+                            if (mc.getBed().getBedId().equals(bed.getBedId())) {
                                 available = false;
                                 break;
                             }

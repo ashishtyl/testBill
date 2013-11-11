@@ -40,13 +40,14 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         System.out.print("ICD10_PCS code object created");
         procedure.create(code, comments);
         System.out.println("created procedure ");
-        mcase.addmedicalProcedure(procedure);
+        mcase.getmProcedures().add(procedure);
+        //mcase.addmedicalProcedure(procedure);
         System.out.println("added procedure");
         procedure.setMcase(mcase);
         System.out.println("set mcase");
-        System.out.println("Medical Procedure " + procedure.getMpId() + "added to case " + mcase.getCIN());
         em.persist(procedure);
         em.persist(mcase);
+        System.out.println("Medical Procedure " + procedure.getMpId() + "added to case " + mcase.getCIN());
         em.flush();
     }
 
@@ -88,6 +89,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
 
     public List<Medical_Procedure> listProcedures(String CIN) {
         mCase mcase = em.find(mCase.class, new Long(CIN));
+        System.out.println(CIN);
         if (mcase != null) {
             List<Medical_Procedure> procedures = mcase.getmProcedures();
             System.out.println(procedures.size());

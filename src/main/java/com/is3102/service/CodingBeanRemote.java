@@ -22,7 +22,7 @@ import javax.ejb.Remote;
 public interface CodingBeanRemote {
 
     // public List<ICD10_Code> getMatchingCodes(String description);
-    public void updateDiagnosis(Long caseId, String display, String description) throws ExistException;
+    public void addDiagnosis(Long caseId, String display, String description) throws ExistException;
 
     public void addCode(String id, String Chapter, String block, String Disease, String name) throws ExistException;
 
@@ -35,9 +35,16 @@ public interface CodingBeanRemote {
 
     public List<ICD10_PCS> listAllMedicalProceures();
 
-    public List<ICNP_Code> listAllNursingProcedures();
+    public void addProcedure(String id, String name, Long price) throws ExistException;
+    
+    public List<Diagnosis> listDiagnoses(String CIN);
+    
+    public void updateDiagnosis(Long diagnosisId, String newDescription);
     
     public void addMedicalProcedure(String id, String name, Long price) throws ExistException;
     
     public void addNursingProcedure(String category, String id, String name, Long price) throws ExistException;
+    
+    public List<ICNP_Code> listAllNursingProcedures();
+
 }

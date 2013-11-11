@@ -1,0 +1,61 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true"/>
+            <p:panel>
+                <h1> Retrieve Patient Information </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Patient Name: *" />
+                    <p:inputText value="#{visitorInfoServiceManaged.name}" required="true" label="Name"/>
+                    <h:outputText value="Patient Passport Number/NRIC: " />
+                    <p:inputText value="#{visitorInfoServiceManaged.NRIC_PIN1}" label="Patient Passport Number/NRIC"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{visitorInfoServiceManaged.doretrievePInfo}" update= ":form:growl, :form:dataTablePatientInfo" />
+
+                <p:dataTable id="dataTablePatientInfo" var="patient1" value="#{visitorInfoServiceManaged.patient1}">
+                    <p:column headerText="Birthday">
+                        <h:outputText value="#{patient1.birthday}" />
+                    </p:column>
+                    <p:column headerText="Address">
+                        <h:outputText value="#{patient1.address}" />
+                    </p:column>
+                    <p:column headerText="Contact Number">
+                        <h:outputText value="#{patient1.cNumber}" />
+                    </p:column>
+                    <p:column headerText="Nationality">
+                        <h:outputText value="#{patient1.nationality}" />
+                    </p:column>
+                    <p:column headerText="Gender">
+                        <h:outputText value="#{patient1.gender}" />
+                    </p:column>
+                    <p:column headerText="Blood Group">
+                        <h:outputText value="#{patient1.bloodGroup}" />
+                    </p:column>
+                    <p:column headerText="Height">
+                        <h:outputText value="#{patient1.height}" />
+                    </p:column>
+                    <p:column headerText="Weight">
+                        <h:outputText value="#{patient1.weight}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="updatePatient?faces-redirect=true" value="Update Patient Profile" />
+            <h3></h3>
+        </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
+        </h:form>
+
+    </ui:define>
+</ui:composition>

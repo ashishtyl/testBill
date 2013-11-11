@@ -40,7 +40,7 @@ public class CodingBean implements CodingBeanRemote {
     }
     //also works as add Diagnosis
 
-    public void updateDiagnosis(Long caseId, String display, String description) throws ExistException {
+    public void addDiagnosis(Long caseId, String display, String description) throws ExistException {
         mCase mcase = em.find(mCase.class, caseId);
         if (mcase == null) {
             System.out.println("Case is null");
@@ -124,7 +124,25 @@ public class CodingBean implements CodingBeanRemote {
         q.setParameter("param", display);
         ICD10_Code code = (ICD10_Code) q.getSingleResult();
         return code;
+    }
 
+    public List<Diagnosis> listDiagnoses(String CIN) {
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        if (mcase != null) {
+            List<Diagnosis> diagnoses = mcase.getDiagnosis();
+            System.out.println(diagnoses.size());
+            return diagnoses;
+        } else {
+            return null;
+        }
+    }
+
+    public void updateDiagnosis(Long diagnosisId, String newDescription) {
+        Diagnosis diagnosis = em.find(Diagnosis.class, diagnosisId);
+        Date dDate = new Date();
+        diagnosis.setDate(dDate);
+        diagnosis.setDescription(newDescription);
+        em.merge(diagnosis);
     }
 
     public void addNursingProcedure(String category, String id, String name, Long price) throws ExistException {
@@ -149,5 +167,10 @@ public class CodingBean implements CodingBeanRemote {
             codeset.add(code);
         }
         return codeset;
+    }
+
+    @Override
+    public void addProcedure(String id, String name, Long price) throws ExistException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
