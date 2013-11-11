@@ -94,10 +94,12 @@
             <p:panel>
                 <h1> Add Nursing Procedure Code </h1>
                 <h:panelGrid columns = "2">
+                    <h:outputText value="Category" />
+                    <P:inputText vale="#{codingBeanManaged.}" required="true"/>
                     <h:outputText value="Code: " />
-                    <p:inputText value="#{codingBeanManaged.procedureId}" required="true"/>
+                    <p:inputText value="#{codingBeanManaged.nprocedureId}" required="true"/>
                     <h:outputText value="Name: " />
-                    <p:inputText value="#{codingBeanManaged.procedureName}" required="true"/>
+                    <p:inputText value="#{codingBeanManaged.n}" required="true"/>
                     <h:outputText value="Price: " />
                     <p:inputText value="#{codingBeanManaged.price}" required="true"/>
 
