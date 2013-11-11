@@ -132,8 +132,15 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoListAllICD10Procedures() {
-        this.setAllProcedures(cbr.listAllProceures());
+    public void DoListAllICD10Procedures(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            this.setAllProcedures(cbr.listAllProceures());
+
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot display codes!", null));
+        }
     }
 
     public void DoRemoveDiagnosis(ActionEvent actionEvent) {
