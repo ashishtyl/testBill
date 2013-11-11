@@ -344,6 +344,8 @@
             <p:growl id="growl" showDetail="true" sticky="true" />
             <p:panel>
                 <h1> Check for Appointment </h1>
+                 <p:commandButton value="Submit" actionListener="#{outPatientManagementController.showAppointments}"
+                                     update=":form9:growl, :form9:dataTableAppointments"/>
                  <p:separator id="separator"/>
                 <p:dataTable id="dataTableAppointments" var="app" value="#{outPatientManagementController.appointments}">
                     <p:column headerText="Appointment ID">
@@ -357,9 +359,12 @@
                           </p:column>
                 </p:dataTable>
             </p:panel>
-             <p:commandButton value="Submit"
-                                     actionListener="#{outPatientManagementController.showAppointments}"
-                                     update=":form9:growl, :form9:dataTableAppointments"/>
+            
+        </h:form>
+        
+         <h:form>
+            <h2></h2>
+            <p:commandButton  action="OutpatientView?faces-redirect=true" value="Go to View Past Records" />
         </h:form>
     </ui:define>
 </ui:composition>
