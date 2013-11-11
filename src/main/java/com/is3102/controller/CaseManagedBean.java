@@ -4,6 +4,7 @@
  */
 package com.is3102.controller;
 
+import com.is3102.EntityClass.Diagnosis;
 import com.is3102.EntityClass.LabRadProcedure;
 import com.is3102.EntityClass.Medical_Anamnesis;
 import com.is3102.EntityClass.Medical_Procedure;
@@ -18,6 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import com.is3102.service.AdministrativeAdmissionRemote;
+import com.is3102.service.CodingBeanRemote;
 import com.is3102.service.DecisionMakingandPlaningRemote;
 import com.is3102.service.MedicalAdmissionBean1Remote;
 import com.is3102.service.OrderEntryRemote;
@@ -45,6 +47,8 @@ public class CaseManagedBean implements Serializable {
     @EJB
     private DecisionMakingandPlaningRemote dmm;
     @EJB
+    private CodingBeanRemote cbm;
+    @EJB
     public OrderEntryRemote oem;
     mCase mcase;
     String CIN;
@@ -54,6 +58,7 @@ public class CaseManagedBean implements Serializable {
     String NRIC_PIN;
     Date dateAdmitted;
     Medical_Anamnesis anamnesis;
+    List<Diagnosis> diagnosis = new ArrayList<Diagnosis>();
     List<Medical_Procedure> mprocedures = new ArrayList<Medical_Procedure>();
     //List<Medical_Diagnosis> diagnoses = new ArrayList<Medical_Diagnosis>();
     List<Medication> medication = new ArrayList<Medication>();
@@ -139,6 +144,14 @@ public class CaseManagedBean implements Serializable {
         this.anamnesis = anamnesis;
     }
 
+    public List<Diagnosis> getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(List<Diagnosis> diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
     public List<LabRadProcedure> getProcedures() {
         return procedures;
     }
@@ -175,6 +188,14 @@ public class CaseManagedBean implements Serializable {
         mprocedures = dmm.listProcedures(CIN);
         if (mprocedures == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Procedures do not exist!", null));
+        }
+    }
+    
+    public void doUpdateDiagnosis(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        diagnosis = cbm.listDiagnoses(CIN);
+        if (diagnosis == null) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Diagnoses do not exist!", null));
         }
     }
 
@@ -251,6 +272,23 @@ public class CaseManagedBean implements Serializable {
 
     public void onCancelProcedure(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Procedure Not Edited!");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void onEditDiagnosis(RowEditEvent event) {
+        try {
+            String newDescription = (String) ((Medical_Procedure) event.getObject()).getComments();
+            cbm.updateDiagnosis((Long) ((Diagnosis) event.getObject()).getId(), newDescription);
+            FacesMessage msg = new FacesMessage("Diagnosis Successfully Edited!");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Procedure could not be Edited!", null));
+        }
+    }
+
+    public void onCancelDiagnosis(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Diagnosis Not Edited!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

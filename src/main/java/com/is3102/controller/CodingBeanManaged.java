@@ -70,12 +70,12 @@ public class CodingBeanManaged {
      List<ICD10_Code> result = cbr.getMatchingCodes(diseaseDescription);
      this.seticdCodes(result);
      }  */
-    public void doUpdateDiagnosis(ActionEvent actionEvent) {
+    public void doAddDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         System.out.println("test 1");
         try {
             Long CIN = Long.valueOf(caseId);
-            cbr.updateDiagnosis(CIN, (diseaseId + " " + diseaseName), diagnosisDescription);
+            cbr.addDiagnosis(CIN, (diseaseId + " " + diseaseName), diagnosisDescription);
             context.addMessage(null, new FacesMessage("Diagnosis added(Updated) successfully"));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));

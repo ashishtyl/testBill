@@ -186,11 +186,49 @@
         <h:form>
             <h3></h3>
             <p:commandButton  action="addDiagnosis?faces-redirect=true" value="Add Medical Diagnosis" />
-        </h:form>
-
-        <h:form>
             <h3></h3>
-            <p:commandButton  action="addDiagnosis?faces-redirect=true" value="View Medical Diagnoses" />
+        </h:form>
+        
+        <h:form id="form3">
+            <p:growl id="messages" showDetail="true"/>
+            <h1></h1>
+            <p:commandButton value="View Medical Diagnoses" actionListener="#{caseManagedBean.doUpdateDiagnosis}" update=":form3:messages, :form3:dataTableDiagnoses"/>
+            <p:dataTable id="dataTableDiagnoses" var="diagnosis" value="#{caseManagedBean.diagnosis}" editable="true">
+                
+                <p:ajax event="rowEdit" listener="#{caseManagedBean.onEditDiagnosis}" update=":form3:messages" />
+                <p:ajax event="rowEditCancel" listener="#{caseManagedBean.onCancelDiagnosis}" update=":form3:messages" />
+
+                <p:column headerText="Diagnosis Code" style="width:10%">
+                    <!--<p:cellEditor>-->
+                    <f:facet name="output">
+                        <h:outputText value="#{diagnosis.code}" />
+                    </f:facet>
+                    <!--</p:cellEditor>-->
+                </p:column>
+
+                <p:column headerText="Date of Diagnosis" style="width:10%">
+                    <!--<p:cellEditor>-->
+                        <f:facet name="output">
+                            <h:outputText value="#{diagnosis.date}" />
+                        </f:facet>
+                    <!--</p:cellEditor>-->
+                </p:column>
+
+                <p:column headerText="Description" style="width:10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{diagnosis.description}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <inputText value="#{diagnosis.description}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:6%">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
         </h:form>
 
         <h:form>
@@ -199,11 +237,11 @@
             <h3></h3>
         </h:form>
 
-        <h:form id="form3">
+        <h:form id="form4">
             <p:panel>
                 <p:commandButton value="View Medication Prescribed"
                                  actionListener="#{caseManagedBean.doViewMedication}"
-                                 update=":form3:dataTableMedication"/>
+                                 update=":form4:dataTableMedication"/>
                 <p:dataTable id="dataTableMedication" var="medication" value="#{caseManagedBean.medication}">
                     <p:column headerText="Name">
                         <h:outputText value="#{medication.name}"/>
@@ -224,11 +262,11 @@
             </p:panel>
         </h:form>
 
-        <h:form id="form4">
+        <h:form id="form5">
             <p:panel>
                 <p:commandButton value="View Procedures Ordered"
                                  actionListener="#{caseManagedBean.doViewMedication}"
-                                 update=":form4:dataTableProcedures"/>
+                                 update=":form5:dataTableProcedures"/>
                 <p:dataTable id="dataTableProcedures" var="procedures" value="#{caseManagedBean.procedures}">
                     <p:column headerText="Name">
                         <h:outputText value="#{procedures.name}"/>
