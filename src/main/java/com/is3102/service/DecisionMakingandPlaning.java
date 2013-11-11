@@ -29,7 +29,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
     @PersistenceContext()
     EntityManager em;
 
-    public void AddPlanedProcedure(Long CIN, String procedure_code, String procedure_name, String finding, String comments) throws ExistException {
+    public void AddPlanedProcedure(Long CIN, String procedure_code, String procedure_name,  String comments) throws ExistException {
         System.out.println("In DMP Bean AddPlannedProcedure");
         mCase mcase = em.find(mCase.class, CIN);
         if (mcase == null) {
@@ -42,7 +42,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         System.out.print("searching for ICD10_PCS code");
         ICD10_PCS code = getCode(desc);
         System.out.print("ICD10_PCS code object created");
-        procedure.create(code, procedure_name, finding, comments);
+        procedure.create(code, comments);
         System.out.println("created procedure ");
 
         em.persist(procedure);
@@ -109,7 +109,7 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
     }
     
     public void updateProcedure(Long procedureId, String newDiseaseHistory, String newSocialHistory, String newFamilyHistory, String newMedicalHistory, String newAllergies, String newSymptoms) {
-        Medical_Procedure procedure = em.find(Medical_Procedure.class, procedureId);
+       /* Medical_Procedure procedure = em.find(Medical_Procedure.class, procedureId);
         procedure.setComments(newSymptoms);
         procedure.setDiseaseHistory(newDiseaseHistory);
         anamnesis.setSocialHistory(newSocialHistory);
@@ -117,6 +117,6 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         anamnesis.setMedicalHistory(newMedicalHistory);
         anamnesis.setAllergies(newAllergies);
         anamnesis.setSymptoms(newSymptoms);
-        em.merge(anamnesis);
+        em.merge(anamnesis);*/
     }
 }

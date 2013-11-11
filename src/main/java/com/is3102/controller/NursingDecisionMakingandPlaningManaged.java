@@ -53,7 +53,7 @@ public class NursingDecisionMakingandPlaningManaged implements Serializable {
             System.out.println("Enter try");
             ndmp.AddPlanedProcedure(cin, procedure_code, procedure_name, comments);
             System.out.println("Leave try");
-            context.addMessage(null, new FacesMessage("Procedure " + procedure_code + " for " + getCIN() + " successfully added!"));
+            context.addMessage(null, new FacesMessage(" Nursing Procedure " + procedure_code + " for " + getCIN() + " successfully added!"));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));

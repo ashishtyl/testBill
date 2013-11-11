@@ -51,8 +51,7 @@ public class Medical_Procedure implements Serializable {
     @ManyToOne(cascade={CascadeType.PERSIST})
     private  mCase mcase;
     @OneToOne(cascade = {CascadeType.PERSIST})
-    private Finding finding;
-    @OneToMany(cascade = {CascadeType.ALL})
+   
     private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();
     private String comments;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -65,12 +64,9 @@ public class Medical_Procedure implements Serializable {
     
     public Medical_Procedure () {}
     
-    public void create(ICD10_PCS procedureCode, String description, String findingDescription, String comments){
+    public void create(ICD10_PCS procedureCode, String comments){
         Date date = new Date();
         this.setDate(date);
-        Finding finding = new Finding();
-        finding.setDescription(description);
-        this.setFinding(finding);
         this.setProcedureCode(procedureCode);
         this.setComments(comments);
         this.setPateintConsent("NULL");
@@ -133,9 +129,7 @@ public class Medical_Procedure implements Serializable {
         this.mpId = mpId;
     }
 
-   
-
-    /**
+     /**
      * @return the mcase
      */
     public mCase getMcase() {
@@ -149,20 +143,7 @@ public class Medical_Procedure implements Serializable {
         this.mcase = mcase;
     }
 
-    /**
-     * @return the finding
-     */
-    public Finding getFinding() {
-        return finding;
-    }
-
-    /**
-     * @param finding the finding to set
-     */
-    public void setFinding(Finding finding) {
-        this.finding = finding;
-    }
-
+       
     /**
      * @return the Executionlogs
      */

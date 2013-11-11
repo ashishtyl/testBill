@@ -39,29 +39,24 @@ public class Nursing_Procedure implements Serializable {
     public static void setSerialVersionUID(long aSerialVersionUID) {
         serialVersionUID = aSerialVersionUID;
     }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long npId;
-
-    @OneToOne(cascade={CascadeType.PERSIST})
-    private Consent consent;  
     @ManyToOne(cascade={CascadeType.PERSIST})
     private  mCase mcase;
     @OneToMany(cascade={CascadeType.ALL})
-    private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();
-    
-    private String name;
-    private String code;
+    private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();    
     private String comments;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
-
-    
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    private ICNP_Code procedureCode; 
+     
     public Nursing_Procedure(){}
     
-    public void create(String name, String code, String comments){
-        this.setCode(code);
-        this.setName(name);
+    public void create(ICNP_Code code, String comments){
+        this.setProcedureCode(code);
         this.setComments(comments);
         Date tmp = new Date();
         this.setDate(tmp);
@@ -80,21 +75,7 @@ public class Nursing_Procedure implements Serializable {
     public void setNpId(Long npId) {
         this.npId = npId;
     }
-
-    /**
-     * @return the consent
-     */
-    public Consent getConsent() {
-        return consent;
-    }
-
-    /**
-     * @param consent the consent to set
-     */
-    public void setConsent(Consent consent) {
-        this.consent = consent;
-    }
-
+      
     /**
      * @return the mcase
      */
@@ -128,34 +109,6 @@ public class Nursing_Procedure implements Serializable {
     }
 
     /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the code
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * @param code the code to set
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
      * @return the comments
      */
     public String getComments() {
@@ -181,6 +134,14 @@ public class Nursing_Procedure implements Serializable {
      */
     public void setDate(Date date) {
         this.date = date;
+    }
+    
+      public ICNP_Code getProcedureCode() {
+        return procedureCode;
+    }
+
+    public void setProcedureCode(ICNP_Code procedureCode) {
+        this.procedureCode = procedureCode;
     }
     
 }
