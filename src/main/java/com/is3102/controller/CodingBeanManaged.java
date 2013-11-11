@@ -61,11 +61,11 @@ public class CodingBeanManaged {
     private String display;
     //ICNP_Code Varriables
     private String nprocedureId;
-    private String nCategory;
-    private String nPrice;
-    private String nProcedureName;
-    private List<ICNP_Code> nursingProcedures;
-    private String nDisplay;
+    private String ncategory;
+    private String nprice;
+    private String nprocedurename;
+    private List<ICNP_Code> nursingprocedures;
+    private String ndisplay;
 
     public String getDisplay() {
         return display;
@@ -128,12 +128,12 @@ public class CodingBeanManaged {
 
         }
     }
-    
-      public void DoAddNProcedure(ActionEvent actionEvent) {
+
+    public void DoAddNProcedure(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            Long cost = (Long.valueOf(nPrice));
-            cbr.addNursingProcedure(nCategory, nprocedureId, nProcedureName, cost);
+            Long cost = (Long.valueOf(nprice));
+            cbr.addNursingProcedure(ncategory, nprocedureId, nprocedurename, cost);
             context.addMessage(null, new FacesMessage("Procedure added successfully"));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -168,7 +168,7 @@ public class CodingBeanManaged {
     public void doListAllICNPProcedures(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            this.setNursingProcedures(cbr.listAllNursingProcedures());
+            this.setNursingprocedures(cbr.listAllNursingProcedures());
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot display codes!", null));
@@ -346,44 +346,43 @@ public class CodingBeanManaged {
         this.nprocedureId = nprocedureId;
     }
 
-    public String getnPrice() {
-        return nPrice;
+    public String getNcategory() {
+        return ncategory;
     }
 
-    public void setnPrice(String nPrice) {
-        this.nPrice = nPrice;
+    public void setNcategory(String ncategory) {
+        this.ncategory = ncategory;
     }
 
-    public String getnProcedureName() {
-        return nProcedureName;
+    public String getNprice() {
+        return nprice;
     }
 
-    public void setnProcedureName(String nProcedureName) {
-        this.nProcedureName = nProcedureName;
+    public void setNprice(String nprice) {
+        this.nprice = nprice;
     }
 
-    public List<ICNP_Code> getNursingProcedures() {
-        return nursingProcedures;
+    public String getNprocedurename() {
+        return nprocedurename;
     }
 
-    public void setNursingProcedures(List<ICNP_Code> nursingProcedures) {
-        this.nursingProcedures = nursingProcedures;
+    public void setNprocedurename(String nprocedurename) {
+        this.nprocedurename = nprocedurename;
     }
 
-    public String getnDisplay() {
-        return nDisplay;
+    public List<ICNP_Code> getNursingprocedures() {
+        return nursingprocedures;
     }
 
-    public void setnDisplay(String nDisplay) {
-        this.nDisplay = nDisplay;
-    }
-    
-    public String getnCategory() {
-        return nCategory;
+    public void setNursingprocedures(List<ICNP_Code> nursingprocedures) {
+        this.nursingprocedures = nursingprocedures;
     }
 
-    public void setnCategory(String nCategory) {
-        this.nCategory = nCategory;
+    public String getNdisplay() {
+        return ndisplay;
     }
-    
+
+    public void setNdisplay(String ndisplay) {
+        this.ndisplay = ndisplay;
+    }
 }

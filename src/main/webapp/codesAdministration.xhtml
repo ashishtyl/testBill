@@ -75,7 +75,7 @@
         <h:form id="form5">
             <p:panel>
                 <p:commandButton value="Display Nursing Procedure Codes"
-                                 actionListener="#{codingBeanManaged.DoListAllICD10Procedures(actionEvent)}"
+                                 actionListener="#{codingBeanManaged}"
                                  update=":form3:dataTableProcedureCodes"/>
                 <p:dataTable id="dataTableProcedureCodes" var="procedureCodes" value="#{codingBeanManaged.allProcedures}">
                     <p:column headerText="Procedure Codes">
@@ -95,16 +95,16 @@
                 <h1> Add Nursing Procedure Code </h1>
                 <h:panelGrid columns = "2">
                     <h:outputText value="Category" />
-                    <P:inputText vale="#{codingBeanManaged.}" required="true"/>
+                    <p:inputText value="#{codingBeanManaged.ncategory}" required="true"/>
                     <h:outputText value="Code: " />
                     <p:inputText value="#{codingBeanManaged.nprocedureId}" required="true"/>
                     <h:outputText value="Name: " />
-                    <p:inputText value="#{codingBeanManaged.n}" required="true"/>
+                    <p:inputText value="#{codingBeanManaged.nprocedurename}" required="true"/>
                     <h:outputText value="Price: " />
-                    <p:inputText value="#{codingBeanManaged.price}" required="true"/>
+                    <p:inputText value="#{codingBeanManaged.nprice}" required="true"/>
 
                 </h:panelGrid>
-                <p:commandButton value="Submit" actionListener="#{codingBeanManaged.DoAddProcedure(actionEvent)}" update=":form6:growl"/>
+                <p:commandButton value="Submit" actionListener="#{codingBeanManaged.DoAddNProcedure(actionEvent)}" update=":form6:growl"/>
             </p:panel>
         </h:form>
     </ui:define>
