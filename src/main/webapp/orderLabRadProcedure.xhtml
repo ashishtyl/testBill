@@ -36,6 +36,8 @@
                     <p:inputText value="#{orderEntryManagedBean.lrpQuantity}" required="true"/>
                     <h:outputText value="Procedure Details: " />
                     <p:inputTextarea rows="6" cols="33" value="#{orderEntryManagedBean.lrpDetails}" required="true"/>
+                    <h:outputText value="Procedure Date (YYYY-mm-dd): *" />
+                    <p:calendar value="#{orderEntryManagedBean.appDate}" required="true" pattern="yyyy-MM-dd HH:mm" label="Procedure Date"/>
                 </h:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{orderEntryManagedBean.doOrderLabRadProcedure}" update=":form2:growl"/>
             </p:panel>

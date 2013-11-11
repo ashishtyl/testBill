@@ -8,8 +8,10 @@ import java.io.Serializable;
 import com.is3102.EntityClass.DrugCatalog;
 import com.is3102.service.OrderEntryRemote;
 import com.is3102.EntityClass.ServiceCatalog;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -44,6 +46,7 @@ public class OrderEntryManagedBean implements Serializable {
     private int lrpQuantity;
     private String lrpDetails;
     private double totalPrice;
+    private Date appDate;
     
     //private SelectItem[] drugTypeOptions;
     //private String[] drugTypes = new String[100];
@@ -141,7 +144,8 @@ public class OrderEntryManagedBean implements Serializable {
         public void doOrderLabRadProcedure(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            String sevName = oem.orderLabRadProcedure(getLrpCIN(), getLrpName(), getLrpQuantity(), getLrpDetails());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String sevName = oem.orderLabRadProcedure(getLrpCIN(), getLrpName(), getLrpQuantity(), getLrpDetails(), format.format(getAppDate()));
             context.addMessage(null, new FacesMessage("Procedure " + sevName + " successfully ordered!"));
         } catch (Exception ex) {
             //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
@@ -247,5 +251,19 @@ public class OrderEntryManagedBean implements Serializable {
      */
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    /**
+     * @return the appDate
+     */
+    public Date getAppDate() {
+        return appDate;
+    }
+
+    /**
+     * @param appDate the appDate to set
+     */
+    public void setAppDate(Date appDate) {
+        this.appDate = appDate;
     }
 }

@@ -5,11 +5,13 @@
 package com.is3102.EntityClass;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -23,7 +25,14 @@ public class AppointmentProcedure implements Serializable {
     private Long id;
     @OneToOne(mappedBy = "aProcedure")
     private POEOrder order;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date appDate;
 
+    public void create(Date appDate){
+        this.setAppDate(appDate);
+    }
+    
     public Long getId() {
         return id;
     }
@@ -38,5 +47,19 @@ public class AppointmentProcedure implements Serializable {
 
     public void setOrder(POEOrder order) {
         this.order = order;
+    }
+
+    /**
+     * @return the appDate
+     */
+    public Date getAppDate() {
+        return appDate;
+    }
+
+    /**
+     * @param appDate the appDate to set
+     */
+    public void setAppDate(Date appDate) {
+        this.appDate = appDate;
     }
 }

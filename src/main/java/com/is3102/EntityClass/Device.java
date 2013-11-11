@@ -24,9 +24,11 @@ public class Device implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String deviceType;
     
     @OneToMany(cascade={CascadeType.ALL})
     private List<AppointmentProcedure> procedures = new ArrayList<AppointmentProcedure>();
+    
     
     
     public Long getId() {
@@ -60,6 +62,38 @@ public class Device implements Serializable {
     @Override
     public String toString() {
         return "com.is3102.EntityClass.Device[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the deviceType
+     */
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    /**
+     * @param deviceType the deviceType to set
+     */
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    /**
+     * @return the procedures
+     */
+    public List<AppointmentProcedure> getProcedures() {
+        return procedures;
+    }
+
+    /**
+     * @param procedures the procedures to set
+     */
+    public void setProcedures(List<AppointmentProcedure> procedures) {
+        this.procedures = procedures;
+    }
+    
+    public void addProcedure(AppointmentProcedure procedure){
+        this.procedures.add(procedure);
     }
     
 }
