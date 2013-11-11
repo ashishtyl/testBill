@@ -4,20 +4,12 @@
  */
 package com.is3102.service;
 
-import com.is3102.service.*;
-import com.is3102.EntityClass.Consent;
-import com.is3102.EntityClass.Diagnosis;
-import com.is3102.EntityClass.Finding;
-import com.is3102.EntityClass.ICD10_PCS;
 import com.is3102.EntityClass.ICNP_Code;
-import com.is3102.EntityClass.Medical_Procedure;
 import com.is3102.EntityClass.Nursing_Procedure;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.ExistException;
-
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -39,9 +31,7 @@ public class NursingDecisionMakingandPlaning implements NursingDecisionMakingand
         if (mcase == null) {
             System.out.println("Case not found!");
             throw new ExistException("No such case exists");
-
         }
-
         System.out.println("Mcase found");
         Nursing_Procedure procedure = new Nursing_Procedure();
         System.out.println("created procedure");
@@ -50,11 +40,8 @@ public class NursingDecisionMakingandPlaning implements NursingDecisionMakingand
         System.out.print("searching for ICNP code");
         ICNP_Code code = getCode(desc);
         System.out.print("ICNP code object foud");
-        procedure.create(code, comments);
+        //procedure.create(code, comments);
         System.out.println("created procedure 2");
-
-        em.persist(procedure);
-
         mcase.addnProcedure(procedure);
         System.out.println("added procedure");
         procedure.setMcase(mcase);
@@ -63,6 +50,7 @@ public class NursingDecisionMakingandPlaning implements NursingDecisionMakingand
         System.out.println("Nursing Procedure " + procedure.getNpId()
                 + "added to case " + mcase.getCIN());
 
+        em.persist(procedure);
         em.persist(mcase);
         em.flush();
     }

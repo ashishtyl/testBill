@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -34,8 +33,8 @@ public class Medical_Procedure implements Serializable {
     private Date date;
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private mCase mcase;
-    @OneToOne(cascade = {CascadeType.PERSIST})
-    private Finding finding;
+    //@OneToOne(cascade = {CascadeType.PERSIST})
+    //private Finding finding;
     @OneToMany(cascade = {CascadeType.ALL})
     private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();
     @ManyToOne(cascade = {CascadeType.PERSIST})
@@ -44,12 +43,9 @@ public class Medical_Procedure implements Serializable {
     public Medical_Procedure() {
     }
 
-    public void create(ICD10_PCS procedureCode, String description, String findingDescription, String comments) {
+    public void create(ICD10_PCS procedureCode, String comments) {
         Date date = new Date();
         this.setDate(date);
-        Finding finding = new Finding();
-        finding.setDescription(description);
-        this.setFinding(finding);
         this.setProcedureCode(procedureCode);
         this.setComments(comments);
         this.setPatientConsent("NULL");
@@ -77,14 +73,6 @@ public class Medical_Procedure implements Serializable {
 
     public void setMcase(mCase mcase) {
         this.mcase = mcase;
-    }
-
-    public Finding getFinding() {
-        return finding;
-    }
-
-    public void setFinding(Finding finding) {
-        this.finding = finding;
     }
 
     public List<ExecutionLog> getExecutionlogs() {

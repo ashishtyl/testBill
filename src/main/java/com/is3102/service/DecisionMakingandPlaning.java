@@ -97,12 +97,11 @@ public class DecisionMakingandPlaning implements DecisionMakingandPlaningRemote 
         }
     }
 
-    public void updateProcedure(Long procedureId, String newComments, String newFindings, String newConsent) {
+    public void updateProcedure(Long procedureId, String newComments, String newConsent) {
         Medical_Procedure procedure = em.find(Medical_Procedure.class, procedureId);
         Date pDate = new Date();
         procedure.setDate(pDate);
         procedure.setComments(newComments);
-        procedure.getFinding().setDescription(newFindings);
         procedure.setPatientConsent(newConsent);
         em.merge(procedure);
     }

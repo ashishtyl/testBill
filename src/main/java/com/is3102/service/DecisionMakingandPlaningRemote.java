@@ -28,6 +28,6 @@ public interface DecisionMakingandPlaningRemote {
     
     public List<Medical_Procedure> listProcedures(String CIN);
     
-    public void updateProcedure(Long procedureId, String newComments, String newFindings, String newConsent);
+    public void updateProcedure(Long procedureId, String newComments, String newConsent);
     
 }
