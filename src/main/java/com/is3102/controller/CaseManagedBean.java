@@ -183,7 +183,7 @@ public class CaseManagedBean implements Serializable {
         }
     }
 
-    public void doUpdateProcedure(ActionEvent actionEvent) {
+    public void doListProcedure(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         mprocedures = dmm.listProcedures(CIN);
         if (mprocedures == null) {
@@ -191,7 +191,7 @@ public class CaseManagedBean implements Serializable {
         }
     }
     
-    public void doUpdateDiagnosis(ActionEvent actionEvent) {
+    public void doViewDiagnoses(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         diagnosis = cbm.listDiagnoses(CIN);
         if (diagnosis == null) {
@@ -257,8 +257,9 @@ public class CaseManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
-    public void onEditProcedure(RowEditEvent event) {
+    /*public void onEditProcedure(RowEditEvent event) {
         try {
+            String newCode = (String) ((Medical_Procedure) event.getObject()).getProcedureCode().getCode();
             String newComments = (String) ((Medical_Procedure) event.getObject()).getComments();
             String newConsent = (String) ((Medical_Procedure) event.getObject()).getPatientConsent();
             dmm.updateProcedure((Long) ((Medical_Procedure) event.getObject()).getMpId(), newComments, newConsent);
@@ -290,5 +291,5 @@ public class CaseManagedBean implements Serializable {
     public void onCancelDiagnosis(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Diagnosis Not Edited!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
+    }*/
 }

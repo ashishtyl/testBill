@@ -95,7 +95,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoAddCode(ActionEvent actionEvent) {
+    public void doAddCode(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             cbr.addCode(diseaseId, ICDChapter, ICDblock, diseaseName, diseaseDescription);
@@ -107,7 +107,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoAddProcedure(ActionEvent actionEvent) {
+    public void doAddProcedure(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             Long cost = (Long.valueOf(price));
