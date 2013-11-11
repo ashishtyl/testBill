@@ -5,18 +5,11 @@
 
 package com.is3102.service;
 
-import com.is3102.service.*;
-import com.is3102.EntityClass.Consent;
-import com.is3102.EntityClass.Diagnosis;
-import com.is3102.EntityClass.Finding;
-import com.is3102.EntityClass.Medical_Procedure;
 import com.is3102.EntityClass.Nursing_Procedure;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.ExistException;
-
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
