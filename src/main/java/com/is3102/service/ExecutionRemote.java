@@ -24,5 +24,7 @@ public interface ExecutionRemote {
     public void AddExecutionRecordNursing(Long procedure_id, Long doctor_id, String exeuction_comment) throws ExistException;
 
     public List<ExecutionLog> CreateEvaluationReport(Long procedure_id) throws ExistException;  
+    
+    public void recordVitals (Long caseId, String bp, String tmp, String HR, String spO2, String glucose, String rRate)throws ExistException;
  
 }
