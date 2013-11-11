@@ -37,6 +37,16 @@ public class HandleDates {
         dateValue = sdf.parse(s);
         return dateValue;
     }
+     
+    public static Date getDateFromString2(String s) throws ParseException {
+        //String s = null;
+        Date dateValue;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateValue = sdf.parse(s);
+        return dateValue;
+    }
+     
+     
     
     public static String GetFirstDayOfMonth () {  
   

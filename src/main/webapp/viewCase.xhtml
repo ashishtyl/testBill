@@ -49,6 +49,12 @@
                 </p:column>
             </p:dataTable>
         </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="patientProfile?faces-redirect=true" value="View Patient Profile" />
+            <h1></h1>
+        </h:form>
 
         <h:form>
             <h3></h3>
@@ -139,58 +145,52 @@
         <h:form>
             <h3></h3>
             <p:commandButton  action="addMedicalProcedure?faces-redirect=true" value="Add Medical Procedure" />
+            <h3></h3>
         </h:form>
 
         <h:form id="form2">
-            <p:growl id="messages" showDetail="true"/>
-            <h1></h1>
-            <p:commandButton value="View Medical Procedures" actionListener="#{caseManagedBean.doUpdateProcedure}" update=":form2:messages, :form2:dataTableProcedures"/>
-            <p:dataTable id="dataTableProcedures" var="mprocedures" value="#{caseManagedBean.mprocedures}" editable="true">
-                
-                <p:ajax event="rowEdit" listener="#{caseManagedBean.onEditProcedure}" update=":form2:messages" />
-                <p:ajax event="rowEditCancel" listener="#{caseManagedBean.onCancelProcedure}" update=":form2:messages" />
+            <p:panel>
+                <p:commandButton value="View Medical Procedures" actionListener="#{caseManagedBean.doListProcedure}" update=":form2:dataTableProcedures"/>
+                <p:dataTable id="dataTableProcedures" var="mprocedures" value="#{caseManagedBean.mprocedures}" >
 
-                <p:column headerText="Procedure Code" style="width:10%">
-                    <!--<p:cellEditor>-->
-                    <f:facet name="output">
-                        <h:outputText value="#{mprocedures.procedureCode}" />
-                    </f:facet>
-                    <!--</p:cellEditor>-->
-                </p:column>
-
-                <p:column headerText="Date of Planning" style="width:10%">
-                    <!--<p:cellEditor>-->
-                        <f:facet name="output">
-                            <h:outputText value="#{mprocedures.date}" />
-                        </f:facet>
-                    <!--</p:cellEditor>-->
-                </p:column>
-
-                <p:column headerText="Doctor's Comments" style="width:10%">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{mprocedures.comments}" />
-                        </f:facet>
-                        <f:facet name="input">
-                            <inputText value="#{mprocedures.comments}" style="width:100%"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column style="width:6%">
-                    <p:rowEditor />
-                </p:column>
-            </p:dataTable>
+                    <p:column headerText="Procedure Code" style="width:10%">
+                        <h:outputText value="#{mprocedures.procedureCode.code}" />
+                    </p:column>
+                    <p:column headerText="Date of Planning" style="width:10%">
+                        <h:outputText value="#{mprocedures.date}" />
+                    </p:column>
+                    <p:column headerText="Doctor's Comments" style="width:10%">
+                        <h:outputText value="#{mprocedures.comments}" />
+                    </p:column>
+                    <p:column headerText="Patient's Consent" style="width:10%">
+                        <h:outputText value="#{mprocedures.patientConsent}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
         </h:form>
 
         <h:form>
             <h3></h3>
             <p:commandButton  action="addDiagnosis?faces-redirect=true" value="Add Medical Diagnosis" />
+            <h3></h3>
         </h:form>
 
-        <h:form>
-            <h3></h3>
-            <p:commandButton  action="addDiagnosis?faces-redirect=true" value="View Medical Diagnoses" />
+        <h:form id="form3">
+            <p:panel>
+                <p:commandButton value="View Medical Diagnoses" actionListener="#{caseManagedBean.doViewDiagnoses}" update=":form3:dataTableDiagnoses"/>
+                <p:dataTable id="dataTableDiagnoses" var="diagnosis" value="#{caseManagedBean.diagnosis}" >
+
+                    <p:column headerText="Diagnosis Code" style="width:10%">
+                        <h:outputText value="#{diagnosis.code.name}" />
+                    </p:column>
+                    <p:column headerText="Date of Diagnosis" style="width:10%">
+                        <h:outputText value="#{diagnosis.date}" />
+                    </p:column>
+                    <p:column headerText="Description" style="width:10%">
+                        <h:outputText value="#{diagnosis.description}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
         </h:form>
 
         <h:form>
@@ -199,11 +199,11 @@
             <h3></h3>
         </h:form>
 
-        <h:form id="form3">
+        <h:form id="form4">
             <p:panel>
                 <p:commandButton value="View Medication Prescribed"
                                  actionListener="#{caseManagedBean.doViewMedication}"
-                                 update=":form3:dataTableMedication"/>
+                                 update=":form4:dataTableMedication"/>
                 <p:dataTable id="dataTableMedication" var="medication" value="#{caseManagedBean.medication}">
                     <p:column headerText="Name">
                         <h:outputText value="#{medication.name}"/>
@@ -224,11 +224,11 @@
             </p:panel>
         </h:form>
 
-        <h:form id="form4">
+        <h:form id="form5">
             <p:panel>
                 <p:commandButton value="View Procedures Ordered"
                                  actionListener="#{caseManagedBean.doViewMedication}"
-                                 update=":form4:dataTableProcedures"/>
+                                 update=":form5:dataTableProcedures"/>
                 <p:dataTable id="dataTableProcedures" var="procedures" value="#{caseManagedBean.procedures}">
                     <p:column headerText="Name">
                         <h:outputText value="#{procedures.name}"/>
