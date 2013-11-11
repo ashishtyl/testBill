@@ -120,7 +120,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoListAllICD10Codes(ActionEvent actionEvent) {
+    public void doListAllICD10Codes(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             this.setAllicdCodes(cbr.listAllCodes());
@@ -132,7 +132,7 @@ public class CodingBeanManaged {
         }
     }
 
-    public void DoListAllICD10Procedures(ActionEvent actionEvent) {
+    public void doListAllICD10Procedures(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             this.setAllProcedures(cbr.listAllProceures());
