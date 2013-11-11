@@ -7,6 +7,7 @@ package com.is3102.service;
 import com.is3102.EntityClass.Diagnosis;
 import com.is3102.EntityClass.ICD10_Code;
 import com.is3102.EntityClass.ICD10_PCS;
+import com.is3102.EntityClass.ICNP_Code;
 import com.is3102.Exception.ExistException;
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +33,7 @@ public interface CodingBeanRemote {
 
     public List<Diagnosis> listAllDiagnosis(Long caseId) throws ExistException;
 
-    public List<ICD10_PCS> listAllProceures();
+    public List<ICD10_PCS> listAllMedicalProceures();
 
     public void addProcedure(String id, String name, Long price) throws ExistException;
     

@@ -11,13 +11,13 @@
                                  actionListener="#{orderEntryManagedBean.doDisplayServiceCatalog}"
                                  update=":form1:dataTableserviceCatalog"/>
                 <p:dataTable id="dataTableserviceCatalog" var="serviceCatalog" value="#{orderEntryManagedBean.serviceCatalog}">
-                    <p:column headerText="Drug Name">
+                    <p:column headerText="Procedure Name">
                         <h:outputText value="#{serviceCatalog.name}"/>
                     </p:column>
-                    <p:column headerText="Drug Type"> 
+                    <p:column headerText="Procedure Details"> 
                         <h:outputText value="#{serviceCatalog.details}"/>
                     </p:column>
-                    <p:column headerText="Method of Administration">
+                    <p:column headerText="Price">
                         <h:outputText value="#{serviceCatalog.price}"/>
                     </p:column>
                  </p:dataTable>
@@ -36,6 +36,8 @@
                     <p:inputText value="#{orderEntryManagedBean.lrpQuantity}" required="true"/>
                     <h:outputText value="Procedure Details: " />
                     <p:inputTextarea rows="6" cols="33" value="#{orderEntryManagedBean.lrpDetails}" required="true"/>
+                    <h:outputText value="Procedure Date (YYYY-mm-dd): *" />
+                    <p:calendar value="#{orderEntryManagedBean.appDate}" required="true" pattern="yyyy-MM-dd HH:mm" label="Procedure Date"/>
                 </h:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{orderEntryManagedBean.doOrderLabRadProcedure}" update=":form2:growl"/>
             </p:panel>

@@ -26,12 +26,13 @@ public class ICNP_Code implements Serializable {
 
     public void ICNP_Code() {}
 
-    public void ICNP_Code(String code, String name, String category) {
+    public void create(String code, String name, String category, Long price) {
 
         this.setCategory(category);
         this.setCode(code);
         this.setName(name);
         this.setDislay(code + " " + name);
+        this.setPrice(price);
 
     }
 

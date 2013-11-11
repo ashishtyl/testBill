@@ -4,17 +4,23 @@
  */
 package com.is3102.service;
 
+import com.is3102.EntityClass.AppointmentProcedure;
+import com.is3102.EntityClass.Device;
 import com.is3102.EntityClass.DrugCatalog;
 import com.is3102.EntityClass.LabRadProcedure;
 import com.is3102.EntityClass.Medication;
 import com.is3102.EntityClass.POEOrder;
 import com.is3102.EntityClass.ServiceCatalog;
 import com.is3102.EntityClass.mCase;
+import com.is3102.Exception.DeviceException;
 import com.is3102.Exception.DrugException;
 import com.is3102.Exception.ExistException;
 import com.is3102.Exception.ProcedureException;
+import com.is3102.util.HandleDates;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -83,7 +89,9 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public String orderLabRadProcedure(String CIN, String name, int quantity, String details) throws ExistException, ProcedureException {
+    public String orderLabRadProcedure(String CIN, String name, int quantity, String details, String appDate) throws ExistException, ProcedureException, ParseException, DeviceException {
+        String procedureType = "MRI";
+        Date aDate = HandleDates.getDateFromString2(appDate);
         mCase mcase = em.find(mCase.class, new Long(CIN));
         if (mcase == null) {
             em.clear();
@@ -95,17 +103,32 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
             double unitPrice = service.getPrice();
             double totalPrice = quantity * unitPrice;
-            if (!checkProcedureSafety(CIN, name)) {
-
+            if (checkProcedureSafety(CIN, name)) {
+                
+            if (checkDeviceAvailability(procedureType, aDate)==null){
+                
+                throw new DeviceException("No device available at given appointment time");
+            }
+            Long deviceID = checkDeviceAvailability(procedureType, aDate);    
+            Device device = em.find(Device.class, new Long(deviceID));
+                
                 POEOrder order = new POEOrder();
                 Date dateOrdered = new Date();
                 order.create(dateOrdered);
                 labradprocedure.create(name, quantity, details, totalPrice);
                 mcase.getLabRadProcedure().add(labradprocedure);
                 labradprocedure.setMcase(mcase);
+                AppointmentProcedure ap = new AppointmentProcedure();
+                
+                System.out.println(aDate.toString());
+                ap.create(aDate);
+                device.addProcedure(ap);
+                order.setaProcedure(ap);
                 order.setLabRadProcedure(labradprocedure);
                 mcase.getOrders().add(order);
                 order.setMcase(mcase);
+                em.persist(ap);
+                em.persist(device);
                 em.persist(order);
                 em.persist(labradprocedure);
                 em.persist(mcase);
@@ -157,8 +180,10 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         q.setParameter("name", name);
         ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
         Boolean safe = service.isSafeForPregnant();
+        System.out.println("Procedure safe? "+safe.toString());
         mCase mcase = em.find(mCase.class, new Long(CIN));
         Boolean pregnant = mcase.getMedicalAnamnesis().isIsPregnant();
+        System.out.println(pregnant.toString());
         if (safe) {
             return true;
         } else if (!safe) {
@@ -185,6 +210,47 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         }
         return false;
     }
+    
+    public Long checkDeviceAvailability(String procedureType, Date appDate) {
+        Long deviceID=null;
+        long HOUR = 3600*1000;
+        boolean booked = false;
+        Query qdc = em.createQuery("SELECT dc FROM Device dc WHERE dc.deviceType=:procedureType");
+        qdc.setParameter("procedureType", procedureType);
+        List<Device> devices = qdc.getResultList();
+        System.out.println("Device list size: "+devices.size());
+        for (Device d : devices) {
+            booked = false;
+            System.out.println("inside device loop");
+            List<AppointmentProcedure> aps = d.getProcedures();
+            System.out.println("aps list called");
+           if (aps.isEmpty()){
+                return d.getId();}
+           
+            System.out.println("Appointment list size: "+aps.size());
+            for (AppointmentProcedure a : aps){
+                System.out.println("inside appointment list loop");
+                if((a.getAppDate().compareTo(appDate))==0){
+                booked = true;
+                break;
+                }
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(a.getAppDate());
+                cal.add(Calendar.MINUTE, 20);
+                if(appDate.after(a.getAppDate()) && appDate.before(cal.getTime())){
+                    booked = true;
+                    break;
+                }
+                
+            }
+            if (booked == false){
+            deviceID =  d.getId();
+            return deviceID;
+            }
+        }
+        return deviceID;
+        
+    }
 
     public List<DrugCatalog> displayDrugCatalog() {
         Query qdc = em.createQuery("SELECT dc FROM DrugCatalog dc");
@@ -194,7 +260,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
     }
 
     public List<ServiceCatalog> displayServiceCatalog() {
-        Query qdc = em.createQuery("SELECT dc FROM ServiceCatalos dc");
+        Query qdc = em.createQuery("SELECT dc FROM ServiceCatalog dc");
         List<ServiceCatalog> serviceCatalog = qdc.getResultList();
         System.out.println(serviceCatalog.size());
         return serviceCatalog;
