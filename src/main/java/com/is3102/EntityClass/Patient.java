@@ -170,7 +170,6 @@ public class Patient implements Serializable {
         return mcase;
     }
 
-
     public void setmCases(List<mCase> mcase) {
         this.mcase = mcase;
     }
