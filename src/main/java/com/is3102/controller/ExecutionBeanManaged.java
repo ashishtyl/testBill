@@ -12,6 +12,13 @@ import com.is3102.service.ExecutionRemote;
 import com.is3102.service.PatientIdandCheckingRemote;
 import com.is3102.service.VisitorInfoServiceRemote;
 import com.is3102.util.HandleDates;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +28,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.ServletContext;
 
 @ManagedBean
 @ViewScoped
@@ -161,6 +169,15 @@ public class ExecutionBeanManaged implements Serializable {
             patientId = (long) 0;
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be found!", null));
         }
+    }
+
+    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+        Document pdf = (Document) document;
+        pdf.open();
+        pdf.setPageSize(PageSize.A4);
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String logo = servletContext.getRealPath("") + File.separator + "images" + File.separator + "merlion.png";
+        pdf.add(Image.getInstance(logo));
     }
 
     public void doListVitals(ActionEvent actionEvent) {
