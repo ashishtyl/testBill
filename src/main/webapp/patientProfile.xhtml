@@ -48,7 +48,17 @@
                 </p:dataTable>
             </p:panel>
         </h:form>
-        
+
+        <h:form>
+            <p:panel>
+                <h:commandLink>  
+                    <p:graphicImage value="PDF" />  
+                    <p:dataExporter type="pdf" target="dataTablePatientInfo" fileName="patientInfo"/>  
+                </h:commandLink>
+
+            </p:panel>
+        </h:form>
+
         <h:form id="form2">
             <p:growl id="growl" showDetail="true"/>
             <p:panel>
@@ -79,19 +89,19 @@
                 </p:dataTable>
             </p:panel>
         </h:form>
-        
+
         <h:form>
             <h3></h3>
             <p:commandButton  action="updatePatient?faces-redirect=true" value="Update Patient Profile" />
             <h3></h3>
         </h:form>
-        
+
         <h:form>
             <h3></h3>
             <p:commandButton  action="recordVitals?faces-redirect=true" value="Record Patient Vitals" />
             <h3></h3>
         </h:form>
-        
+
         <h:form>
             <h3></h3>
             <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
