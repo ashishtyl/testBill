@@ -39,6 +39,8 @@ public class Medical_Procedure implements Serializable {
     private List<ExecutionLog> Executionlogs = new ArrayList<ExecutionLog>();
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private ICD10_PCS procedureCode;
+    
+    private String category;
 
     public Medical_Procedure() {
     }
