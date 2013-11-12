@@ -1,0 +1,47 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h1> Record Patient Vitals </h1>
+                <h:panelGrid columns = "2" style="margin-bottom:10px" cellpadding="5">  
+                    <h:outputText value="Patient Name: *" />
+                    <p:inputText value="#{executionBeanManaged.name}" required="true" label="Patient Name"/>
+                    <h:outputText value="Passport Number/NRIC: *" />
+                    <p:inputText value="#{executionBeanManaged.passport_NRIC}" required="true" label="Patient Passport Number/NRIC"/>
+                    <h:outputText value="Blood Pressure: (in / mmHg) " />
+                    <p:inputText value="#{executionBeanManaged.bloodPressure}"/>
+                    <h:outputText value="Temperature: (in Fahrenheit)" />
+                    <p:inputText value="#{executionBeanManaged.temperature}"/>
+                    <h:outputText value="Heart Rate: (beats per minute) " />
+                    <p:inputText value="#{executionBeanManaged.heartRate}"/>
+                    <h:outputText value="Oxygen Saturation Level: (in %) " />
+                    <p:inputText value="#{executionBeanManaged.spO2}"/>
+                    <h:outputText value="Glucose Level: " />
+                    <p:inputText value="#{executionBeanManaged.glucoseLevel}"/>
+                    <h:outputText value="Respiratory Rate: " />
+                    <p:inputText value="#{executionBeanManaged.respiratoryRate}"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{executionBeanManaged.doEnterVitals}" update=":form1:growl"/>
+            </p:panel>
+        </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="patientProfile?faces-redirect=true" value="Return to Patient Profile" />
+            <h3></h3>
+        </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
+        </h:form>
+
+    </ui:define>
+</ui:composition>

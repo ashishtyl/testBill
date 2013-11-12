@@ -9,6 +9,7 @@ import com.is3102.EntityClass.LabRadProcedure;
 import com.is3102.EntityClass.Medical_Anamnesis;
 import com.is3102.EntityClass.Medical_Procedure;
 import com.is3102.EntityClass.Medication;
+import com.is3102.EntityClass.Vitals;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import com.is3102.EntityClass.mCase;
@@ -165,6 +166,8 @@ public class CaseManagedBean implements Serializable {
 
     public void doUpdateCase(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
+        //String username = (String) context.getExternalContext().getUserPrincipal().getName();
+        //System.out.println(username);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         mcase = am.retrievePatientCase(name, NRIC_PIN, format.format(dateAdmitted));
         if (mcase != null) {
@@ -174,7 +177,7 @@ public class CaseManagedBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Case could not be found!", null));
         }
     }
-
+    
     public void doUpdateAnamnesis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         anamnesis = mam.listAnamnesis(CIN);
@@ -197,7 +200,7 @@ public class CaseManagedBean implements Serializable {
         if (diagnosis == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Diagnoses do not exist!", null));
         }
-    }
+    }    
 
     public void doViewMedication(ActionEvent actionEvent) {
         medication = oem.listMedication(CIN);

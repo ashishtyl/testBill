@@ -41,6 +41,8 @@ public class Patient implements Serializable {
     private List<Appointment> appointment = new ArrayList<Appointment>();
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private List<mCase> mcase = new ArrayList<mCase>();
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Vitals> vitals = new ArrayList<Vitals>();
 
      @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "patient")
     private List<OutpatientAppointment> appointment2 = new ArrayList<OutpatientAppointment>();
@@ -60,6 +62,11 @@ public class Patient implements Serializable {
         this.setBloodGroup(bloodGroup);
         this.setHeight(height);
         this.setWeight(weight);
+    }
+    
+    public int getPatientAge(){
+        //TODO
+        return 1;
     }
 
     public Long getPatientId() {
@@ -170,8 +177,15 @@ public class Patient implements Serializable {
         return mcase;
     }
 
-
     public void setmCases(List<mCase> mcase) {
         this.mcase = mcase;
+    }
+
+    public List<Vitals> getVitals() {
+        return vitals;
+    }
+
+    public void setVitals(List<Vitals> vitals) {
+        this.vitals = vitals;
     }
 }

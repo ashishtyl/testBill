@@ -168,7 +168,7 @@ public class CodingBean implements CodingBeanRemote {
         }
         return codeset;
     }
-
+    
     @Override
     public void addProcedure(String id, String name, Long price) throws ExistException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -44,4 +44,10 @@ public interface AdministrativeAdmissionRemote {
     public List<mCase> getPatientCases(String name, String passport_NRIC);
     
     public mCase retrievePatientCase(String name, String Passport_NRIC, String dateAdmitted);
+    
+    public List<Patient> getAllPatients();
+    
+    public List<Patient> getCurrentPatients();
+    
+    public Patient checkPatient(String PIN);
 }

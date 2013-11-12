@@ -68,6 +68,7 @@ public class OutPatientManagementController implements Serializable  {
     Date endDate;
     String type;
     String appID;
+    String id;
     long CIN;
     Patient patient;
     List<OutpatientAppointment> appointments = new ArrayList<OutpatientAppointment>();
@@ -281,8 +282,7 @@ public class OutPatientManagementController implements Serializable  {
         eventModel.addEvent(new DefaultScheduleEvent("Example Appointment Three", nextDay9Am(), nextDay11Am()));
         eventModel.addEvent(new DefaultScheduleEvent("Example Appointment Four", theDayAfter3Pm(), theDayAfter4Pm()));
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Please do not make an appointment which is already occupied, otherwise " +
-                "your appointment will not be accepted"));
+
          context.addMessage(null, new FacesMessage("Please note each appointment should be exactly for an hour, otherwise " + 
                 "your appointment will not be accepted"));
        
@@ -337,13 +337,12 @@ public class OutPatientManagementController implements Serializable  {
     }
 
     public void showAppointments(ActionEvent event) {
-        Patient patient = opm.getPatient(NRIC_PIN4);
-        if (patient != null) {
-            appointments = opm.getOutPatientAppointments(NRIC_PIN4);
-        } else {
-            appointments = null;
-        }
+       
+            appointments = opm.getOutPatientAppointments(NRIC_PIN1);
+        
     }
+    
+     
 
     public void onEdit(RowEditEvent event) {
         try {
@@ -504,20 +503,23 @@ public class OutPatientManagementController implements Serializable  {
         event = new DefaultScheduleEvent();
         System.out.println("Appointment created");
     }
-public void addEventTest(ActionEvent actionEvent) {
+public String addEventTest(ActionEvent actionEvent) {
      //add patient
      FacesContext context = FacesContext.getCurrentInstance();
         try {
             
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String pin = opm.addPatient(NRIC_PIN1, name, format.format(birthday), address, contact, nationality, height, weight, gender, bloodgroup);
-            context.addMessage(null, new FacesMessage("Patient Record " + name + " with PIN " + NRIC_PIN1 + " successfully created!"));
+            if ("existed".equals(pin))   
+                context.addMessage(null, new FacesMessage("Patient Record " + name + " with PIN " + NRIC_PIN1 + " already existed, plese check your appointment!"));  
+            else
+                context.addMessage(null, new FacesMessage("Patient Record " + name + " with PIN " + NRIC_PIN1 + " successfully created!"));
             //add appointment  
         System.out.println("Adding event");
-        if(event.getId() == null)
-            eventModel.addEvent(event);
-        else
-            eventModel.updateEvent(event);
+       // if(event.getId() == null)
+            //eventModel.addEvent(event);
+       // else
+           // eventModel.updateEvent(event);
       
          System.out.println("test 1");
         try {
@@ -530,12 +532,38 @@ public void addEventTest(ActionEvent actionEvent) {
             //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             // String id = opm.makeOutpatientAppointment(NRIC_PIN2,format.format(event.startDate)),format.format(event.endDate));
             // String id = opm.makeOutpatientAppointment(NRIC_PIN1,format.format(event.getStartDate()),format.format(event.getEndDate()));
-             String id = opm.makeOutpatientAppointment(NRIC_PIN1,event.getStartDate(),event.getEndDate());
+            /* System.out.println("***\n");
+              Calendar calA = Calendar.getInstance();
+              System.out.println("****\n");
+              Calendar calB = Calendar.getInstance();
+              
+            
+              calA.setTime(event.getStartDate());// all done
+              System.out.println("*******\n");
+              System.out.println("**********************\n");
+              System.out.println(event.getStartDate().toString());
+              System.out.println(calA);
+              calB.setTime(event.getEndDate());// all done
+              calA.add(Calendar.HOUR, 1);
+              int compareResult = calB.compareTo(calA);
+              System.out.println(compareResult);
+              if (compareResult!=0){
+                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Appointment could not be made!", null));
+                 context.addMessage(null, new FacesMessage("Please note each appointment should be exactly for an hour, otherwise " + 
+                "your appointment will not be accepted")); 
+                 return null;
+              }
+              else {*/
+             id = opm.makeOutpatientAppointment(NRIC_PIN1,event.getStartDate(),event.getEndDate());
+             if(event.getId() == null)
+            eventModel.addEvent(event);
+        else
+           eventModel.updateEvent(event);
              System.out.println(event.getStartDate());
              System.out.println(event.getTitle());
              context.addMessage(null, new FacesMessage("Appointment " + id + " for " + NRIC_PIN1  + " successfully made!"));
              Long CIN =opm.createCase(id, event.getStartDate(),"outpatient");
-            
+              //}
         } catch (Exception ex) {
            System.out.println(event.getStartDate() + "1");
               System.out.println(event.getTitle() +  "1");
@@ -547,10 +575,10 @@ public void addEventTest(ActionEvent actionEvent) {
         System.out.println("Appointment created");
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be Created!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be Created becasue patient already existed!", null));
         }
         
-        
+        return null;
      
         
     }
