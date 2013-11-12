@@ -20,7 +20,7 @@ public interface MedicalAdmissionBean1Remote {
   
     public void addAnamnesis(Long caseId, String diseaseHistory,
                              String socialHistory, String medicalHistory,
-                             String familyHistory, String allergies, String symptoms) throws ExistException,  CaseException;
+                             String familyHistory, String allergies, String symptoms, String pregnancy) throws ExistException,  CaseException;
     public Medical_Anamnesis getAnamnesis(Long anamnesisId)throws ExistException;
     public void removeAnamnesis(Long anamnesisId)throws ExistException;
     public List<Medical_Anamnesis> ListMedical_Anamnesis();

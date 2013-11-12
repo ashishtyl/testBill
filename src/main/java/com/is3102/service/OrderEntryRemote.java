@@ -31,4 +31,5 @@ public interface OrderEntryRemote {
     public String orderLabRadProcedure(String CIN, String name, int quantity, String details, String appDate) throws ExistException, ProcedureException, ParseException, DeviceException;
     public List<Medication> listMedication(String CIN);
     public List<LabRadProcedure> listLabRadProcedures(String CIN);
+    public List<ServiceCatalog> displayServiceCatalog2();
 }

@@ -48,13 +48,19 @@ public class MedicalAdmissionBean1 implements MedicalAdmissionBean1Remote {
     @Override
     public void addAnamnesis(Long caseId, String diseaseHistory,
             String socialHistory, String medicalHistory,
-            String familyHistory, String allergies, String symptoms) throws ExistException, CaseException {
+            String familyHistory, String allergies, String symptoms, String pregnancy) throws ExistException, CaseException {
+        
         mcase = getCaseInfo(caseId);
         anamnesis = new Medical_Anamnesis();
         //System.out.println("Test1");
         anamnesis.create(diseaseHistory,
                 socialHistory, medicalHistory,
                 familyHistory, allergies, symptoms);
+        if (pregnancy.equals("yes")){
+            anamnesis.setIsPregnant(true);
+        }else{
+            anamnesis.setIsPregnant(false);
+        }
         mcase.setMedicalAnamnesis(anamnesis);
         em.persist(mcase);
 

@@ -48,6 +48,7 @@ public class OrderEntryManagedBean implements Serializable {
     private double totalPrice;
     private Date appDate;
     
+    
     //private SelectItem[] drugTypeOptions;
     //private String[] drugTypes = new String[100];
     //private int count = 0;
@@ -127,6 +128,13 @@ public class OrderEntryManagedBean implements Serializable {
          drugTypes[count++] = dc.getType();
          }*/
     }
+        
+        public void doDisplayServiceCatalog2(ActionEvent actionEvent) {
+        setServiceCatalog(oem.displayServiceCatalog2());
+        /*for (DrugCatalog dc : drugsCatalog) {
+         drugTypes[count++] = dc.getType();
+         }*/
+    }
 
     public void doPrescribeMedication(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -154,6 +162,22 @@ public class OrderEntryManagedBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
         }
     }
+        
+                public void doOrderLabRadProcedure2(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String sevName = oem.orderLabRadProcedure(getLrpCIN(), getLrpName(), getLrpQuantity(), getLrpDetails(), "2012-01-01 00:00");
+            context.addMessage(null, new FacesMessage("Procedure " + sevName + " successfully ordered!"));
+        } catch (Exception ex) {
+            //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
+            //FacesContext.getCurrentInstance().addMessage(null, msg);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
+        }
+    }
+        
+        
     
     /*private SelectItem[] createFilterOptions(String[] drugTypes) {
      SelectItem[] options = new SelectItem[drugTypes.length + 1];

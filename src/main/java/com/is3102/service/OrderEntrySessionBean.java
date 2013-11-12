@@ -10,6 +10,7 @@ import com.is3102.EntityClass.DrugCatalog;
 import com.is3102.EntityClass.LabRadProcedure;
 import com.is3102.EntityClass.Medication;
 import com.is3102.EntityClass.POEOrder;
+import com.is3102.EntityClass.Report;
 import com.is3102.EntityClass.ServiceCatalog;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.DeviceException;
@@ -91,20 +92,22 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public String orderLabRadProcedure(String CIN, String name, int quantity, String details, String appDate) throws ExistException, ProcedureException, ParseException, DeviceException {
         String procedureType = "Laboratory or Radiology Procedure";
-        Date aDate = HandleDates.getDateFromString2(appDate);
+
+        
         mCase mcase = em.find(mCase.class, new Long(CIN));
         if (mcase == null) {
             em.clear();
             throw new ExistException("CASE DOES NOT EXIST");
         } else {
             LabRadProcedure labradprocedure = new LabRadProcedure();
+            Report report = new Report();
             Query q = em.createQuery("SELECT sc FROM ServiceCatalog sc WHERE sc.name = :name");
             q.setParameter("name", name);
             ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
             double unitPrice = service.getPrice();
             double totalPrice = quantity * unitPrice;
             procedureType = service.getProcedureType();
-            String deviceType = service.getDeviceType();
+            
             
             if (checkProcedureSafety(CIN, name)) {
                 
@@ -114,12 +117,15 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
                 labradprocedure.create(name, quantity, details, totalPrice);
                 mcase.getLabRadProcedure().add(labradprocedure);
                 labradprocedure.setMcase(mcase);
+                labradprocedure.setReport(report);
                 order.setLabRadProcedure(labradprocedure);
                 mcase.getOrders().add(order);
                 order.setMcase(mcase);
                 
                 
-            if(procedureType.equals("Radiology")){    
+            if(procedureType.equals("Radiology")){  
+                Date aDate = HandleDates.getDateFromString2(appDate);
+                String deviceType = service.getDeviceType();
             if (checkDeviceAvailability(deviceType, aDate)==null){
                 
                 throw new DeviceException("No device available at given appointment time");
@@ -134,7 +140,8 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
                 order.setaProcedure(ap);
                 em.persist(ap);
                 em.persist(device);
-            }  
+            }
+                em.persist(report);
                 em.persist(order);
                 em.persist(labradprocedure);
                 em.persist(mcase);
@@ -266,7 +273,16 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
     }
 
     public List<ServiceCatalog> displayServiceCatalog() {
-        Query qdc = em.createQuery("SELECT dc FROM ServiceCatalog dc");
+        Query qdc = em.createQuery("SELECT dc FROM ServiceCatalog dc WHERE dc.procedureType=:Radiology");
+        qdc.setParameter("Radiology", "Radiology");
+        List<ServiceCatalog> serviceCatalog = qdc.getResultList();
+        System.out.println(serviceCatalog.size());
+        return serviceCatalog;
+    }
+    
+        public List<ServiceCatalog> displayServiceCatalog2() {
+        Query qdc = em.createQuery("SELECT dc FROM ServiceCatalog dc WHERE dc.procedureType=:Laboratory");
+        qdc.setParameter("Laboratory", "Laboratory");
         List<ServiceCatalog> serviceCatalog = qdc.getResultList();
         System.out.println(serviceCatalog.size());
         return serviceCatalog;
