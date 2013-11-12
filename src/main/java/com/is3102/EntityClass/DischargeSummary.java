@@ -29,20 +29,22 @@ public class DischargeSummary implements Serializable {
     private String recommendation;
     private String patientState;
     private String medicalProcedure;
-   
+    private String category;
+
     //super class discharge-medical/nursing/administrative
-   
-    public void DischargeSummary(){}
+    public void DischargeSummary() {
+    }
+
     public void create(String diagnosis, String findings, String recommendation,
-              String patientState, String medicalProcedure){
+            String patientState, String medicalProcedure) {
         this.setDiagnosis(diagnosis);
         this.setFindings(findings);
         this.setRecommendation(recommendation);
         this.setPatientState(patientState);
         this.setMedicalProcedure(medicalProcedure);
-        
+
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -50,42 +52,57 @@ public class DischargeSummary implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    //how to auto generate date
 
-   public String getDiagnosis(){
-       return diagnosis;
-   }
-   public void setDiagnosis(String diagnosis){
-       this.diagnosis=diagnosis;
-   }
-   
-    public String getFindings(){
-       return findings;
-   }
-   public void setFindings(String findings){
-       this.findings=findings;
-   }
-   
-   public String getRecommendation(){
-       return recommendation;
-   }
-   public void setRecommendation(String recommendation){
-       this.recommendation=recommendation;
-   }
-   
-   public String getPatientState(){
-       return patientState;
-   }
-   public void setPatientState(String patientState){
-       this.patientState=patientState;
-   }
-   
-   public String getMedicalProcedure(){
-       return medicalProcedure;
-   }
-   public void setMedicalProcedure(String medicalProcedure){
-       this.medicalProcedure=medicalProcedure;
-   }
-    
+    //how to auto generate date
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public String getFindings() {
+        return findings;
+    }
+
+    public void setFindings(String findings) {
+        this.findings = findings;
+    }
+
+    public String getRecommendation() {
+        return recommendation;
+    }
+
+    public void setRecommendation(String recommendation) {
+        this.recommendation = recommendation;
+    }
+
+    public String getPatientState() {
+        return patientState;
+    }
+
+    public void setPatientState(String patientState) {
+        this.patientState = patientState;
+    }
+
+    public String getMedicalProcedure() {
+        return medicalProcedure;
+    }
+
+    public void setMedicalProcedure(String medicalProcedure) {
+        this.medicalProcedure = medicalProcedure;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

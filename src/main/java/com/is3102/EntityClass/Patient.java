@@ -63,6 +63,11 @@ public class Patient implements Serializable {
         this.setHeight(height);
         this.setWeight(weight);
     }
+    
+    public int getPatientAge(){
+        //TODO
+        return 1;
+    }
 
     public Long getPatientId() {
         return patientId;

@@ -92,6 +92,64 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         }
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public String orderLabRadProcedure(String CIN, String name, int quantity, String details, String appDate) throws ExistException, ProcedureException, ParseException, DeviceException {
+        String procedureType = "Laboratory or Radiology Procedure";
+        Date aDate = HandleDates.getDateFromString2(appDate);
+        mCase mcase = em.find(mCase.class, new Long(CIN));
+        if (mcase == null) {
+            em.clear();
+            throw new ExistException("CASE DOES NOT EXIST");
+        } else {
+            LabRadProcedure labradprocedure = new LabRadProcedure();
+            Query q = em.createQuery("SELECT sc FROM ServiceCatalog sc WHERE sc.name = :name");
+            q.setParameter("name", name);
+            ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
+            double unitPrice = service.getPrice();
+            double totalPrice = quantity * unitPrice;
+            procedureType = service.getProcedureType();
+            String deviceType = service.getDeviceType();
+            
+            if (checkProcedureSafety(CIN, name)) {
+                
+                POEOrder order = new POEOrder();
+                Date dateOrdered = new Date();
+                order.create(dateOrdered);
+                labradprocedure.create(name, quantity, details, totalPrice);
+                mcase.getLabRadProcedure().add(labradprocedure);
+                labradprocedure.setMcase(mcase);
+                order.setLabRadProcedure(labradprocedure);
+                mcase.getOrders().add(order);
+                order.setMcase(mcase);
+                
+                
+            if(procedureType.equals("Radiology")){    
+            if (checkDeviceAvailability(deviceType, aDate)==null){
+                
+                throw new DeviceException("No device available at given appointment time");
+            }
+            
+            
+            Long deviceID = checkDeviceAvailability(deviceType, aDate);    
+            Device device = em.find(Device.class, new Long(deviceID));
+            AppointmentProcedure ap = new AppointmentProcedure();
+                ap.create(aDate);
+                device.addProcedure(ap);
+                order.setaProcedure(ap);
+                em.persist(ap);
+                em.persist(device);
+            }  
+                em.persist(order);
+                em.persist(labradprocedure);
+                em.persist(mcase);
+                em.flush();
+            } else {
+                throw new ProcedureException("Procedure cannot be ordered due to pregnancy!");
+            }
+            return (labradprocedure.getName());
+        }
+    }
+
     public boolean checkDrugOverDose(String name, Long dosage) {
         Query q = em.createQuery("SELECT dc FROM DrugCatalog dc WHERE dc.name = :name");
         q.setParameter("name", name);

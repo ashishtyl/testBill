@@ -23,7 +23,9 @@ public class ServiceCatalog implements Serializable {
     private String name; // blood test
     private String details; // blood test for cancer; blood test for dengue
     private Long price;
+    private String procedureType;
     private boolean safeForPregnant;
+    private String deviceType;
     
     public ServiceCatalog() {
     }
@@ -78,5 +80,33 @@ public class ServiceCatalog implements Serializable {
      */
     public void setSafeForPregnant(boolean safeForPregnant) {
         this.safeForPregnant = safeForPregnant;
+    }
+
+    /**
+     * @return the procedureType
+     */
+    public String getProcedureType() {
+        return procedureType;
+    }
+
+    /**
+     * @param procedureType the procedureType to set
+     */
+    public void setProcedureType(String procedureType) {
+        this.procedureType = procedureType;
+    }
+
+    /**
+     * @return the deviceType
+     */
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    /**
+     * @param deviceType the deviceType to set
+     */
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
     }
 }
