@@ -312,4 +312,11 @@ public class OrderEntryManagedBean implements Serializable {
     public void setAppDate(Date appDate) {
         this.appDate = appDate;
     }
+
+    /**
+     * @return the serviceCatalog
+     */
+    public List<ServiceCatalog> getServiceCatalog() {
+        return serviceCatalog;
+    }
 }
