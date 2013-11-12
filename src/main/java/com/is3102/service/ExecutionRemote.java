@@ -5,7 +5,6 @@
 package com.is3102.service;
 
 import com.is3102.EntityClass.ExecutionLog;
-import com.is3102.EntityClass.Vitals;
 import com.is3102.Exception.ConsentException;
 import com.is3102.Exception.ExistException;
 import java.util.List;
@@ -24,9 +23,8 @@ public interface ExecutionRemote {
 
     public void AddExecutionRecordNursing(Long procedure_id, Long doctor_id, String exeuction_comment) throws ExistException;
 
-    public List<ExecutionLog> CreateEvaluationReport(Long procedure_id) throws ExistException;
-
-    public void recordVitals(Long patientId, String bp, String tmp, String HR, String spO2, String glucose, String rRate) throws ExistException;
+    public List<ExecutionLog> CreateEvaluationReport(Long procedure_id) throws ExistException;  
     
-    public List<Vitals> listVitals(Long PIN);
+    public void recordVitals (Long caseId, String bp, String tmp, String HR, String spO2, String glucose, String rRate)throws ExistException;
+ 
 }
