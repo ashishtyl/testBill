@@ -33,4 +33,5 @@ public interface OrderEntryRemote {
     public List<Medication> listMedication(String CIN);
     public List<LabRadProcedure> listLabRadProcedures(String CIN);
     public List<POEOrder> listPatientOrders(String patientId);
+    public List<ServiceCatalog> displayServiceCatalog2();
 }

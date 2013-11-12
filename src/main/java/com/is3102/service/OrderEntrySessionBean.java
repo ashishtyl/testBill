@@ -103,7 +103,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             throw new ExistException("CASE DOES NOT EXIST");
         } else {
             LabRadProcedure labradprocedure = new LabRadProcedure();
-            Report report = new Report();
+            
             Query q = em.createQuery("SELECT sc FROM ServiceCatalog sc WHERE sc.name = :name");
             q.setParameter("name", name);
             ServiceCatalog service = (ServiceCatalog) q.getSingleResult();
@@ -119,7 +119,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
                 labradprocedure.create(name, quantity, details, totalPrice);
                 mcase.getLabRadProcedure().add(labradprocedure);
                 labradprocedure.setMcase(mcase);
-                labradprocedure.setReport(report);
+              
                 order.setLabRadProcedure(labradprocedure);
                 mcase.getOrders().add(order);
                 order.setMcase(mcase);
@@ -141,7 +141,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
                 em.persist(ap);
                 em.persist(device);
             }
-                em.persist(report);
+                
                 em.persist(order);
                 em.persist(labradprocedure);
                 em.persist(mcase);
