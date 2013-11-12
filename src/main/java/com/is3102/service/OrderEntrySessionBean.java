@@ -111,7 +111,6 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             String deviceType = service.getDeviceType();
             
             if (checkProcedureSafety(CIN, name)) {
-                
                 POEOrder order = new POEOrder();
                 Date dateOrdered = new Date();
                 order.create(dateOrdered);
@@ -122,14 +121,11 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
                 mcase.getOrders().add(order);
                 order.setMcase(mcase);
                 
-                
             if(procedureType.equals("Radiology")){    
             if (checkDeviceAvailability(deviceType, aDate)==null){
                 
                 throw new DeviceException("No device available at given appointment time");
-            }
-            
-            
+            }            
             Long deviceID = checkDeviceAvailability(deviceType, aDate);    
             Device device = em.find(Device.class, new Long(deviceID));
             AppointmentProcedure ap = new AppointmentProcedure();
@@ -199,7 +195,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         return false;
     }
     
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    /*@TransactionAttribute(TransactionAttributeType.REQUIRED)
     public String orderLabRadProcedure(String CIN, String name, int quantity, String details, String appDate) throws ExistException, ProcedureException, ParseException, DeviceException {
         String procedureType = "MRI";
         Date aDate = HandleDates.getDateFromString2(appDate);
@@ -248,7 +244,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
             }
             return (labradprocedure.getName());
         }
-    }
+    }*/
 
     public boolean checkProcedureSafety(String CIN, String name) {
         Query q = em.createQuery("SELECT sc FROM ServiceCatalog sc WHERE sc.name = :name");
