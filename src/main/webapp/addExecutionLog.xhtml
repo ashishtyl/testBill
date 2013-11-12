@@ -1,0 +1,53 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:panel>
+                <h1>List Procedures Associated to Case</h1>
+                <h:outputText value="Case ID: "/>
+                <p:inputText value="#{decisionMakingandPlaningManaged.CIN}"  label="Case ID"/>
+
+                <p:commandButton value="List Planned Procedures"
+                                 actionListener="#{decisionMakingandPlaningManaged.doRetrieveCarePlaning()}"
+                                 update=":form1:dataTableProcedures"/>
+                <p:dataTable id="dataTableProcedures" var="procedures" value="#{decisionMakingandPlaningManaged.medicalProcedures}">
+                    <p:column headerText="Procedure Id">
+                        <h:outputText value="#{procedures.mpId}"/>
+                    </p:column>
+                    <p:column headerText="Procedure Code">
+                        <h:outputText value="#{procedures.procedureCode.code}"/>
+                    </p:column>
+                    <p:column headerText="Procedure Name">
+                        <h:outputText value="#{procedures.procedureCode.name}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panel>
+        </h:form>
+
+        <h:form id="form2">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+
+            <panel>
+                <h1>Add Execution Log</h1>  
+                <h:panelGrid columns="2">
+
+                    <h:outputText value="Employee ID: "/>
+                    <p:inputText value="#{executionBeanManaged.employee_id}"  label="Employee ID"/>
+
+                    <h:outputText value="Procedure ID: "/>
+                    <p:inputText value="#{executionBeanManaged.procedure_id}" label="Procedure ID"/>
+
+                    <h:outputText value="Execution Comment: "/>
+                    <p:inputText value="#{executionBeanManaged.exeuction_comment}" label="Execution Comment"/>
+                    
+                </h:panelGrid>    
+                <p:commandButton value="Submit" actionListener="#{decisionMakingandPlaningManaged.doAddPlannedProcedure}" update=":form2:growl" />
+            </panel>
+        </h:form>
+</ui:composition>
