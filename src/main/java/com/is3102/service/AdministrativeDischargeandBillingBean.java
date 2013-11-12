@@ -34,8 +34,11 @@ public class AdministrativeDischargeandBillingBean implements AdministrativeDisc
     EntityManager em;
     mCase mcase;
 
-    public void CalculateBill(Long CIN) throws Exception {
+    public void CalculateBill(Long CIN) throws ExistException {
         mcase = em.find(mCase.class, CIN);
+        if(mcase==null){
+            throw new ExistException("Case not found!");
+        }
         List<Transactions> transactions = new ArrayList<Transactions>();
         System.out.println("Add Medical procedures total");
         transactions.addAll(medicalTotal(mcase));

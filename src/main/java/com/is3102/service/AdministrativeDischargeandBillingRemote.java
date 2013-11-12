@@ -16,6 +16,7 @@ import javax.ejb.Remote;
 @Remote
 public interface AdministrativeDischargeandBillingRemote {
     
+    public void CalculateBill(Long CIN) throws ExistException;
     public void setDischargeDate(Long cin)throws ExistException, ParseException;
     public Date getDischargeDate(Long cin);
     
