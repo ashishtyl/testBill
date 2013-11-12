@@ -6,6 +6,7 @@ package com.is3102.EntityClass;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +25,8 @@ public class Vitals implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private mCase mCase;
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    private Patient patient;
     private String bloodPressure;
     private String temperature;
     private String heartRate;
@@ -37,8 +38,7 @@ public class Vitals implements Serializable {
     
     public Vitals(){}
     
-    public void create(mCase mcase, String bp, String tmp, String HR, String spO2, String glucose, String rRate){
-        this.setmCase(mCase);
+    public void create(String bp, String tmp, String HR, String spO2, String glucose, String rRate){
         this.setBloodPressure(bp);
         this.setTemperature(tmp);
         this.setHeartRate(HR);
@@ -49,12 +49,12 @@ public class Vitals implements Serializable {
         this.setT_stamp(time);
     }
 
-    public mCase getmCase() {
-        return mCase;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setmCase(mCase mCase) {
-        this.mCase = mCase;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     public String getBloodPressure() {

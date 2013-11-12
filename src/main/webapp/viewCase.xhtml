@@ -38,8 +38,12 @@
                         <f:facet name="output">
                             <h:outputText value="#{mcase.type}" />
                         </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{mcase.type}" style="width:100%"/>
+
+                        <f:facet name="input">  
+                            <p:selectOneMenu  id="type" value="#{mcase.type}">
+                                <f:selectItem itemLabel="Inpatient" itemValue="Inpatient" />
+                                <f:selectItem itemLabel="Outpatient" itemValue="Outpatient" />
+                            </p:selectOneMenu>  
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -49,7 +53,7 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-        
+
         <h:form>
             <h3></h3>
             <p:commandButton  action="patientProfile?faces-redirect=true" value="View Patient Profile" />
@@ -76,7 +80,7 @@
                             <h:outputText value="#{anamnesis.diseaseHistory}" />
                         </f:facet>
                         <f:facet name="input">
-                            <inputText value="#{anamnesis.diseaseHistory}" style="width:100%"/>
+                            <p:inputText value="#{anamnesis.diseaseHistory}" style="width:100%"/>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -87,7 +91,7 @@
                             <h:outputText value="#{anamnesis.socialHistory}" />
                         </f:facet>
                         <f:facet name="input">
-                            <inputText value="#{anamnesis.socialHistory}" style="width:100%"/>
+                            <p:inputText value="#{anamnesis.socialHistory}" style="width:100%"/>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -98,7 +102,7 @@
                             <h:outputText value="#{anamnesis.medicalHistory}" />
                         </f:facet>
                         <f:facet name="input">
-                            <inputText value="#{anamnesis.medicalHistory}" style="width:100%"/>
+                            <p:inputText value="#{anamnesis.medicalHistory}" style="width:100%"/>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -109,7 +113,7 @@
                             <h:outputText value="#{anamnesis.familyHistory}" />
                         </f:facet>
                         <f:facet name="input">
-                            <inputText value="#{anamnesis.familyHistory}" style="width:100%"/>
+                            <p:inputText value="#{anamnesis.familyHistory}" style="width:100%"/>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -120,7 +124,7 @@
                             <h:outputText value="#{anamnesis.allergies}" />
                         </f:facet>
                         <f:facet name="input">
-                            <inputText value="#{anamnesis.allergies}" style="width:100%"/>
+                            <p:inputText value="#{anamnesis.allergies}" style="width:100%"/>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -131,7 +135,7 @@
                             <h:outputText value="#{anamnesis.symptoms}" />
                         </f:facet>
                         <f:facet name="input">
-                            <inputText value="#{anamnesis.symptoms}" style="width:100%"/>
+                            <p:inputText value="#{anamnesis.symptoms}" style="width:100%"/>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>

@@ -287,4 +287,34 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
             return null;
         }
     }
+
+    public List<Patient> getAllPatients() {
+        Query qp = em.createQuery("SELECT p FROM Patient p");
+        List<Patient> patients = qp.getResultList();
+        System.out.println(patients.size());
+        return patients;
+    }
+    
+    public List<Patient> getCurrentPatients() {
+        Query qp = em.createQuery("SELECT p FROM Patient p");
+        List<Patient> patients = qp.getResultList();
+        List<Patient> curentPatients = new ArrayList<Patient>();
+        System.out.println(patients.size());
+        for(Patient patient: patients) {
+            List<Appointment> appointments = patient.getAppointments();
+            System.out.println(appointments.size());
+            for(Appointment app: appointments) {
+                System.out.println(app.getAppDate());
+                if(app.getmCase().getDateDischarged()==null)
+                    curentPatients.add(patient);
+            }
+        }
+        System.out.println(curentPatients.size());
+        return curentPatients;
+    }
+    
+    public Patient checkPatient(String PIN) {
+        Patient patient = em.find(Patient.class, new Long(PIN));
+        return patient;
+    }
 }

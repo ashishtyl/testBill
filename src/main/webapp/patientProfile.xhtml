@@ -5,21 +5,24 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-        <h:form id="form">
+        <h:form id="form1">
             <p:growl id="growl" showDetail="true"/>
             <p:panel>
                 <h1> Retrieve Patient Information </h1>
                 <h:panelGrid columns = "2">
                     <h:outputText value="Patient Name: *" />
-                    <p:inputText value="#{visitorInfoServiceManaged.name}" required="true" label="Name"/>
+                    <p:inputText value="#{executionBeanManaged.name}" required="true" label="Name"/>
                     <h:outputText value="Patient Passport Number/NRIC: " />
-                    <p:inputText value="#{visitorInfoServiceManaged.NRIC_PIN1}" label="Patient Passport Number/NRIC"/>
+                    <p:inputText value="#{executionBeanManaged.passport_NRIC}" label="Patient Passport Number/NRIC"/>
                 </h:panelGrid>
-                <p:commandButton value="Submit" actionListener="#{visitorInfoServiceManaged.doretrievePInfo}" update= ":form:growl, :form:dataTablePatientInfo" />
+                <p:commandButton value="Submit" actionListener="#{executionBeanManaged.doretrievePInfo}" update= ":form1:growl, :form1:dataTablePatientInfo" />
 
-                <p:dataTable id="dataTablePatientInfo" var="patient1" value="#{visitorInfoServiceManaged.patient1}">
+                <p:dataTable id="dataTablePatientInfo" var="patient1" value="#{executionBeanManaged.patient1}">
                     <p:column headerText="Birthday">
                         <h:outputText value="#{patient1.birthday}" />
+                    </p:column>
+                    <p:column headerText="Age">
+                        <h:outputText value="#{executionBeanManaged.age}" />
                     </p:column>
                     <p:column headerText="Address">
                         <h:outputText value="#{patient1.address}" />
@@ -36,11 +39,41 @@
                     <p:column headerText="Blood Group">
                         <h:outputText value="#{patient1.bloodGroup}" />
                     </p:column>
-                    <p:column headerText="Height">
+                    <p:column headerText="Height (in cm)">
                         <h:outputText value="#{patient1.height}" />
                     </p:column>
-                    <p:column headerText="Weight">
+                    <p:column headerText="Weight (in kg)">
                         <h:outputText value="#{patient1.weight}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        
+        <h:form id="form2">
+            <p:panel>
+                <p:commandButton value="View Patient Vitals" actionListener="#{executionBeanManaged.doListVitals}" update=":form2:dataTableVitals"/>
+                <p:dataTable id="dataTableVitals" var="vitals" value="#{executionBeanManaged.vitals}" >
+
+                    <p:column headerText="Date of Recording" style="width:10%">
+                        <h:outputText value="#{vitals.t_stamp}" />
+                    </p:column>
+                    <p:column headerText="Blood Pressure" style="width:10%">
+                        <h:outputText value="#{vitals.bloodPressure}" />
+                    </p:column>
+                    <p:column headerText="Body Temperature" style="width:10%">
+                        <h:outputText value="#{vitals.temperature}" />
+                    </p:column>
+                    <p:column headerText="Heart Rate" style="width:10%">
+                        <h:outputText value="#{vitals.heartRate}" />
+                    </p:column>
+                    <p:column headerText="Oxygen Saturation" style="width:10%">
+                        <h:outputText value="#{vitals.spO2}" />
+                    </p:column>
+                    <p:column headerText="Glucose Levels" style="width:10%">
+                        <h:outputText value="#{vitals.glucoseLevel}" />
+                    </p:column>
+                    <p:column headerText="Respiratory Rate" style="width:10%">
+                        <h:outputText value="#{vitals.respiratoryRate}" />
                     </p:column>
                 </p:dataTable>
             </p:panel>
@@ -49,6 +82,12 @@
         <h:form>
             <h3></h3>
             <p:commandButton  action="updatePatient?faces-redirect=true" value="Update Patient Profile" />
+            <h3></h3>
+        </h:form>
+        
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="recordVitals?faces-redirect=true" value="Record Patient Vitals" />
             <h3></h3>
         </h:form>
         

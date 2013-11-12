@@ -7,6 +7,7 @@ package com.is3102.service;
 import com.is3102.EntityClass.DrugCatalog;
 import com.is3102.EntityClass.LabRadProcedure;
 import com.is3102.EntityClass.Medication;
+import com.is3102.EntityClass.POEOrder;
 import com.is3102.EntityClass.ServiceCatalog;
 import com.is3102.Exception.DeviceException;
 import com.is3102.Exception.DrugException;
@@ -31,4 +32,5 @@ public interface OrderEntryRemote {
     public String orderLabRadProcedure(String CIN, String name, int quantity, String details, String appDate) throws ExistException, ProcedureException, ParseException, DeviceException;
     public List<Medication> listMedication(String CIN);
     public List<LabRadProcedure> listLabRadProcedures(String CIN);
+    public List<POEOrder> listPatientOrders(String patientId);
 }

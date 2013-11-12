@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 <ui:define name="content">
-    <h:form id="form" onLoad="reset()">
+    <h:form id="form" >
         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
         <p:dataTable id="dataTable" var="employee" value="#{employeeController.lazyModel}"
                      styleClass="employeeDataTableStyle"
@@ -95,7 +95,7 @@
     <p:dialog header="Employee Detail" widgetVar="employeeDialog" resizable="false" id="employeeDlg">
         <h:form id="employeeDetailForm">
             <p:messages id="msgs"/>
-            <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+            <p:panelGrid id="display" columns="2" style="margin:0 auto;">
                 <h:outputText value="First name :"></h:outputText>
                 <p:inputText value="#{employeeController.selectedEmployee.firstname}" required="true"
                              requiredMessage="Please Enter First Name!">
@@ -148,7 +148,7 @@
 
     <p:dialog header="Create New Employee" widgetVar="newEmployeeDialog" resizable="false" id="newEmployeeDlg">
         <h:form id="newEmployeeForm">
-            <p:panelGrid id="displayNewEmployee" columns="2" cellpadding="4" style="margin:0 auto;">
+            <p:panelGrid id="displayNewEmployee" columns="2" style="margin:0 auto;">
                 <h:outputText value="First name :"></h:outputText>
                 <p:inputText value="#{employeeController.newEmployee.firstname}" required="true"
                              requiredMessage="Please Enter First Name!"/>
