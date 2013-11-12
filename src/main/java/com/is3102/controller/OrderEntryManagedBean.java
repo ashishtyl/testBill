@@ -170,8 +170,8 @@ public class OrderEntryManagedBean implements Serializable {
     public void doDisplayServiceCatalog(ActionEvent actionEvent) {
         setServiceCatalog(oem.displayServiceCatalog());
     }
-        
-        public void doDisplayServiceCatalog2(ActionEvent actionEvent) {
+
+    public void doDisplayServiceCatalog2(ActionEvent actionEvent) {
         setServiceCatalog(oem.displayServiceCatalog2());
         /*for (DrugCatalog dc : drugsCatalog) {
          drugTypes[count++] = dc.getType();
@@ -200,8 +200,8 @@ public class OrderEntryManagedBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
         }
     }
-        
-                public void doOrderLabRadProcedure2(ActionEvent actionEvent) {
+
+    public void doOrderLabRadProcedure2(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -214,17 +214,15 @@ public class OrderEntryManagedBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
         }
     }
-        
-        
-    
+
     /*private SelectItem[] createFilterOptions(String[] drugTypes) {
      SelectItem[] options = new SelectItem[drugTypes.length + 1];
 
-    public List<ServiceCatalog> getServiceCatalog() {
-        return serviceCatalog;
-    }
+     public List<ServiceCatalog> getServiceCatalog() {
+     return serviceCatalog;
+     }
 
-    /**
+     /**
      * @param serviceCatalog the serviceCatalog to set
      */
     public void setServiceCatalog(List<ServiceCatalog> serviceCatalog) {
