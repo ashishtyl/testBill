@@ -9,9 +9,11 @@ import com.is3102.EntityClass.LabRadProcedure;
 import com.is3102.EntityClass.Medical_Procedure;
 import com.is3102.EntityClass.Medication;
 import com.is3102.EntityClass.Nursing_Procedure;
+import com.is3102.EntityClass.Patient;
 import com.is3102.EntityClass.Transactions;
 import com.is3102.EntityClass.mCase;
 import com.is3102.Exception.ExistException;
+import com.is3102.util.HandleDates;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -139,12 +141,17 @@ public class AdministrativeDischargeandBillingBean implements AdministrativeDisc
     private double calculateDiscount(mCase mcase) {
         double disc = 0;
         String bedNo = mcase.getBed().getRoomNo();
+        
+        Patient patient = mcase.getPatient();
+        String birthday = HandleDates.convertDateToString(patient.getBirthday());
+        int age = HandleDates.getAge(birthday);
+        System.out.println("Age: " + age);
 
         if ((bedNo.compareTo("1") == 0) || (bedNo.compareTo("2") == 0)) {
             System.out.println("Ward discount offerred");
             disc += 0.20;
         }
-        if (mcase.getPatient().getPatientAge() < 18 || mcase.getPatient().getPatientAge() > 65) {
+        if (age < 18 || age > 65) {
             System.out.println("Age discount offered");
             disc += 0.15;
         }

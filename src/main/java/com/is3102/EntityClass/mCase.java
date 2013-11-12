@@ -51,9 +51,7 @@ public class mCase implements Serializable {
     @OneToOne(mappedBy = "mcase")
     private OutpatientAppointment appointment2;
     @OneToOne(cascade = {CascadeType.ALL})
-    private DischargeSummary dischargeSummary;
-
-   
+    private DischargeSummary dischargeSummary;   
     @OneToOne(cascade = {CascadeType.ALL})
     private Medical_Anamnesis medicalAnamnesis;
     @OneToOne(cascade = {CascadeType.ALL})

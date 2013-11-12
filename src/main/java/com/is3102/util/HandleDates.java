@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 
 /**
  *
@@ -20,6 +22,17 @@ public class HandleDates {
     /**
      * @param args the command line arguments
      */
+    
+    public static int getAge(String str) {
+        int year = Integer.parseInt(str.substring(0, 4));
+        int month = Integer.parseInt(str.substring((str.indexOf("-")+1), (str.lastIndexOf("-"))));
+        int day = Integer.parseInt(str.substring(str.lastIndexOf("-") + 1));
+        System.out.println(year + " " + month + " " + day);
+        LocalDate birthdate = new LocalDate(year, month, day);
+        LocalDate now = new LocalDate();
+        Years age = Years.yearsBetween(birthdate, now);
+        return age.getYears();
+    }
     
     public static String convertDateToString(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -44,9 +57,7 @@ public class HandleDates {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateValue = sdf.parse(s);
         return dateValue;
-    }
-     
-     
+    } 
     
     public static String GetFirstDayOfMonth () {  
   

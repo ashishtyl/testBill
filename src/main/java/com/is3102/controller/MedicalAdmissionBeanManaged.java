@@ -32,6 +32,7 @@ public class MedicalAdmissionBeanManaged {
     private String familyHistory;
     private String allergies;
     private String symptoms;
+    private String isPregnant;
     private Medical_Anamnesis mAnamnesis;
     //list testing
     private List<Medical_Anamnesis> list;
@@ -48,13 +49,15 @@ public class MedicalAdmissionBeanManaged {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             //System.out.println(anamnesisId);
-            mab.addAnamnesis(caseId, diseaseHistory, socialHistory, medicalHistory, familyHistory, allergies, symptoms);
+            mab.addAnamnesis(caseId, diseaseHistory, socialHistory, medicalHistory, familyHistory, allergies, symptoms, isPregnant);
             context.addMessage(null, new FacesMessage("Anamnesis added successfully"));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Anamnesis cannot be added!", null));
         }
     }
+    
+
 
     public void DoGetAnamnesis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -180,6 +183,20 @@ public class MedicalAdmissionBeanManaged {
 
     public void setCaseList(List<mCase> list1) {
         this.caseList = list1;
+    }
+
+    /**
+     * @return the isPregnant
+     */
+    public String getIsPregnant() {
+        return isPregnant;
+    }
+
+    /**
+     * @param isPregnant the isPregnant to set
+     */
+    public void setIsPregnant(String isPregnant) {
+        this.isPregnant = isPregnant;
     }
     
 }

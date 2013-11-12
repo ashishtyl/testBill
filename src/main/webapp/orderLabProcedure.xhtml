@@ -8,7 +8,7 @@
         <h:form id="form1">
             <p:panel>
                 <p:commandButton value="Display Service Catalog"
-                                 actionListener="#{orderEntryManagedBean.doDisplayServiceCatalog}"
+                                 actionListener="#{orderEntryManagedBean.doDisplayServiceCatalog2}"
                                  update=":form1:dataTableserviceCatalog"/>
                 <p:dataTable id="dataTableserviceCatalog" var="serviceCatalog" value="#{orderEntryManagedBean.serviceCatalog}">
                     <p:column headerText="Procedure Name">
@@ -26,7 +26,7 @@
         <h:form id="form2">
             <p:growl id="growl" showDetail="true"/>
             <p:panel>
-                <h1> Order Laboratory and Radiology Procedure </h1>
+                <h1> Order Laboratory Procedure </h1>
                 <h:panelGrid columns = "2">
                     <h:outputText value="Case Identification Number: " />
                     <p:inputText value="#{orderEntryManagedBean.lrpCIN}" required="true"/>
@@ -36,10 +36,9 @@
                     <p:inputText value="#{orderEntryManagedBean.lrpQuantity}" required="true"/>
                     <h:outputText value="Procedure Details: " />
                     <p:inputTextarea rows="6" cols="33" value="#{orderEntryManagedBean.lrpDetails}" required="true"/>
-                    <h:outputText value="Procedure Date (YYYY-mm-dd): *" />
-                    <p:calendar value="#{orderEntryManagedBean.appDate}" required="true" pattern="yyyy-MM-dd HH:mm" label="Procedure Date"/>
+                    
                 </h:panelGrid>
-                <p:commandButton value="Submit" actionListener="#{orderEntryManagedBean.doOrderLabRadProcedure}" update=":form2:growl"/>
+                <p:commandButton value="Submit" actionListener="#{orderEntryManagedBean.doOrderLabRadProcedure2}" update=":form2:growl"/>
             </p:panel>
         </h:form>
          <h:form>
