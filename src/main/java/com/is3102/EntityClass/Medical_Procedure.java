@@ -42,6 +42,8 @@ public class Medical_Procedure implements Serializable {
     
     private String category;
 
+    
+
     public Medical_Procedure() {
     }
 
@@ -112,4 +114,13 @@ public class Medical_Procedure implements Serializable {
     public void setPatientConsent(String patientConsent) {
         this.patientConsent = patientConsent;
     }
+    
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
 }

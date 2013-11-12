@@ -29,7 +29,8 @@ public class Diagnosis implements Serializable {
     private ICD10_Code code;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
-
+    private String category;
+    
     public Diagnosis() {
     }
 
@@ -78,4 +79,19 @@ public class Diagnosis implements Serializable {
     public void setCode(ICD10_Code code) {
         this.code = code;
     }
+
+    public Long getDiagnosisId() {
+        return diagnosisId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
+    
+    
 }
