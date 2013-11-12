@@ -182,6 +182,7 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
     }
     
     public boolean checkDrugAllergy(String CIN, String name) {
+        System.out.println(CIN);
         mCase mcase = em.find(mCase.class, new Long(CIN));
         String allergies = mcase.getMedicalAnamnesis().getAllergies();
         System.out.println(allergies);
@@ -346,16 +347,19 @@ public class OrderEntrySessionBean implements OrderEntryRemote {
         System.out.println("Birthday: " + birthday);
         int age = HandleDates.getAge(birthday);
         System.out.println("Age: " + age);
-        Appointment appointment;
+        //Appointment appointment;
+        mCase mcase;
         if (patient != null) {
-            List<Appointment> appointments = patient.getAppointments();
-            System.out.println(appointments.size());
-            if (!appointments.isEmpty()) {
-                appointment = appointments.get(appointments.size() - 1);
+            List<mCase> mcases = patient.getmCases();
+            //List<Appointment> appointments = patient.getAppointments();
+            System.out.println(mcases.size());
+            //System.out.println(appointments.size());
+            if (!mcases.isEmpty()) {
+                mcase = mcases.get(mcases.size() - 1);
             } else {
                 return null;
             }
-            List<POEOrder> orders = appointment.getmCase().getOrders();
+            List<POEOrder> orders = mcase.getOrders();
             System.out.println(orders.size());
             return orders;
         } else {

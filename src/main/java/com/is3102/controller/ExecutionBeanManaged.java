@@ -167,7 +167,7 @@ public class ExecutionBeanManaged implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             vitals = em.listVitals(patientId);
-            if (vitals == null) {
+            if (vitals.isEmpty()) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Vitals Not Found!", null));
             }
         } catch (Exception ex) {
