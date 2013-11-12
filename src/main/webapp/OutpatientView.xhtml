@@ -1,0 +1,150 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <ui:define name="content">
+        
+         <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+             
+                    <h1> Enter Your NRIC/PASSWORD Number to View Your Case Records </h1>
+                    <h:outputText value="NRIC/PASSWORD: " />
+                    <p:inputText value="#{outpatientViewController.passwordId}" required="true" label="NRIC/PASSWORD"/>
+                      <p:commandButton value="Submit" actionListener="#{outpatientViewController.DoListmCase}" update=":form1:growl"/>
+             <p:dataTable id="dataTableCase" var="mCase" value="#{outpatientViewController.caseList}">
+                    <p:column headerText="CaseId">
+                        <h:outputText value="#{mCase.CIN}"/>
+                    </p:column>
+                    <p:column headerText="Admitted Date">
+                        <h:outputText value="#{mCase.dateAdmitted}"/>
+                    </p:column>
+                    <p:column headerText="Discharge Date">
+                        <h:outputText value="#{mCase.dateDischarged}"/>
+                    </p:column>
+                </p:dataTable>
+                   
+                   </p:panel>
+        </h:form>
+        
+         <h:form id="form2">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGroup>
+                    <h1> View Medical Procedure </h1>
+                    <h2> Enter a Case Number from Above List</h2>
+                    <h:outputText value="Case #(CIN): " />
+                    <p:inputText value="#{outpatientViewController.CIN}" required="true" label="Case"/>
+         </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{outpatientViewController.DoListMedical_Procedure}" update=":form2:growl"/>
+            </p:panel>
+             <p:dataTable id="dataTableMedical_Procedure" var="mp" value="#{outpatientViewController.mpList}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{mp.mpId}"/>
+                    </p:column>
+                    <p:column headerText="Date">
+                        <h:outputText value="#{mp.date}"/>
+                    </p:column>
+                    <p:column headerText="Comments">
+                        <h:outputText value="#{mp.comments}"/>
+                    </p:column>
+                </p:dataTable>
+        </h:form>
+        
+        
+         <h:form id="form3">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGroup>
+                    <h1> View Medication</h1>
+                    <h2> Enter a Case Number from Above List</h2>
+                    <h:outputText value="Case #(CIN): " />
+                    <p:inputText value="#{outpatientViewController.CIN}" required="true" label="Case"/>
+         </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{outpatientViewController.DoListMedication}" update=":form3:growl"/>
+            </p:panel>
+             <p:dataTable id="dataTableMedication" var="m" value="#{outpatientViewController.mList}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{m.medId}"/>
+                    </p:column>
+                    <p:column headerText="Medication Name">
+                        <h:outputText value="#{m.name}"/>
+                    </p:column>
+                    <p:column headerText="Dosage">
+                        <h:outputText value="#{m.dosage}"/>
+                    </p:column>
+                 <p:column headerText="Details">
+                        <h:outputText value="#{m.details}"/>
+                    </p:column>
+                 <p:column headerText="Total Price">
+                        <h:outputText value="#{m.totalPrice}"/>
+                    </p:column>
+                 <p:column headerText="Quantity">
+                        <h:outputText value="#{m.quantity}"/>
+                    </p:column>
+                </p:dataTable>
+        </h:form>
+        
+         <h:form id="form4">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGroup>
+                    <h1> View Diagnosis</h1>
+                    <h2> Enter a Case Number from Above List</h2>
+                    <h:outputText value="Case #(CIN): " />
+                    <p:inputText value="#{outpatientViewController.CIN}" required="true" label="Case"/>
+         </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{outpatientViewController.DoListDiagnosis}" update=":form4:growl"/>
+            </p:panel>
+             <p:dataTable id="dataTableDiagnosis" var="d" value="#{outpatientViewController.dList}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{d.diagnosisId}"/>
+                    </p:column>
+                    <p:column headerText="Description">
+                        <h:outputText value="#{d.description}"/>
+                    </p:column>
+                    <p:column headerText="Date">
+                        <h:outputText value="#{d.date}"/>
+                    </p:column>
+    
+                </p:dataTable>
+        </h:form>
+        
+                <h:form id="form5">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGroup>
+                    <h1> View Lab/Rad Procedure</h1>
+                    <h2> Enter a Case Number from Above List</h2>
+                    <h:outputText value="Case #(CIN): " />
+                    <p:inputText value="#{outpatientViewController.CIN}" required="true" label="Case"/>
+         </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{outpatientViewController.DoListLabRadProcedure}" update=":form5:growl"/>
+            </p:panel>
+             <p:dataTable id="dataTableLabRadProcedure" var="lrp" value="#{outpatientViewController.lrpList}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{lrp.procId}"/>
+                    </p:column>
+                    <p:column headerText="Test Name">
+                        <h:outputText value="#{lrp.name}"/>
+                    </p:column>
+                 <p:column headerText="Test Details">
+                        <h:outputText value="#{lrp.details}"/>
+                    </p:column>
+                 <p:column headerText="Total Price">
+                        <h:outputText value="#{lrp.totalPrice}"/>
+                    </p:column>
+                 <p:column headerText="Quantity">
+                        <h:outputText value="#{lrp.quantity}"/>
+                    </p:column>
+                </p:dataTable>
+        </h:form>
+         <h:form>
+            <h2></h2>
+            <p:commandButton  action="Schedule2?faces-redirect=true" value="Rerutn to Appointment Page" />
+        </h:form>     
+  </ui:define>
+</ui:composition>

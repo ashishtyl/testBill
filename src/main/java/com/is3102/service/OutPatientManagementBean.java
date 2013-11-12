@@ -16,20 +16,24 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import com.is3102.EntityClass.OutpatientAppointment;
+import java.util.Calendar;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import java.util.Date;
 import javax.ejb.Stateful;
+import javax.faces.application.FacesMessage;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 
 /**
  *
  * @author Ben
  */
-@Stateful
+@Stateless
 public class OutPatientManagementBean implements OutPatientManagementRemote{
     @PersistenceContext
     EntityManager em;
@@ -45,22 +49,51 @@ public class OutPatientManagementBean implements OutPatientManagementRemote{
        
     }
 
-    @Override
+   /* @Override
     public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
         Date bDate = HandleDates.getDateFromString(birthday);
-        System.out.println(bloodgroup);
-        patient = em.find(Patient.class, NRIC_PIN);
-        if (patient != null) // Patient Exists
-        {
-            throw new ExistException("PATIENT ALREADY EXISTS");
+      try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :NRIC_PIN");
+            q.setParameter("NRIC_PIN", NRIC_PIN);
+            patient = (Patient) q.getSingleResult();
+            if (patient != null) // Patient Exists
+            {
+                throw new ExistException("PATIENT ALREADY EXISTS, You may already booked an appointment");
+                //return "existed";
+            }
+        } catch (NoResultException ex) {
+            System.out.println("PATIENT DOES NOT EXIST");
+            patient = new Patient();
+            patient.create(NRIC_PIN, name, bDate, address, cNumber, nationality, height, weight, gender, bloodgroup);
+            em.persist(patient);
+            return patient.getPassport_NRIC();
         }
-        patient = new Patient();
-        patient.create(NRIC_PIN, name, bDate, address, cNumber, nationality, height, weight, gender, bloodgroup);
-        em.persist(patient);
-        rememberPIN=NRIC_PIN;
-        return patient.getPassport_NRIC();
-    }
+        return null;
+    }*/
 
+     @Override
+    public String addPatient(String NRIC_PIN, String name, String birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodgroup) throws ExistException, ParseException, Exception {
+            Date bDate = HandleDates.getDateFromString(birthday);
+     try {
+            Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :NRIC_PIN");
+            q.setParameter("NRIC_PIN", NRIC_PIN);
+            patient = (Patient) q.getSingleResult();
+            if (patient != null){ // Patient Exists
+               //throw new ExistException("PATIENT ALREADY EXISTS, You may already booked an appointment");
+               return "existed";
+            }
+     }catch (NoResultException ex) {
+           
+               System.out.println("PATIENT DOES NOT EXIST");
+               patient = new Patient();
+               patient.create(NRIC_PIN, name, bDate, address, cNumber, nationality, height, weight, gender, bloodgroup);
+               em.persist(patient);
+               return patient.getPassport_NRIC();
+        }
+       return null;
+    }
+    
+    
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     
     public String makeOutpatientAppointment(String NRIC_PIN, Date startDate, Date endDate) throws ExistException, ParseException {
@@ -73,10 +106,23 @@ public class OutPatientManagementBean implements OutPatientManagementRemote{
            // em.clear();
            // throw new ExistException("DOCTOR DOES NOT EXIST");
        // } else {
-            patient = em.find(Patient.class, NRIC_PIN);
-            if (patient == null) {
+           // patient = em.find(Patient.class, NRIC_PIN);
+              Calendar calA = Calendar.getInstance();
+              System.out.println("****\n");
+              Calendar calB = Calendar.getInstance();
+              calA.setTime(startDate);// all done
+              calB.setTime(endDate);// all done
+              calA.add(Calendar.HOUR, 1);
+              int compareResult = calB.compareTo(calA);
+              System.out.println(compareResult);
+            
+        Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :NRIC_PIN");
+                q.setParameter("NRIC_PIN", NRIC_PIN);
+                patient = (Patient) q.getSingleResult();
+            if ( startDate == null || endDate == null ||compareResult!=0) {
                 em.clear();
-                throw new ExistException("PATIENT DOES NOT EXIST");
+                throw new ExistException("Date does not been identified or appointment duration is not an hour");
+                
             } else {
                 appointment = new OutpatientAppointment();
                 mCase mcase = new mCase();
@@ -123,7 +169,10 @@ public class OutPatientManagementBean implements OutPatientManagementRemote{
     }
 
     public List<OutpatientAppointment> getOutPatientAppointments(String NRIC_PIN) {
-        Patient patient = em.find(Patient.class, NRIC_PIN);
+      
+        Query q = em.createQuery("SELECT p FROM Patient p WHERE p.passport_NRIC = :NRIC_PIN");
+        q.setParameter("NRIC_PIN", NRIC_PIN);
+        patient = (Patient) q.getSingleResult();
         List appointmentList = (List) patient.getAppointment2();
         appointmentList.size();
         return appointmentList;
