@@ -1,0 +1,152 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        
+      <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                
+                    <h1> Enter Your NRIC/PASSWORD Number to View Your Case Records </h1>
+                    <h:outputText value="NRIC/PASSWORD: " />
+                    <p:inputText value="#{reportManaged.passwordId}" required="true" label="NRIC/PASSWORD"/>
+                      <p:commandButton value="Submit" actionListener="#{reportManaged.DoListmCase}" update=":form1:growl :form1:dataTableCase"/>
+                       <p:separator id="separator"/>
+
+             <p:dataTable id="dataTableCase" var="mC" value="#{reportManaged.caseList}">
+                    <p:column headerText="CaseId">
+                        <h:outputText value="#{mC.CIN}"/>
+                    </p:column>
+                    <p:column headerText="(Going to be)Admitted Date">
+                        <h:outputText value="#{mC.dateAdmitted}"/>
+                    </p:column>
+                    <p:column headerText="Case Type">
+                        <h:outputText value="#{mC.type}"/>
+                    </p:column>
+                </p:dataTable>
+                   
+                   </p:panel>
+        </h:form>   
+        
+         <h:form id="form5">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGroup>
+                    <h1> View Lab/Rad Procedure</h1>
+                    <h2> Enter a Case Number from Above List</h2>
+                    <h:outputText value="Case #(CIN): " />
+                    <p:inputText value="#{reportManaged.CIN}" required="true" label="Case"/>
+         </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{reportManaged.DoListLabRadProcedure}" update=":form5:growl :form5:dataTableLabRadProcedure"/>
+            </p:panel>
+             <p:dataTable id="dataTableLabRadProcedure" var="lrp" value="#{reportManaged.lrpList}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{lrp.procId}"/>
+                    </p:column>
+                    <p:column headerText="Test Name">
+                        <h:outputText value="#{lrp.name}"/>
+                    </p:column>
+                 <p:column headerText="Test Details">
+                        <h:outputText value="#{lrp.details}"/>
+                    </p:column>
+                 <p:column headerText="Total Price">
+                        <h:outputText value="#{lrp.totalPrice}"/>
+                    </p:column>
+                 <p:column headerText="Quantity">
+                        <h:outputText value="#{lrp.quantity}"/>
+                    </p:column>
+                </p:dataTable>
+        </h:form>
+        
+        
+           <h:form id="form6">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel>
+                <h:panelGroup>
+                    <h1> Add Report </h1>
+                    <h:panelGrid columns="2" >
+                    <h:outputText value="Procedure Id(from above list): " />
+                    <p:inputText value="#{reportManaged.lrpId}" required="true" label="Procedure Id"/>
+                    <h:outputText value="Report Name: " />
+                    <p:inputText value="#{reportManaged.name}" required="true" label="name"/>
+                    <h:outputText value="Report Contents: " />
+                    <p:inputText value="#{reportManaged.reportContents}"  required="true" label="Report Contents"/>
+                    <h:outputText value="Requesting Physician: " />
+                    <p:inputText value="#{reportManaged.requestingPhysician}" required="true" label="requestingPhysician"/>
+                    <h:outputText value="Report Date: " />
+                    <p:calendar value="#{reportManaged.reportDate }" pattern="yyyy-MM-dd"/>
+                    </h:panelGrid>
+                </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{reportManaged.DoAddReport}" update=":form6:growl"/>
+            </p:panel>
+        </h:form>
+
+           <h:form id="form7">
+           <p:growl id="growl" showDetail="true" sticky="true" />
+         <p:panel>
+                <h:panelGroup>
+                    <h1> Check Report for a Case</h1>
+                    <h2> Enter a Case Number from Above List</h2>
+                    <h:outputText value="Case #(CIN): " />
+                    <p:inputText value="#{reportManaged.CIN}" required="true" label="Case"/>
+         </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{reportManaged.DoCheckReport}" update=":form5:growl :form7:dataTableCheckReport"/>
+            </p:panel>
+             <p:dataTable id="dataTableCheckReport" var="r" value="#{reportManaged.reportList}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{r.reportId}"/>
+                    </p:column>
+                    <p:column headerText="Report Name">
+                        <h:outputText value="#{r.name}"/>
+                    </p:column>
+                 <p:column headerText="Report Contents">
+                        <h:outputText value="#{r.reportContents}"/>
+                    </p:column>
+                 <p:column headerText="Requesting Physician">
+                        <h:outputText value="#{r.requestingPhysician}"/>
+                    </p:column>
+                 <p:column headerText="Report Date">
+                        <h:outputText value="#{r.reportDate}"/>
+                    </p:column>
+                </p:dataTable>
+        </h:form>
+        
+          <h:form>
+            <h2></h2>
+            <p:commandButton  action="image?faces-redirect=true" value="View Image" />
+         </h:form> 
+        
+         <h:form id="form8">
+           <p:growl id="growl" showDetail="true" sticky="true" />
+         <p:panel>
+                <h:panelGroup>
+                    <h1> Check All Reports in the Database</h1>
+         </h:panelGroup>
+                <p:commandButton value="Submit" actionListener="#{reportManaged.DoListReport}" update=":form8:growl :form8:dataTableReport"/>
+            </p:panel>
+             <p:dataTable id="dataTableReport" var="re" value="#{reportManaged.reportList2}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{re.reportId}"/>
+                    </p:column>
+                    <p:column headerText="Report Name">
+                        <h:outputText value="#{re.name}"/>
+                    </p:column>
+                 <p:column headerText="Report Contents">
+                        <h:outputText value="#{re.reportContents}"/>
+                    </p:column>
+                 <p:column headerText="Requesting Physician">
+                        <h:outputText value="#{re.requestingPhysician}"/>
+                    </p:column>
+                 <p:column headerText="Report Date">
+                        <h:outputText value="#{re.reportDate}"/>
+                    </p:column>
+                </p:dataTable>
+        </h:form>
+        
+      
+        
+           </ui:define>
+</ui:composition>

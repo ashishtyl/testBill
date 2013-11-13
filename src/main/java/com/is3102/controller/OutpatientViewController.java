@@ -37,34 +37,33 @@ public class OutpatientViewController implements Serializable {
     List<Medication> mList;
     List<LabRadProcedure> lrpList;
 
-    public void DoListmCase() {
+    public void DoListmCase (ActionEvent event){
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             System.out.println("In DoListmCase");
             caseList = opv.ListmCase(passwordId);
-            //System.out.println("temp size:" + temp.size());
-           // this.setCaseList(temp);
             System.out.println("Set case list");
             if (caseList.isEmpty() == true) {
                 System.out.println("Error occured");
             }
-            //return caseList;
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No records found, Please check your NRIC/PASSWORD Id!", null));
         }
-        //return caseList;    
     }
 
     public List<Medical_Procedure> DoListMedical_Procedure(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            System.out.println("HelloHhhhhhhhhhhhhhhhhhhhhhhh");
-            mpList = opv.ListMedical_Procedure(CIN);
-            System.out.println("HelloHello");
+            System.out.println("Hello");
+            mpList = opv.ListMedical_Procedure(CIN, passwordId);
+            if(mpList.isEmpty()==true){
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No Records Yet!", null));
+                System.out.println("Medical Procedure List is Null");
+            }
         } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Case Not Match!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot List, Please Check CIN!", null));
         }
         return mpList;
     }
@@ -72,13 +71,14 @@ public class OutpatientViewController implements Serializable {
     public List<Medication> DoListMedication(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-
             System.out.println("Hello");
-            mList = opv.ListMedication(CIN);
+            mList = opv.ListMedication(CIN, passwordId);
+            if(mList == null)
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No Records Yet!", null));
             System.out.println("HelloHello");
         } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Case Not Match!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot List, Please Check CIN!", null));
         }
         return mList;
     }
@@ -86,13 +86,14 @@ public class OutpatientViewController implements Serializable {
     public List<Diagnosis> DoListDiagnosis(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-
             System.out.println("Hello");
-            dList = opv.ListDiagnosis(CIN);
+            dList = opv.ListDiagnosis(CIN, passwordId);
+            if(dList == null)
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No Records Yet!", null));
             System.out.println("HelloHello");
         } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Case Not Match!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot List, Please Check CIN!", null));
         }
         return dList;
     }
@@ -101,11 +102,13 @@ public class OutpatientViewController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             System.out.println("Hello");
-            lrpList = opv.ListLabRadProcedure(CIN);
+            lrpList = opv.ListLabRadProcedure(CIN, passwordId);
+            if(lrpList == null)
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No Records Yet!", null));
             System.out.println("HelloHello");
         } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Case Not Match!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot List, Please Check CIN!", null));
         }
         return lrpList;
     }
@@ -173,4 +176,5 @@ public class OutpatientViewController implements Serializable {
     public void setLrpList(List<LabRadProcedure> lrpList) {
         this.lrpList = lrpList;
     }
+    
 }
