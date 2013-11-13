@@ -127,7 +127,7 @@ public class ExecutionBeanManaged implements Serializable {
         Long pId = Long.valueOf(procedure_id);
         Long dId = Long.valueOf(employee_id);
         try {
-            ex.AddExecutionRecordNursing(pId, dId, exeuction_comment);
+            em.AddExecutionRecordNursing(pId, dId, exeuction_comment);
            
             context.addMessage(null, new FacesMessage("Execution record added!"));
         } catch (Exception ex) {
