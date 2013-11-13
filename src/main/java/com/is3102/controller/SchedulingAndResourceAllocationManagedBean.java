@@ -120,7 +120,7 @@ public class SchedulingAndResourceAllocationManagedBean implements Serializable 
 
     }
 
-   public void doAssignShiftEmployee() {
+    public void doAssignShiftEmployee() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             try {
