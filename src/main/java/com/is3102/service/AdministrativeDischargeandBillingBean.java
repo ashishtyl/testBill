@@ -36,7 +36,7 @@ public class AdministrativeDischargeandBillingBean implements AdministrativeDisc
     EntityManager em;
     mCase mcase;
 
-    public void CalculateBill(Long CIN) throws ExistException {
+    public List<Transactions> CalculateBill(Long CIN) throws ExistException {
         mcase = em.find(mCase.class, CIN);
         if(mcase==null){
             throw new ExistException("Case not found!");
@@ -54,15 +54,20 @@ public class AdministrativeDischargeandBillingBean implements AdministrativeDisc
         Bill bill = new Bill();
         System.out.println("Creating bill");
         bill.create(mcase);
+         mcase.setBill(bill);
         System.out.println("Set transactions");
         bill.setTransctions(transactions);
         System.out.println("calculate total");
         bill.claculateTotal();
         bill.setDiscount(calculateDiscount(mcase));
-        bill.setNetTotal();
+        bill.setNetTotal();    
         System.out.println("persist bill");
         em.persist(bill);
+        
+        return (bill.getTransctions());
     }
+    
+   
 
     public void setDischargeDate(Long cin) throws ExistException, ParseException {
         Date dateDis = new Date();

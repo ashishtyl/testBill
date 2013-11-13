@@ -69,7 +69,7 @@ public class NursingDecisionMakingandPlaningManaged implements Serializable {
             Long cin = Long.valueOf(getCIN());
             List<Nursing_Procedure> result = ndmp.RetrieveNursingPlaning(cin);
             System.out.println("list returned");
-            this.setMedicalProcedures(result);
+            this.setNursingProcedures(result);
             System.out.println("Resutls set");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -118,11 +118,11 @@ public class NursingDecisionMakingandPlaningManaged implements Serializable {
         this.patient_comment = patient_comment;
     }
 
-    public List<Nursing_Procedure> getMedicalProcedures() {
+    public List<Nursing_Procedure> getNursingProcedures() {
         return nursingProcedures;
     }
 
-    public void setMedicalProcedures(List<Nursing_Procedure> nursingProcedures) {
+    public void setNursingProcedures(List<Nursing_Procedure> nursingProcedures) {
         this.nursingProcedures = nursingProcedures;
     }
 

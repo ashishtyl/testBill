@@ -47,7 +47,9 @@
                     <p:inputText value="#{executionBeanManaged.exeuction_comment}" label="Execution Comment"/>
                     
                 </h:panelGrid>    
-                <p:commandButton value="Submit" actionListener="#{decisionMakingandPlaningManaged.doAddPlannedProcedure}" update=":form2:growl" />
+                <p:commandButton value="Submit" actionListener="#{executionBeanManaged.doAddExecutionLog}" update=":form2:growl" />
             </panel>
         </h:form>
+</ui:define>
+    
 </ui:composition>
