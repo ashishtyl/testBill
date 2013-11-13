@@ -74,32 +74,6 @@ public class SchedulingAndResourceAllocationManagedBean implements Serializable 
         // this.doViewShift();
     }
 
-    public void DoAddDoctor(ActionEvent actionEvent) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        try {
-            try {
-                getSra().addDoctor(doctorName, doctorUsername, doctorDOB);
-                context.addMessage(null, new FacesMessage("Doctor created successfully with user name: " + doctorUsername));
-            } catch (ParseException ex) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Doctor could not be created!", null));
-            }
-
-        } catch (ExistException ex) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Doctor could not be created!", null));
-        }
-
-    }
-
-    public void DoGetDoctorName() {
-        try {
-            this.setDoctorName(getSra().getDoctorName(getDoctorID()));
-        } catch (ExistException ex) {
-            Logger.getLogger(SchedulingAndResourceAllocationManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public void doGetAvailableEmployees(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
@@ -124,16 +98,6 @@ public class SchedulingAndResourceAllocationManagedBean implements Serializable 
         }
     }
 
-    public void doGetDoctorName() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        try {
-            doctorName = getSra().getDoctorName(doctorID);
-            //   context.addMessage(null, new FacesMessage("Shift assigned successfully to doctor ID: " + doctorID ));
-        } catch (ExistException ex) {
-            Logger.getLogger(SchedulingAndResourceAllocationManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public void doGetDoctorID() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
@@ -142,18 +106,6 @@ public class SchedulingAndResourceAllocationManagedBean implements Serializable 
         } catch (ExistException ex) {
             Logger.getLogger(SchedulingAndResourceAllocationManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void doGetShiftsByDoctor() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        try {
-            this.setShiftsByDoctor(getSra().getShifts(this.doctorID));
-            context.addMessage(null, new FacesMessage("ID of " + doctorName + " is: " + doctorID));
-        } catch (ExistException ex) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Shifts could not be fetched", null));
-        }
-
     }
 
     public void doGetShiftsByEmployee() {
@@ -168,24 +120,7 @@ public class SchedulingAndResourceAllocationManagedBean implements Serializable 
 
     }
 
-    public void doAssignShift() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        try {
-            try {
-                getSra().assignShift(doctorID, shiftDate, shiftCode);
-                context.addMessage(null, new FacesMessage("Shift assigned successfully to doctor ID: " + doctorID));
-            } catch (ParseException ex) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Shift could not be assigned!", null));
-            }
-
-        } catch (ExistException ex) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Shift could not be assigned!", null));
-        }
-    }
-
-    public void doAssignShiftEmployee() {
+   public void doAssignShiftEmployee() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             try {
