@@ -6,6 +6,7 @@ package com.is3102.EntityClass;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +25,8 @@ public class Vitals implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private mCase mCase;
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    private Patient patient;
     private String bloodPressure;
     private String temperature;
     private String heartRate;
@@ -33,12 +34,12 @@ public class Vitals implements Serializable {
     private String glucoseLevel;
     private String respiratoryRate;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date t_stamp;  
-    
-    public Vitals(){}
-    
-    public void create(mCase mcase, String bp, String tmp, String HR, String spO2, String glucose, String rRate){
-        this.setmCase(mCase);
+    private Date t_stamp;
+
+    public Vitals() {
+    }
+
+    public void create(String bp, String tmp, String HR, String spO2, String glucose, String rRate) {
         this.setBloodPressure(bp);
         this.setTemperature(tmp);
         this.setHeartRate(HR);
@@ -49,12 +50,12 @@ public class Vitals implements Serializable {
         this.setT_stamp(time);
     }
 
-    public mCase getmCase() {
-        return mCase;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setmCase(mCase mCase) {
-        this.mCase = mCase;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     public String getBloodPressure() {
@@ -112,8 +113,6 @@ public class Vitals implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-  
 
     @Override
     public int hashCode() {
@@ -139,8 +138,7 @@ public class Vitals implements Serializable {
     public String toString() {
         return "com.is3102.EntityClass.Vitals[ id=" + id + " ]";
     }
-    
-    
+
     public Date getT_stamp() {
         return t_stamp;
     }
@@ -148,5 +146,4 @@ public class Vitals implements Serializable {
     public void setT_stamp(Date t_stamp) {
         this.t_stamp = t_stamp;
     }
-    
 }

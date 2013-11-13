@@ -16,11 +16,23 @@
                     <p:inputText value="#{executionBeanManaged.passport_NRIC}" label="Patient Passport Number/NRIC"/>
                 </h:panelGrid>
                 <p:commandButton value="Submit" actionListener="#{executionBeanManaged.doretrievePInfo}" update= ":form1:growl, :form1:dataTablePatientInfo" />
+                <h3></h3>
 
                 <p:dataTable id="dataTablePatientInfo" var="patient1" value="#{executionBeanManaged.patient1}">
-                    <p:column headerText="Birthday">
-                        <h:outputText value="#{patient1.birthday}" />
+
+                    <f:facet name="header">  
+                        <h:outputText value="#{executionBeanManaged.name}' Bill Summary" />  
+                    </f:facet>
+
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Birthday" />  
+                        </f:facet>  
+                        <h:outputText value="#{patient1.birthday}">  
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
                     </p:column>
+
                     <p:column headerText="Age">
                         <h:outputText value="#{executionBeanManaged.age}" />
                     </p:column>
@@ -45,17 +57,14 @@
                     <p:column headerText="Weight (in kg)">
                         <h:outputText value="#{patient1.weight}" />
                     </p:column>
+
                 </p:dataTable>
             </p:panel>
-        </h:form>
-
-        <h:form>
             <p:panel>
                 <h:commandLink>  
-                    <p:graphicImage value="PDF" />  
-                    <p:dataExporter type="pdf" target="dataTablePatientInfo" fileName="patientInfo"/>  
+                    <p:commandButton value="PDF" />  
+                    <p:dataExporter type="pdf" target="dataTablePatientInfo" fileName="patientInfo" preProcessor="#{executionBeanManaged.preProcessPDF}"/>  
                 </h:commandLink>
-
             </p:panel>
         </h:form>
 

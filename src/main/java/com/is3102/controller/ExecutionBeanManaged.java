@@ -5,42 +5,106 @@
 package com.is3102.controller;
 
 import com.is3102.EntityClass.ExecutionLog;
+import com.is3102.EntityClass.Patient;
+import com.is3102.EntityClass.Vitals;
+import com.is3102.Exception.ExistException;
 import com.is3102.service.ExecutionRemote;
-
+import com.is3102.service.PatientIdandCheckingRemote;
+import com.is3102.service.VisitorInfoServiceRemote;
+import com.is3102.util.HandleDates;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.ServletContext;
 
-/**
- *
- * @author AshishLong pId = Long.valueOf(procedure_id);
- */
 @ManagedBean
+@ViewScoped
 public class ExecutionBeanManaged implements Serializable {
 
     @EJB
-    private ExecutionRemote ex;
-    //CIN
+    private ExecutionRemote em;
+    @EJB
+    public PatientIdandCheckingRemote pm;
+    @EJB
+    public VisitorInfoServiceRemote vm;
+    private String name;
+    private String passport_NRIC;
     private String case_Id;
-    //Id of procedure instance associate with a case
     private String procedure_id;
-    //Doctor id
     private String employee_id;
-    //Execution comment documented at the time of completion
     private String exeuction_comment;
-    //list of execution log comments associated with one procedure entity
     private List<ExecutionLog> executionLogList;
-    //fields for Vitals entity
     private String bloodPressure;
     private String temperature;
     private String heartRate;
     private String spO2;
     private String glucoseLevel;
     private String respiratoryRate;
+    Patient patient1;
+    private int age;
+    List<Vitals> vitals = new ArrayList<Vitals>();
+    private Long patientId;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassport_NRIC() {
+        return passport_NRIC;
+    }
+
+    public void setPassport_NRIC(String passport_NRIC) {
+        this.passport_NRIC = passport_NRIC;
+    }
+
+    public List<Vitals> getVitals() {
+        return vitals;
+    }
+
+    public void setVitals(List<Vitals> vitals) {
+        this.vitals = vitals;
+    }
+
+    public Patient getPatient1() {
+        return patient1;
+    }
+
+    public void setPatient1(Patient patient1) {
+        this.patient1 = patient1;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public void doAddExecutionLog(ActionEvent actionEvent) {
 
@@ -48,7 +112,7 @@ public class ExecutionBeanManaged implements Serializable {
         Long pId = Long.valueOf(procedure_id);
         Long dId = Long.valueOf(employee_id);
         try {
-            ex.AddExecutionRecordMedical(pId, dId, exeuction_comment);
+            em.AddExecutionRecordMedical(pId, dId, exeuction_comment);
             context.addMessage(null, new FacesMessage("Execution record added!"));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -72,9 +136,6 @@ public class ExecutionBeanManaged implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot add execution log!", null));
         }
     }
-    /*public void AddExecutionRecord(Long procedure_id, Long doctor_id, String exeuction_comment) throws ExistException;
-
-     public List<ExecutionLog> CreateEvaluationReport(Long procedure_id) throws ExistException;*/
 
     public void doCreateEvaluationReport(ActionEvent actionEvent) {
 
@@ -82,7 +143,7 @@ public class ExecutionBeanManaged implements Serializable {
         try {
 
             Long pId = Long.valueOf(procedure_id);
-            List<ExecutionLog> result = ex.CreateEvaluationReport(pId);
+            List<ExecutionLog> result = em.CreateEvaluationReport(pId);
             this.setExecutionLogList(result);
 
         } catch (Exception ex) {
@@ -95,15 +156,56 @@ public class ExecutionBeanManaged implements Serializable {
     public void doEnterVitals(ActionEvent ActionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-
-            Long cId = Long.valueOf(procedure_id);
-            ex.recordVitals(cId, bloodPressure, temperature, heartRate, spO2, glucoseLevel, respiratoryRate);
-            context.addMessage(null, new FacesMessage("Vitals recorded!"));
-
+            Patient patient = pm.getPatientInfo(name, passport_NRIC);
+            if (patient != null) {
+                em.recordVitals(patient.getPatientId(), bloodPressure, temperature, heartRate, spO2, glucoseLevel, respiratoryRate);
+                context.addMessage(null, new FacesMessage("Patient Vitals Recorded!"));
+            } else {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Unable to add Vitals", null));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record Does not Exist!", null));
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot update diagnosis!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot Update Vitals!", null));
+        }
+    }
+
+    public void doretrievePInfo(ActionEvent actionEvent) throws ExistException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        patient1 = vm.getPatient(name, passport_NRIC);
+        if (patient1 != null) {
+            patientId = patient1.getPatientId();
+            String birthday = HandleDates.convertDateToString(patient1.getBirthday());
+            System.out.println("Birthday: " + birthday);
+            age = HandleDates.getAge(birthday);
+            System.out.println("Age: " + age);
+            System.out.println("Patient Id: " + patientId);
+        } else {
+            patientId = (long) 0;
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be found!", null));
+        }
+    }
+
+    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+        Document pdf = (Document) document;
+        pdf.open();
+        pdf.setPageSize(PageSize.A4);
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String logo = servletContext.getRealPath("") + File.separator + "images" + File.separator + "merlion.png";
+        pdf.add(Image.getInstance(logo));
+    }
+
+    public void doListVitals(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            vitals = em.listVitals(patientId);
+            if (vitals.isEmpty()) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Vitals Not Found!", null));
+            }
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot Update Vitals!", null));
         }
     }
 
