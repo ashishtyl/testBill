@@ -1,0 +1,54 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:panel>
+                <p:commandButton value="Display Service Catalog"
+                                 actionListener="#{orderEntryManagedBean.doDisplayServiceCatalog}"
+                                 update=":form1:dataTableserviceCatalog"/>
+                <p:dataTable id="dataTableserviceCatalog" var="serviceCatalog" value="#{orderEntryManagedBean.serviceCatalog}">
+                    <p:column headerText="Procedure Name">
+                        <h:outputText value="#{serviceCatalog.name}"/>
+                    </p:column>
+                    <p:column headerText="Procedure Details"> 
+                        <h:outputText value="#{serviceCatalog.details}"/>
+                    </p:column>
+                    <p:column headerText="Price">
+                        <h:outputText value="#{serviceCatalog.price}"/>
+                    </p:column>
+                 </p:dataTable>
+            </p:panel>
+        </h:form>
+        <h:form id="form2">
+            <p:growl id="growl" showDetail="true"/>
+            <p:panel>
+                <h1> Order Radiology Procedure </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Case Identification Number: " />
+                    <p:inputText value="#{orderEntryManagedBean.lrpCIN}" required="true"/>
+                    <h:outputText value="Procedure Name: " />
+                    <p:inputText value="#{orderEntryManagedBean.lrpName}" required="true"/>
+                    <h:outputText value="Quantity: " />
+                    <p:inputText value="#{orderEntryManagedBean.lrpQuantity}" required="true"/>
+                    <h:outputText value="Procedure Details: " />
+                    <p:inputTextarea rows="6" cols="33" value="#{orderEntryManagedBean.lrpDetails}" required="true"/>
+                    <h:outputText value="Procedure Date (YYYY-mm-dd): *" />
+                    <p:calendar value="#{orderEntryManagedBean.appDate}" required="true" pattern="yyyy-MM-dd HH:mm" label="Procedure Date"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" actionListener="#{orderEntryManagedBean.doOrderLabRadProcedure}" update=":form2:growl"/>
+            </p:panel>
+        </h:form>
+         <h:form>
+            <h3></h3>
+            <p:commandButton  action="providerOrderEntry?faces-redirect=true" value="Return to Order Entry System" />
+        </h:form>
+        <h:form>
+            <h3></h3>
+            <p:commandButton  action="viewCase?faces-redirect=true" value="Return to Case" />
+        </h:form>
+    </ui:define>
+</ui:composition>

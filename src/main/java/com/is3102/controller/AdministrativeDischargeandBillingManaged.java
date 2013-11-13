@@ -38,6 +38,16 @@ public class AdministrativeDischargeandBillingManaged implements Serializable{
     
     long CIN;
     Date dischargeDate;
+    public void doGenereatePatientBill(ActionEvent actionEvent){
+        FacesContext context = FacesContext.getCurrentInstance();
+        try{
+            adb.CalculateBill(CIN);
+        }catch(ExistException ex){
+            System.out.println("Case not found!");
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Bill could not be genereated!", null));
+        }
+    }
             
     public void doSetDischargeDate(ActionEvent actionEvent){
         FacesContext context = FacesContext.getCurrentInstance();

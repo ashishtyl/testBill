@@ -26,7 +26,6 @@ public class VisitorInfoServiceManaged implements Serializable {
 
     @EJB
     public VisitorInfoServiceRemote vm;
-    //public AdministrativeAdmissionManaged adminadm;
     String name;
     String NRIC_PIN;
     String NRIC_PIN1;
@@ -107,11 +106,8 @@ public class VisitorInfoServiceManaged implements Serializable {
     public void doretrievePInfo(ActionEvent actionEvent) throws ExistException {
         logger.log("In doretrieve Patient Info");
         FacesContext context = FacesContext.getCurrentInstance();
-        //try {
         patient1 = vm.getPatient(name, NRIC_PIN1);
         if (patient1 != null) {
-            //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            //bed = vm.retrievePatientInfo(patient.getPatientId(), format.format(dateAdmitted));
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Patient Record could not be found!", null));
         }

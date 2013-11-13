@@ -43,7 +43,7 @@ public class POEOrder implements Serializable {
     public POEOrder() {
     }
 
-    public void create(Date setDateOrdered) {
+    public void create(Date dateOrdered) {
         this.setDateOrdered(dateOrdered);
     }
 

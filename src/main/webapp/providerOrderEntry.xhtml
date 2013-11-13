@@ -6,15 +6,80 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         <h1> Welcome to Provider Order Entry System </h1>
+        
+        <h:form id="form1">
+            <p:panel>
+                <p:commandButton value="View Patient Records" actionListener="#{orderEntryManagedBean.doListPatients}" update=":form1:dataTablePatients"/>
+                <p:dataTable id="dataTablePatients" var="patients" value="#{orderEntryManagedBean.patients}" >
+
+                    <p:column headerText="PIN">
+                        <h:outputText value="#{patients.patientId}" />
+                    </p:column>
+                    <p:column headerText="Birthday">
+                        <h:outputText value="#{patients.birthday}" />
+                    </p:column>
+                    <p:column headerText="Address">
+                        <h:outputText value="#{patients.address}" />
+                    </p:column>
+                    <p:column headerText="Contact Number">
+                        <h:outputText value="#{patients.cNumber}" />
+                    </p:column>
+                    <p:column headerText="Nationality">
+                        <h:outputText value="#{patients.nationality}" />
+                    </p:column>
+                    <p:column headerText="Gender">
+                        <h:outputText value="#{patients.gender}" />
+                    </p:column>
+                    <p:column headerText="Blood Group">
+                        <h:outputText value="#{patients.bloodGroup}" />
+                    </p:column>
+                    <p:column headerText="Height (in cm)">
+                        <h:outputText value="#{patients.height}" />
+                    </p:column>
+                    <p:column headerText="Weight (in kg)">
+                        <h:outputText value="#{patients.weight}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        
+        <h:form id="form2">
+            <p:growl id="growl" showDetail="true"/>
+            <p:panel>
+                <h1> Retrieve Patient Orders </h1>
+                <h:panelGrid columns = "2">
+                    <h:outputText value="Patient PIN: *" />
+                    <p:inputText value="#{orderEntryManagedBean.PIN}" required="true" label="Patient PIN"/>
+                </h:panelGrid>
+                <p:commandButton value="View Patient Orders" actionListener="#{orderEntryManagedBean.doListPatientOrders}" update=":form2:growl, :form2:dataTableOrders"/>
+                <p:dataTable id="dataTableOrders" var="orders" value="#{orderEntryManagedBean.orders}" >
+
+                    <p:column headerText="Date Ordered">
+                        <h:outputText value="#{orders.dateOrdered}" />
+                    </p:column>
+                    <p:column headerText="Medication Prescribed">
+                        <h:outputText value="#{orders.medication.name}" />
+                    </p:column>
+                    <p:column headerText="Procedure Ordered">
+                        <h:outputText value="#{orders.labRadProcedure.name}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        
         <h:form>
             <h3></h3>
             <p:commandButton  action="prescribeMedication_1?faces-redirect=true" value="Click here to prescribe medication" />
         </h:form>
         <h:form>
             <h3></h3>
-            <p:commandButton  action="orderLabRadProcedure?faces-redirect=true" value="Click here to order a procedure" />
+            <p:commandButton  action="orderLabProcedure?faces-redirect=true" value="Click here to order a laboratory procedure" />
         </h:form>
         <h:form>
+            <h:form>
+            <h3></h3>
+            <p:commandButton  action="orderRadProcedure?faces-redirect=true" value="Click here to order a radiology procedure" />
+        </h:form>
             <h3></h3>
             <p:commandButton  action="viewCase?faces-redirect=true" value="Click here to return to case" />
         </h:form>

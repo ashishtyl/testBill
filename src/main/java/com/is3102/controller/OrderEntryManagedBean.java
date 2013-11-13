@@ -6,8 +6,11 @@ package com.is3102.controller;
 
 import java.io.Serializable;
 import com.is3102.EntityClass.DrugCatalog;
+import com.is3102.EntityClass.POEOrder;
+import com.is3102.EntityClass.Patient;
 import com.is3102.service.OrderEntryRemote;
 import com.is3102.EntityClass.ServiceCatalog;
+import com.is3102.service.AdministrativeAdmissionRemote;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
@@ -29,11 +32,13 @@ public class OrderEntryManagedBean implements Serializable {
 
     @EJB
     public OrderEntryRemote oem;
+    @EJB
+    public AdministrativeAdmissionRemote am;
     List<DrugCatalog> drugsCatalog = new ArrayList<DrugCatalog>();
     //private DrugCatalog selectedDrug;
     //private DrugCatalog[] selectedDrugs;
     private List<ServiceCatalog> serviceCatalog = new ArrayList<ServiceCatalog>();
-    
+    private String PIN;
     private String CIN;
     private String name;
     private long dosage;
@@ -47,10 +52,25 @@ public class OrderEntryManagedBean implements Serializable {
     private String lrpDetails;
     private double totalPrice;
     private Date appDate;
-    
-    //private SelectItem[] drugTypeOptions;
-    //private String[] drugTypes = new String[100];
-    //private int count = 0;
+    private List<Patient> patients = new ArrayList<Patient>();
+    private List<POEOrder> orders = new ArrayList<POEOrder>();
+
+    public String getPIN() {
+        return PIN;
+    }
+
+    public void setPIN(String PIN) {
+        this.PIN = PIN;
+    }
+
+    public List<POEOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<POEOrder> orders) {
+        this.orders = orders;
+    }
+
     public String getCIN() {
         return CIN;
     }
@@ -111,18 +131,48 @@ public class OrderEntryManagedBean implements Serializable {
         return drugsCatalog;
     }
 
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+
     public OrderEntryManagedBean() {
+    }
+
+    public void doListPatients(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        patients = am.getCurrentPatients();
+        if (patients.isEmpty()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Patient Record Not Found!", null));
+        }
+    }
+
+    public void doListPatientOrders(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Patient pp = am.checkPatient(PIN);
+        if (pp != null) {
+            orders = oem.listPatientOrders(PIN);
+            if (orders.isEmpty()) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Orders Not Found!", null));
+            }
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Please check Patient PIN!", null));
+        }
     }
 
     public void doDisplayDrugsCatalog(ActionEvent actionEvent) {
         drugsCatalog = oem.displayDrugCatalog();
-        /*for (DrugCatalog dc : drugsCatalog) {
-         drugTypes[count++] = dc.getType();
-         }*/
     }
-    
-        public void doDisplayServiceCatalog(ActionEvent actionEvent) {
+
+    public void doDisplayServiceCatalog(ActionEvent actionEvent) {
         setServiceCatalog(oem.displayServiceCatalog());
+    }
+
+    public void doDisplayServiceCatalog2(ActionEvent actionEvent) {
+        setServiceCatalog(oem.displayServiceCatalog2());
         /*for (DrugCatalog dc : drugsCatalog) {
          drugTypes[count++] = dc.getType();
          }*/
@@ -134,18 +184,28 @@ public class OrderEntryManagedBean implements Serializable {
             String medName = oem.prescribeMedication(CIN, name, dosage, quantity, details);
             context.addMessage(null, new FacesMessage("Medication " + medName + " successfully ordered!"));
         } catch (Exception ex) {
-            //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
-            //FacesContext.getCurrentInstance().addMessage(null, msg);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
         }
     }
-    
-        public void doOrderLabRadProcedure(ActionEvent actionEvent) {
+
+    public void doOrderLabRadProcedure(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             String sevName = oem.orderLabRadProcedure(getLrpCIN(), getLrpName(), getLrpQuantity(), getLrpDetails(), format.format(getAppDate()));
+            context.addMessage(null, new FacesMessage("Procedure " + sevName + " successfully ordered!"));
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
+        }
+    }
+
+    public void doOrderLabRadProcedure2(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String sevName = oem.orderLabRadProcedure(getLrpCIN(), getLrpName(), getLrpQuantity(), getLrpDetails(), "2012-01-01 00:00");
             context.addMessage(null, new FacesMessage("Procedure " + sevName + " successfully ordered!"));
         } catch (Exception ex) {
             //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null);
@@ -154,29 +214,15 @@ public class OrderEntryManagedBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Order again!", null));
         }
     }
-    
+
     /*private SelectItem[] createFilterOptions(String[] drugTypes) {
      SelectItem[] options = new SelectItem[drugTypes.length + 1];
 
-     options[0] = new SelectItem("", "Select");
-     for (int i = 0; i < drugTypes.length; i++) {
-     options[i + 1] = new SelectItem(drugTypes[i], drugTypes[i]);
+     public List<ServiceCatalog> getServiceCatalog() {
+     return serviceCatalog;
      }
 
-     return options;
-     }*/
-    /*public SelectItem[] getDrugTypeOptions() {
-     return drugTypeOptions;
-     }*/
-
-    /**
-     * @return the serviceCatalog
-     */
-    public List<ServiceCatalog> getServiceCatalog() {
-        return serviceCatalog;
-    }
-
-    /**
+     /**
      * @param serviceCatalog the serviceCatalog to set
      */
     public void setServiceCatalog(List<ServiceCatalog> serviceCatalog) {
@@ -265,5 +311,12 @@ public class OrderEntryManagedBean implements Serializable {
      */
     public void setAppDate(Date appDate) {
         this.appDate = appDate;
+    }
+
+    /**
+     * @return the serviceCatalog
+     */
+    public List<ServiceCatalog> getServiceCatalog() {
+        return serviceCatalog;
     }
 }

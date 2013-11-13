@@ -95,10 +95,10 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
     public long createCase(String bedNo, String roomNo, String floor, String appId, String type) throws ExistException {
         mCase mcase;
         Appointment appointment = em.find(Appointment.class, new Long(appId));
-        if (appointment
-                == null) {
+        if (appointment == null) {
             throw new ExistException("CASE DOES NOT EXIST");
         }
+        Patient patient = appointment.getPatient();
         mcase = appointment.getmCase();
         Date dateAdmitted = new Date();
         mcase.create(dateAdmitted, type);
@@ -107,23 +107,15 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         q.setParameter("roomNo", roomNo);
         q.setParameter("floor", floor);
         Bed bed = (Bed) q.getSingleResult();
-        System.out.println(bed.getBedId());
-        System.out.println(bed.getBedNo());
-        System.out.println(bed.getRoomNo());
-        System.out.println(bed.getFloor());
-
-        /* if (bed
-         == null) { // Bed does not exist
-         em.clear();
-         throw new ExistException("BED DOES NOT EXIST");
-         } */
 
         if (mcase.getBed() == null) {
             mcase.setBed(bed);
             mcase.setType(type);
             appointment.setmCase(mcase);
-            mcase.setPatient(appointment.getPatient());
-            //em.persist(appointment);
+            patient.getmCases().add(mcase);
+            mcase.setPatient(patient);
+            em.persist(patient);
+            em.persist(appointment);
             em.persist(mcase);
             em.flush();
         } else {
@@ -286,5 +278,36 @@ public class AdministrativeAdmissionBean implements AdministrativeAdmissionRemot
         } catch (NoResultException ex) {
             return null;
         }
+    }
+
+    public List<Patient> getAllPatients() {
+        Query qp = em.createQuery("SELECT p FROM Patient p");
+        List<Patient> patients = qp.getResultList();
+        System.out.println(patients.size());
+        return patients;
+    }
+
+    public List<Patient> getCurrentPatients() {
+        Query qp = em.createQuery("SELECT p FROM Patient p");
+        List<Patient> patients = qp.getResultList();
+        List<Patient> curentPatients = new ArrayList<Patient>();
+        System.out.println(patients.size());
+        for (Patient patient : patients) {
+            List<Appointment> appointments = patient.getAppointments();
+            System.out.println(appointments.size());
+            for (Appointment app : appointments) {
+                System.out.println(app.getAppDate());
+                if (app.getmCase().getDateDischarged() == null) {
+                    curentPatients.add(patient);
+                }
+            }
+        }
+        System.out.println(curentPatients.size());
+        return curentPatients;
+    }
+
+    public Patient checkPatient(String PIN) {
+        Patient patient = em.find(Patient.class, new Long(PIN));
+        return patient;
     }
 }

@@ -308,7 +308,6 @@ public class AdministrativeAdmissionManaged implements Serializable {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String id = am.makeAppointment(NRIC_PIN2, format.format(appDate), docID);
-
             Employee employee = am.getEmployee(docID);
             context.addMessage(null, new FacesMessage("Appointment " + id + " for " + NRIC_PIN2 + " on date " + format.format(appDate) + " by doctor " + employee.getUsername() + " successfully made!"));
         } catch (Exception ex) {
