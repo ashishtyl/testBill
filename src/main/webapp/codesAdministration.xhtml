@@ -105,5 +105,39 @@
                 <p:commandButton value="Submit" actionListener="#{codingBeanManaged.doAddProcedure}" update=":form6:growl"/>
             </p:panel>
         </h:form>
+        <h:form id="form7">
+            <p:panel>
+                <h1> Display Registered Medical Devices </h1>
+                <p:commandButton value="List Devices"
+                                 actionListener="#{schedulingAndResourceAllocationManagedBean.doListDevices}"
+                                 update=":form7:dataTableDevices"/>
+                <p:dataTable id="dataTableDevices" var="Device" value="#{schedulingAndResourceAllocationManagedBean.devices}">
+                    <p:column headerText="Device ID">
+                        <h:outputText value="#{Device.id}"/>
+                    </p:column>
+                    <p:column headerText="Device Type">
+                        <h:outputText value="#{Device.deviceType}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        <h:form id="form8">
+            <p:growl id="growl" showDetail="true"/>
+            <p:panel>
+                <h1> Add Medical Device </h1>
+                <h:panelGrid columns = "2">
+                    <p:selectOneMenu value="#{schedulingAndResourceAllocationManagedBean.deviceType}">  
+                        <f:selectItem itemLabel="Select One" itemValue="" />  
+                        <f:selectItem itemLabel="Mobile X-Ray" itemValue="Mobile X-Ray" />  
+                        <f:selectItem itemLabel="Dental X-Ray" itemValue="Dental X-Ray" />  
+                        <f:selectItem itemLabel="Gneral X-Ray" itemValue="Genral X-Ray" />  
+                        <f:selectItem itemLabel="MRI" itemValue="MRI" />  
+                        <f:selectItem itemLabel="Utlra Sound" itemValue="Ultra Sound" />  
+                        <f:selectItem itemLabel="OPG Unit" itemValue="OPG Unit" />  
+                    </p:selectOneMenu>  
+                </h:panelGrid>
+                <p:commandButton value="Add Device" actionListener="#{schedulingAndResourceAllocationManagedBean.doAddNewDevice}" update=":form8:growl"/>
+            </p:panel>
+        </h:form>
     </ui:define>
 </ui:composition>

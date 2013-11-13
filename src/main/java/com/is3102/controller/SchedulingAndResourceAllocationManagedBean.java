@@ -4,6 +4,7 @@
  */
 package com.is3102.controller;
 
+import com.is3102.EntityClass.Device;
 import com.is3102.EntityClass.Schedule;
 import com.is3102.Exception.ExistException;
 import com.is3102.entity.Employee;
@@ -60,6 +61,32 @@ public class SchedulingAndResourceAllocationManagedBean implements Serializable 
     List<Employee> employeeByShift;
     List<Schedule> shiftsByEmployee;
     int employeeID;
+    String deviceType;
+    List<Device> devices;
+
+    public void doAddNewDevice(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            sra.addNewDevice(deviceType);
+            context.addMessage(null, new FacesMessage("Device added successfully"));
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Device Could not be added!", null));
+        }
+    }
+    
+    public void doListDevices(ActionEvent actionEvent){
+        System.out.println("In doListsDevicecs");
+        FacesContext context = FacesContext.getCurrentInstance();
+        try{
+            this.setDevices(sra.listDevices());
+            System.out.println("devices set");
+        }catch(ExistException ex){
+            System.out.println("No devices found");
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No devices found!", null));
+        }
+    }
 
     public void DoGetAllEmployees(ActionEvent actionEvent) throws ExistException {
         try {
@@ -470,4 +497,22 @@ public class SchedulingAndResourceAllocationManagedBean implements Serializable 
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
     }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
+    }
+    
+    
 }

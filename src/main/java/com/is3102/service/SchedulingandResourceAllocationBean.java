@@ -6,6 +6,7 @@
  */
 package com.is3102.service;
 
+import com.is3102.EntityClass.Device;
 import com.is3102.EntityClass.Schedule;
 import com.is3102.Exception.ExistException;
 import com.is3102.entity.Employee;
@@ -49,6 +50,27 @@ public class SchedulingandResourceAllocationBean implements SchedulingandResourc
         }
         return doctorID;
 
+    }
+    
+    public void addNewDevice(String deviceType){
+        System.out.println("In schedule and resource allocaiton: addNewDevice");
+        Device device = new Device();
+        device.create(deviceType);
+        System.out.println("device "+device.getId()+" added succesfully");
+        em.persist(device);
+    }
+    
+    public List<Device> listDevices()throws ExistException{
+        List<Device> devices = new ArrayList<Device>();
+        Query q = em.createQuery("SELECT d FROM Device d");
+        for(Object o: q.getResultList()){
+            Device device = (Device) o;
+            devices.add(device);
+        }
+        if(devices.isEmpty()){
+            throw new ExistException("No devices found!");
+        }
+        return devices;
     }
 
     public void createShift(String shiftDate, String shiftCode) throws ExistException, ParseException {

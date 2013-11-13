@@ -29,7 +29,11 @@ public class Device implements Serializable {
     @OneToMany(cascade={CascadeType.ALL})
     private List<AppointmentProcedure> procedures = new ArrayList<AppointmentProcedure>();
     
+    public void Device(){}
     
+    public void create(String deviceType){
+        this.setDeviceType(deviceType);
+    }
     
     public Long getId() {
         return id;

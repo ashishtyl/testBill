@@ -5,6 +5,7 @@
 package com.is3102.service;
 
 
+import com.is3102.EntityClass.Device;
 import com.is3102.EntityClass.Schedule;
 import com.is3102.Exception.ExistException;
 import com.is3102.entity.Employee;
@@ -19,6 +20,10 @@ import java.util.List;
  */
 @Remote
 public interface SchedulingandResourceAllocationBeanRemote {
+    
+    public void addNewDevice(String deviceType);
+    
+    public List<Device> listDevices()throws ExistException;
     
     public Long getDoctorID(String name) throws ExistException;
 
