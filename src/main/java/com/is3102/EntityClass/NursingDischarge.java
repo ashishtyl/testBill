@@ -27,7 +27,7 @@ public class NursingDischarge implements Serializable {
     private String woundcare;
     
     @ManyToOne
-    Employee doctor;
+    Employee employee;
     
     public void NusringDischarge(){}
     
@@ -37,12 +37,12 @@ public class NursingDischarge implements Serializable {
         this.setWoundcare(woundcare);
     }  
 
-    public Employee getDoctor() {
-        return doctor;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setDoctor(Employee doctor) {
-        this.doctor = doctor;
+    public void setEmployee(Employee employee) {
+        this.employee=employee;
     }
 
     public String getActivityLevel() {
