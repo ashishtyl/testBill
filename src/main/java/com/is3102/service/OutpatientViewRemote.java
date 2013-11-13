@@ -18,13 +18,13 @@ import javax.ejb.Remote;
  * @author Ben
  */
 
-@Local
+@Remote
 public interface OutpatientViewRemote {
     
     public List<mCase> ListmCase(String PasswordId)throws ExistException;
-    public List<Medical_Procedure> ListMedical_Procedure(Long CIN)throws ExistException;
-    public List<Diagnosis> ListDiagnosis(Long CIN)throws ExistException;
-    public List<Medication> ListMedication(Long CIN)throws ExistException;
-    public List<LabRadProcedure> ListLabRadProcedure(Long CIN)throws ExistException;
+    public List<Medical_Procedure> ListMedical_Procedure(Long CIN, String passwordId)throws ExistException;
+    public List<Diagnosis> ListDiagnosis(Long CIN, String passwordId)throws ExistException;
+    public List<Medication> ListMedication(Long CIN, String passwordId)throws ExistException;
+    public List<LabRadProcedure> ListLabRadProcedure(Long CIN, String passwordId)throws ExistException;
     
 }

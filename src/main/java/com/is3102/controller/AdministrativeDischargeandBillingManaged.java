@@ -7,6 +7,13 @@ package com.is3102.controller;
 import com.is3102.EntityClass.Transactions;
 import com.is3102.Exception.ExistException;
 import com.is3102.service.AdministrativeDischargeandBillingRemote;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import java.io.File;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -21,6 +28,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.ServletContext;
 
 /**
  *
@@ -54,6 +62,16 @@ public class AdministrativeDischargeandBillingManaged implements Serializable{
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Bill could not be genereated!", null));
         }
     }
+    
+    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+        Document pdf = (Document) document;
+        pdf.open();
+        pdf.setPageSize(PageSize.A4);
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String logo = servletContext.getRealPath("") + File.separator + "images" + File.separator + "merlion.png";
+        pdf.add(Image.getInstance(logo));
+    }
+
             
     public void doSetDischargeDate(ActionEvent actionEvent){
         FacesContext context = FacesContext.getCurrentInstance();

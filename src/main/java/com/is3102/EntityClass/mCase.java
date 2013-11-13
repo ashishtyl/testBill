@@ -58,7 +58,7 @@ public class mCase implements Serializable {
     private Nursing_Anamnesis nursingAnamnesis;
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Bed bed;
-    @ManyToOne
+   @ManyToOne
     private Patient patient;
     @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Diagnosis> diagnosis = new ArrayList<Diagnosis>();
@@ -147,7 +147,7 @@ public class mCase implements Serializable {
     public void setAppointment(Appointment appointment) {
         this.appointment = appointment;
     }
-
+    
     public Patient getPatient() {
         return patient;
     }

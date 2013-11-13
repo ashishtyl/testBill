@@ -128,7 +128,7 @@ public class OutPatientManagementBean implements OutPatientManagementRemote{
                 mCase mcase = new mCase();
                 System.out.println("Test");
                // appointment.create(aDate, bDate);
-                appointment.create(endDate, endDate);
+                appointment.create(startDate, endDate);
                 System.out.println("Appointment ID: " + appointment.getAppId());
                 patient.getAppointment2().add(appointment);
                 appointment.setPatient(patient);
@@ -154,6 +154,7 @@ public class OutPatientManagementBean implements OutPatientManagementRemote{
         mcase.setType(type);
         appointment.setmCase(mcase);
         mcase.setPatient(appointment.getPatient());
+        appointment.getPatient().getMcase().add(mcase);
             //em.persist(appointment);
         em.persist(mcase);
         em.flush();

@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-         <h:form id="form1">
+        <h:form id="form1">
             <p:growl id="growl" showDetail="true" sticky="true" />
             <panel>
                 <h1>View Patient Bill</h1>  
@@ -13,19 +13,39 @@
 
                     <h:outputText value="CIN: "/>
                     <p:inputText value="#{administrativeDischargeandBillingManaged.CIN}"  label="CIN"/>              
-                    
+
                 </h:panelGrid>    
                 <p:commandButton value="Submit" 
                                  actionListener="#{administrativeDischargeandBillingManaged.doGenereatePatientBill}" 
                                  update=":form1:dataTableBill"/>
                 <p:dataTable id="dataTableBill" var="items" value="#{administrativeDischargeandBillingManaged.billItems}">
-                    <p:column headerText="Item Name">
-                        <h:outputText value="#{items.name}"/>
+                    
+                    <f:facet name="header">  
+                        <h:outputText value="Bill Summary" />  
+                    </f:facet>
+                    
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Item Name" />  
+                        </f:facet>  
+                        <h:outputText value="#{items.name}" />
                     </p:column>
-                    <p:column headerText="Item Price">
-                        <h:outputText value="#{items.price}"/>
+                    
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Item Price" />  
+                        </f:facet>  
+                        <h:outputText value="#{items.price}" />
                     </p:column>
+                    
+                </p:dataTable>
             </panel>
+            <p:panel>
+                <h:commandLink>  
+                    <p:commandButton value="Download Bill as PDF" />  
+                    <p:dataExporter type="pdf" target="dataTablePatientInfo" fileName="patientInfo" preProcessor="#{executionBeanManaged.preProcessPDF}"/>  
+                </h:commandLink>
+            </p:panel>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -51,6 +51,22 @@ public class Patient implements Serializable {
     public Patient() {
     }
 
+    public List<Appointment> getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(List<Appointment> appointment) {
+        this.appointment = appointment;
+    }
+
+    public List<mCase> getMcase() {
+        return mcase;
+    }
+
+    public void setMcase(List<mCase> mcase) {
+        this.mcase = mcase;
+    }
+
     public void create(String passport_NRIC, String name, Date birthday, String address, String cNumber, String nationality, String height, String weight, String gender, String bloodGroup) {
         this.setPassport_NRIC(passport_NRIC);
         this.setName(name);
