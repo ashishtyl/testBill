@@ -28,8 +28,10 @@ public class ExecutionBean implements ExecutionRemote {
     EntityManager em;
 
     public void AddExecutionRecordMedical(Long procedure_id, Long doctor_id, String exeuction_comment) throws ExistException, ConsentException {
+        
         System.out.println("In ExcB: addMedicalExecution");
         Employee doctor = em.find(Employee.class, doctor_id);
+        
         if (doctor == null) {
             em.clear();
             System.out.println("Doctor not found");
@@ -57,12 +59,37 @@ public class ExecutionBean implements ExecutionRemote {
                 }
             }
         }
+
+        Medical_Procedure procedure = em.find(Medical_Procedure.class, procedure_id);
+        
+        if (procedure == null) {
+            em.clear();
+            throw new ExistException("No such procedure created");
+        }
+        
+        System.out.println("In ExcB: medical procedure found");
+
+        if (procedure.getPatientConsent().equalsIgnoreCase("NULL")) {
+            System.out.println("In ExcB: consent not received");
+            throw new ConsentException("Patient Consent not received!");
+        }
+    
+        System.out.println("Consent check passed!");
+
+        ExecutionLog eLog = new ExecutionLog();
+        eLog.create(doctor, exeuction_comment);
+        System.out.println("Log created");
+
+        procedure.addExecutionLog(eLog);
+        System.out.println("Log appended");
+
     }
 
     public void AddExecutionRecordNursing(Long procedure_id, Long employee_id, String exeuction_comment) throws ExistException {
         System.out.println("In ExcB: addNursingExecution");
         Employee doctor = em.find(Employee.class, employee_id);
-        if (doctor == null) {
+        if (doctor
+                == null) {
             em.clear();
             System.out.println("Doctor not found");
             throw new ExistException("Doctor not found!");
@@ -88,7 +115,8 @@ public class ExecutionBean implements ExecutionRemote {
         System.out.println("In ExcB: createEvaluationReport");
         Medical_Procedure procedure = em.find(Medical_Procedure.class, procedure_id);
 
-        if (procedure == null) {
+        if (procedure
+                == null) {
             em.flush();
             System.out.println("no preocdure found");
             throw new ExistException("No such procedure created!");

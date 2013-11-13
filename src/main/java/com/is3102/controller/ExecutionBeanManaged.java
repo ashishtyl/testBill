@@ -117,7 +117,23 @@ public class ExecutionBeanManaged implements Serializable {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot update diagnosis!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot add execution log!", null));
+        }
+    }
+    
+    public void doAddExecutionLogNursing(ActionEvent actionEvent) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        Long pId = Long.valueOf(procedure_id);
+        Long dId = Long.valueOf(employee_id);
+        try {
+            ex.AddExecutionRecordNursing(pId, dId, exeuction_comment);
+           
+            context.addMessage(null, new FacesMessage("Execution record added!"));
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot add execution log!", null));
         }
     }
 

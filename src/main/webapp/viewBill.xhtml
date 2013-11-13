@@ -1,0 +1,32 @@
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+         <h:form id="form1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <panel>
+                <h1>View Patient Bill</h1>  
+                <h:panelGrid columns="2">
+
+                    <h:outputText value="CIN: "/>
+                    <p:inputText value="#{administrativeDischargeandBillingManaged.CIN}"  label="CIN"/>              
+                    
+                </h:panelGrid>    
+                <p:commandButton value="Submit" 
+                                 actionListener="#{administrativeDischargeandBillingManaged.doGenereatePatientBill}" 
+                                 update=":form1:dataTableBill"/>
+                <p:dataTable id="dataTableBill" var="items" value="#{administrativeDischargeandBillingManaged.billItems}">
+                    <p:column headerText="Item Name">
+                        <h:outputText value="#{items.name}"/>
+                    </p:column>
+                    <p:column headerText="Item Price">
+                        <h:outputText value="#{items.price}"/>
+                    </p:column>
+            </panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

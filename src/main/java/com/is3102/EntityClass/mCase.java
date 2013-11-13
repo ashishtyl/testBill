@@ -64,9 +64,10 @@ public class mCase implements Serializable {
     private List<Diagnosis> diagnosis = new ArrayList<Diagnosis>();
     @OneToOne(cascade = {CascadeType.ALL})
     private NursingDischarge nursingDischarge;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private Bill bill;
 
     
-
     public mCase() {
     }
 
@@ -233,6 +234,13 @@ public class mCase implements Serializable {
      public void addnProcedure(Nursing_Procedure nprocedure) {
         this.getnProcedures().add(nprocedure);
     }
-      
+     
+    public Bill getBill() {
+        return bill;
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
+    }  
     
 }

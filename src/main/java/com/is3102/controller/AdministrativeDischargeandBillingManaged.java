@@ -4,12 +4,15 @@
  */
 package com.is3102.controller;
 
+import com.is3102.EntityClass.Transactions;
 import com.is3102.Exception.ExistException;
 import com.is3102.service.AdministrativeDischargeandBillingRemote;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -32,6 +35,9 @@ public class AdministrativeDischargeandBillingManaged implements Serializable{
     
     @EJB
     public AdministrativeDischargeandBillingRemote adb;
+    List<Transactions> billItems = new ArrayList<Transactions>();
+
+    
     
     public AdministrativeDischargeandBillingManaged(){}
     
@@ -41,7 +47,7 @@ public class AdministrativeDischargeandBillingManaged implements Serializable{
     public void doGenereatePatientBill(ActionEvent actionEvent){
         FacesContext context = FacesContext.getCurrentInstance();
         try{
-            adb.CalculateBill(CIN);
+            billItems=adb.CalculateBill(CIN);
         }catch(ExistException ex){
             System.out.println("Case not found!");
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
@@ -93,6 +99,13 @@ public class AdministrativeDischargeandBillingManaged implements Serializable{
      */
     public void setDischargeDate(Date dischargeDate) {
         this.dischargeDate = dischargeDate;
+    }
+    public List<Transactions> getBillItems() {
+        return billItems;
+    }
+
+    public void setBillItems(List<Transactions> billItems) {
+        this.billItems = billItems;
     }
     
     
