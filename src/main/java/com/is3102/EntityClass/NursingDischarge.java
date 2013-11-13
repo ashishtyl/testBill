@@ -4,6 +4,7 @@
  */
 package com.is3102.EntityClass;
 
+import com.is3102.entity.Employee;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class NursingDischarge implements Serializable {
     private String woundcare;
     
     @ManyToOne
-    Doctor doctor;
+    Employee doctor;
     
     public void NusringDischarge(){}
     
@@ -36,11 +37,11 @@ public class NursingDischarge implements Serializable {
         this.setWoundcare(woundcare);
     }  
 
-    public Doctor getDoctor() {
+    public Employee getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(Doctor doctor) {
+    public void setDoctor(Employee doctor) {
         this.doctor = doctor;
     }
 

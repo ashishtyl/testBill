@@ -15,29 +15,26 @@ import java.util.List;
  */
 @Entity
 public class Schedule implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-  //  @Temporal(javax.persistence.TemporalType.DATE)
+    //  @Temporal(javax.persistence.TemporalType.DATE)
     private String shiftDate;
     private String shiftCode;
-  
     @ManyToMany
     private List<Employee> employees;
-    
-    @ManyToMany
-    private List<Doctor> doctors;
-    
-   public Schedule(){
-    } 
-       public void create(String shiftDate, String shiftCode) {
+
+    public Schedule() {
+    }
+
+    public void create(String shiftDate, String shiftCode) {
         this.setShiftDate(shiftDate);
         this.setShiftCode(shiftCode);
-        
+
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -71,18 +68,8 @@ public class Schedule implements Serializable {
         return "EntityClass.Schedule[ id=" + id + " ]";
     }
 
-    
-
-
-
- 
-    public void addEmployee(Employee doctor){
+    public void addEmployee(Employee doctor) {
         this.employees.add(doctor);
-    }
-    
-    
-     public void addDoctor(Doctor doctor){
-        this.getDoctors().add(doctor);
     }
 
     /**
@@ -126,21 +113,4 @@ public class Schedule implements Serializable {
     public void setEmployees(List<Employee> doctors) {
         this.employees = doctors;
     }
-
-    /**
-     * @return the doctors
-     */
-    public List<Doctor> getDoctors() {
-        return doctors;
-    }
-
-    /**
-     * @param doctors the doctors to set
-     */
-    public void setDoctors(List<Doctor> doctors) {
-        this.doctors = doctors;
-    }
-    
-    
-    
 }

@@ -43,7 +43,7 @@
             <p:panel>
                 <h:commandLink>  
                     <p:commandButton value="Download Bill as PDF" />  
-                    <p:dataExporter type="pdf" target="dataTablePatientInfo" fileName="patientInfo" preProcessor="#{executionBeanManaged.preProcessPDF}"/>  
+                    <p:dataExporter type="pdf" target=":form1:dataTableBill" fileName="patientBill" preProcessor="#{administrativeDischargeandBillingManaged.preProcessPDF}"/>  
                 </h:commandLink>
             </p:panel>
         </h:form>
